@@ -1,0 +1,5 @@
+#sidebar{
+    background-color: var(--theme-color-bg-element);
+    width: clamp(100px, 300px, 500px);
+    height: 100vh;
+}
