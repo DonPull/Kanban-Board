@@ -1,3 +1,39 @@
+.button{
+    border: 0.2rem solid var(--theme-color-accent);
+    border-radius: 10rem;
+
+    width: max-content;
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: var(--theme-color-accent);
+    background-color: var(--theme-color-bg-element);
+    padding: 0.9rem 2rem;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.button:hover{
+    color: var(--theme-color-bg-element);
+    background-color: var(--theme-color-accent);
+}
+
+.separator{
+    width: 90%;
+    height: 0.2rem;
+    background-color: var(--theme-color-bg-1);
+    margin: 2rem auto;
+}
+
+.width-100-percent{
+    width: 100% !important;
+}
+
+.height-100-percent{
+    height: 100% !important;
+}
+
+/* FLEX */
 .flex{
     display: flex;
 }
@@ -13,7 +49,60 @@
 .justify-space-around{
     justify-content: space-around;
 }
-.align-items-center{
+.align-center{
     align-items: center;
 }
 
+/* MARGINS */
+.margin-5px{
+    margin: 5px !important;
+}
+.margin-10px{
+    margin: 5px !important;
+}
+.margin-15px{
+    margin: 5px !important;
+}
+.margin-20px{
+    margin: 5px !important;
+}
+/* margin top */
+.margin-top-5px{
+    margin-top: 5px !important;
+}
+.margin-top-10px{
+    margin-top: 5px !important;
+}
+.margin-top-15px{
+    margin-top: 5px !important;
+}
+.margin-top-20px{
+    margin-top: 5px !important;
+}
+
+/* PADDINGS */
+.padding-5px{
+    padding: 5px !important;
+}
+.padding-10px{
+    padding: 5px !important;
+}
+.padding-15px{
+    padding: 5px !important;
+}
+.padding-20px{
+    padding: 5px !important;
+}
+/* padding top */
+.padding-top-5px{
+    padding-top: 5px !important;
+}
+.padding-top-10px{
+    padding-top: 5px !important;
+}
+.padding-top-15px{
+    padding-top: 5px !important;
+}
+.padding-top-20px{
+    padding-top: 5px !important;
+}

@@ -1,21 +1,43 @@
 :root{
   --theme-color-bg: rgb(36, 36, 36);
+  --theme-color-bg-1: rgb(97 97 97);
   --theme-color-bg-element: rgb(50, 50, 50);
-  --theme-color-accent: rgb(99, 97, 210);
+  /* --theme-color-accent: rgb(99, 97, 210); */
+  --theme-color-accent: rgb(135 133 243);
+  --theme-color-accent-1: rgb(179 177 244);
+  
+  --theme-font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  sans-serif;
+
+  font-size: 62.5%; /* Converts rem to a 10base system so 57px = 5.7rem */
+  width: 100vw;
+  height: 100vh;
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+*{
+  /* For TESTING purposes 
+  outline: 5px solid;
+  outline-color: rgba(240, 128, 128, 0.2);
+  */
 }
 
 body {
-  background-color: var(--theme-color-bg);
-  width: 100vw;
-  height: 100vh;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-size: 1.6rem; /* If there is an accessibility feature that changes font size this line will ensure that the settings of the user won't be messed with */
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-family: var(--theme-font-family);
+  background-color: var(--theme-color-bg-element);
+}
+
+#root{
+  display: flex;
+  justify-content: space-between;
 }
 
 code {
