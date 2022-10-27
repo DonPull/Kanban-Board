@@ -18,10 +18,10 @@
     margin-top: 1rem;
 }
 
-#navbar-project-btn-container{
+.navbar-content-container{
     align-self: center;
     min-width: max-content;
-    width: 85%;
+    width: 88%;
 }
 
 .title-with-underline-container{
@@ -46,4 +46,40 @@
 }
 #navbar-project-btn-container button:nth-child(1){
     margin-top: 0;
+}
+
+#profile-picture img{
+    border: 0.2rem solid var(--theme-color-accent);
+    border-radius: 50%;
+}
+
+#sidebar-footer-container{
+    margin-top: auto;
+}
+#sidebar-footer-container p{
+    margin: 0;
+    transition: 0.2s;
+}
+#sidebar-footer-container img{
+    aspect-ratio: 1/1;
+    height: 4rem;
+}
+#sidebar-footer-container button{
+    padding: 0.1rem 1.5rem;
+}
+#sidebar-footer-container button img{
+    height: 2.5rem;
+    margin-left: 0.7rem;
+    filter: invert(48%) sepia(88%) saturate(903%) hue-rotate(211deg) brightness(99%) contrast(92%);
+}
+
+#sidebar-footer-container button:hover{
+    transition: 0s;
+}
+#sidebar-footer-container button:hover img{
+    display: none;
+}
+#sidebar-footer-container button:hover p{
+    padding-left: 16px;
+    padding-right: 16px;
 }
