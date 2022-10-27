@@ -28,11 +28,11 @@
     background-color: var(--theme-color-accent);
 }
 #create-new-tab:hover img{
-    filter: invert(14%) sepia(24%) saturate(0%) hue-rotate(263deg) brightness(90%) contrast(82%);
+    filter: var(--theme-color-bg-element-filter);
 }
 
 #create-new-tab img{
     height: 60%;
     margin: auto;
-    filter: invert(48%) sepia(88%) saturate(903%) hue-rotate(211deg) brightness(99%) contrast(92%);
+    filter: var(--theme-color-accent-filter);
 }

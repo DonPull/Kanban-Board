@@ -2,8 +2,10 @@
   --theme-color-bg: rgb(36, 36, 36);
   --theme-color-bg-1: rgb(97 97 97);
   --theme-color-bg-element: rgb(50, 50, 50);
+  --theme-color-bg-element-filter: invert(14%) sepia(24%) saturate(0%) hue-rotate(263deg) brightness(90%) contrast(82%);
   /* --theme-color-accent: rgb(99, 97, 210); */
   --theme-color-accent: rgb(135 133 243);
+  --theme-color-accent-filter: invert(48%) sepia(88%) saturate(903%) hue-rotate(211deg) brightness(99%) contrast(92%);
   --theme-color-accent-1: rgb(179 177 244);
   
   --theme-font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -33,6 +35,10 @@ body {
   letter-spacing: 0.5px;
   font-family: var(--theme-font-family);
   background-color: var(--theme-color-bg-element);
+}
+
+p{
+  min-width: max-content;
 }
 
 #root{

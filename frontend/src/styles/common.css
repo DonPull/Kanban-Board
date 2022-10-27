@@ -33,6 +33,14 @@
     height: 100% !important;
 }
 
+/* POSSITIONS */
+.absolute{
+    position: absolute;
+}
+.relative{
+    position: relative;
+}
+
 /* FLEX */
 .flex{
     display: flex;
