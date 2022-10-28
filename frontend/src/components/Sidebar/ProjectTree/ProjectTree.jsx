@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import Modal from '../../Modal';
 import "./ProjectTree.css";
 
 class ProjectTree extends Component {
@@ -10,6 +11,9 @@ class ProjectTree extends Component {
                     <label>Project Tree</label>
                     <div className='separator' style={{ margin: "5px auto" }}/>
                 </div>
+
+                <Modal />
+
             </div>
         );
     }
