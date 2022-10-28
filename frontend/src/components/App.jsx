@@ -2,7 +2,7 @@ import ReactDOM from 'react-dom';
 import React, { Component } from 'react';
 import "../styles/App.css";
 import "../styles/common.css";
-import Sidebar from './Sidebar';
+import Sidebar from './Sidebar/Sidebar';
 import Content from './Content';
 import TabList from './TabList';
 

@@ -1,0 +1,104 @@
+/*
+#sidebar-footer-container{
+    margin-top: auto;
+}
+*/
+#sidebar-footer-container p{
+    margin: 0;
+    margin-right: 28px;
+    transition: 0.2s;
+}
+#home-btn p{
+    margin-top: 2px !important;
+}
+#sidebar-footer-container img{
+    aspect-ratio: 1/1;
+    height: 4rem;
+}
+#sidebar-footer-container button{
+    padding: 1rem 1.5rem 1rem 1.5rem;
+    position: relative;
+}
+#sidebar-footer-container #home-btn{
+    padding: 1rem 2.3rem 1rem 2.3rem;
+    position: relative;
+}
+#sidebar-footer-container button img{
+    position: absolute;
+    right: 10%;
+    height: 2.5rem;
+    /*margin-left: 0.7rem;*/
+    filter: var(--theme-color-accent-filter);
+}
+#sidebar-footer-container #home-btn img{
+    right: 17%;
+}
+
+/* animations */
+#sidebar-footer-container button:hover{
+    transition: 0s;
+}
+#sidebar-footer-container button:hover img{
+    display: none;
+}
+#sidebar-footer-container button:hover p{
+    margin: 0 14px 0 14px !important;
+}
+#sidebar-footer-container button:hover #home-btn-p{
+    margin: 2px 14px 0 14px !important;
+}
+
+/**************** MY PROFILE BTN STYLES + ANIMATION ****************/
+
+#profile-btn-container p{
+    margin: 0;
+}
+
+#profile-animation-container{
+    margin-left: 1rem;
+    justify-content: flex-end;
+}
+
+#profile-picture-animation{
+    transition: 0.2s;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: calc(0% + 40px);
+}
+#profile-picture-animation img{
+    height: 3.6rem;
+    border: 0.2rem solid var(--theme-color-accent);
+    border-radius: 50%;
+}
+
+#go-to-profile-arrow-animation{
+    position: absolute;
+    transition: 0.2s;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+#go-to-profile-arrow{
+    width: 3.2rem;
+    height: auto;
+    border: none !important;
+    transition: 0.2s;
+    opacity: 0;
+    filter: var(--theme-color-accent-filter);
+}
+
+/* animations */
+#profile-btn-container button:hover #profile-picture-animation{
+    width: 100%;
+}
+#profile-btn-container button:hover #go-to-profile-arrow-animation{
+    width: calc(0% + 42px);
+}
+#profile-btn-container button:hover #go-to-profile-arrow{
+    transition: 0.4s !important;
+    opacity: 1 !important;
+    filter: var(--theme-color-bg-element-filter);
+}

@@ -1,0 +1,41 @@
+#sidebar{
+    background-color: var(--theme-color-bg-element);
+    /* width: clamp(100px, 300px, 500px); */
+    min-width: 30rem;
+    height: 100vh;
+}
+
+#logo{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+#logo img{
+    border-radius: 10px;
+    aspect-ratio: 1/1;
+    height: 50px;
+    margin-top: 1rem;
+}
+
+.navbar-content-container{
+    align-self: center;
+    min-width: max-content;
+    width: 88%;
+}
+
+.title-with-underline-container{
+    display: flex;
+    justify-content: center;
+    align-self: flex-start;
+    flex-direction: column;
+}
+
+.title-with-underline-container label{
+    /* width: 100px; */
+    text-align: center;
+    text-transform: initial;
+    color: var(--theme-color-accent-1);
+    font-size: 1.8rem;
+    font-weight: 700;
+}

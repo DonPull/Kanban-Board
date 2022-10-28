@@ -1,0 +1,7 @@
+#navbar-project-btn-container button{
+    margin-top: 1rem;
+    width: -webkit-fill-available;
+}
+#navbar-project-btn-container button:nth-child(1){
+    margin-top: 0;
+}
