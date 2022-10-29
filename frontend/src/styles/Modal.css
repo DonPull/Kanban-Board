@@ -1,35 +1,51 @@
 /* The Modal (background) */
 .modal {
-	transition: 0.5s;
-  /*display: none; /* Hidden by default */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+	transition: 0.3s;
   opacity: 0;
   position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
-  padding-top: 100px; /* Location of the box */
+  z-index: -1; /* Sit on top */
+  /*padding-top: 100px; /* Location of the box */
   left: 0;
   top: 0;
-  width: 0%; /* Full width */
-  height: 0%; /* Full height */
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
   overflow: auto; /* Enable scroll if needed */
   background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  background-color: rgba(0,0,0,0.0); /* Black w/ opacity */
 }
 
 .animation{
-	transition: 0.5s;
-	/*display: block;*/
-    opacity: 1;
-    width: 100%;
-    height: 100%;
+  z-index: 10;
+  opacity: 1;
+  background-color: rgba(0,0,0,0.4);
 }
 
 /* Modal Content */
 .modal-content {
-  background-color: #fefefe;
-  margin: auto;
-  padding: 20px;
-  border: 1px solid #888;
-  width: 80%;
+  width: max-content;
+  height: max-content;
+  position: relative;
+  /* transform: translate(-50%, -50%);
+  left: 50%;
+  top: 50%; */
+  border-radius: 30px;
+  background-color: var(--theme-color-bg);
+  box-shadow: 0px 0px 8px #ccc;
+  border: 2px solid var(--theme-color-accent-1);
+  padding: 3rem;
+  /* width: 0px;
+  height: 0px; */
+}
+
+.modal-content-animation{
+  animation-name: modal-content-popup;
+  /*animation-timing-function: cubic-bezier(0.34, 0.57, 0.47, 1.17); old */
+  animation-timing-function: cubic-bezier(0.39, 0.78, 0.58, 1.11); /* new */
+  animation-duration: 350ms;
+  animation-fill-mode: forwards;
 }
 
 /* The Close Button */
@@ -45,4 +61,33 @@
   color: #000;
   text-decoration: none;
   cursor: pointer;
+}
+
+/*
+@keyframes modal-content-popup {
+  0%{
+    width: 0%;
+    height: 0%;
+  }
+  65%{
+    width: 110%;
+    height: 110%;
+  }
+  100%{
+    width: 100%;
+    height: 100%;
+  }
+}
+*/
+
+@keyframes modal-content-popup {
+  0%{
+    transform: scale(0);
+  }
+  65%{
+    transform: scale(1.1);
+  }
+  100%{
+    transform: scale(1);
+  }
 }

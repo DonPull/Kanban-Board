@@ -9,8 +9,8 @@ import "./SidebarFooter.css";
 class SidebarFooter extends Component {
     render() { 
         return (
-            <React.Fragment>
-                <div id="sidebar-footer-container" className='flex justify-space-between navbar-content-container'>
+            <div className='flex column navbar-content-container'>
+                <div id="sidebar-footer-container" className='flex justify-space-between'>
                     <button className='button flex justify-space-between align-center'>
                         <p>Settings</p>
                         <img className="img-with-icon-hover-animation" src={settingsImg} />
@@ -22,7 +22,7 @@ class SidebarFooter extends Component {
                     </button>
                 </div>
 
-                <div id="profile-btn-container" className='align-center navbar-content-container'>
+                <div id="profile-btn-container" className='align-center'>
                     <button style={{ margin: "1.2rem 0", padding: "0.5rem 0.7rem 0.5rem 2rem", justifyContent: "unset" }} className='button flex justify-space-between align-center width-100-percent'>
                         <p>My Profile</p>
                         <div id="profile-animation-container" className='flex width-100-percent relative'>
@@ -36,7 +36,7 @@ class SidebarFooter extends Component {
                         </div>
                     </button>
                 </div>
-            </React.Fragment>
+            </div>
         );
     }
 }
