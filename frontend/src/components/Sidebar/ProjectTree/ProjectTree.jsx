@@ -20,7 +20,7 @@ class ProjectTree extends Component {
                     <div className='separator' style={{ margin: "5px auto" }}/>
                 </div>
 
-                <Modal modalContent={<TestModalContent />} openBtn={openBtnId} closeOnHover={false} />
+                {/* <Modal modalContent={<TestModalContent />} openBtnId={openBtnId} openOnHover={true} /> */}
 
             </div>
         );

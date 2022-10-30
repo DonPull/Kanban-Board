@@ -1,8 +1,8 @@
 import ReactDOM from 'react-dom';
 import React, { Component } from 'react';
 import Tab from './Tab';
-import newTab from '../assets/new-tab.svg';
-import "../styles/TabList.css";
+import newTab from '../../assets/new-tab.svg';
+import "../../styles/TabList.css";
 
 class TabList extends Component {
     state = {

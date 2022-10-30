@@ -24,6 +24,12 @@
     background-color: var(--theme-color-bg-1);
     margin: 2rem auto;
 }
+.separator-vertical{
+    width: 0.2rem;
+    height: 90%;
+    background-color: var(--theme-color-bg-1);
+    margin: auto 1rem;
+}
 
 .width-100-percent{
     width: 100% !important;

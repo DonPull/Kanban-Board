@@ -1,31 +1,40 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import "../styles/Modal.css";
+import { v4 as uuid } from 'uuid';
 
 class Modal extends Component {
     state = {
-        modal: React.createRef(),
-        modalContentContainer: React.createRef(),
-        openBtn: this.props.openBtn
+        modal: uuid(),
+        modalContentContainer: uuid(),
+        openBtnId: this.props.openBtnId
     }
 
-    getOpenAndCloseBtns = (closeBtn) => {
+    getCloseBtn = (closeBtn) => {
         let { openOnHover, closeOnHover } = this.props;
-        let openBtn = document.getElementById(this.state.openBtn);
+        let openBtn = document.getElementById(this.state.openBtnId);
 
-        // TODO: (Could be solver already with those React.createRef() methods but we will see when I add more than one modal) Implement unique react ids, otherwise one modal is going to be closing/opening another one insed of itself. (a possible solution would be to give a unique id with .props to each modal separately)
         // Get the modal
-        let modal = this.state.modal.current;
+        let modal = document.getElementById(this.state.modal);
         // Get the modal-content
-        let modalContent = this.state.modalContentContainer.current;
+        let modalContent = document.getElementById(this.state.modalContentContainer);
 
         //Handle the opening of the modal
         function openModal() {
             modal.classList.add("animation");
             modalContent.classList.add("modal-content-animation");
         }
-        // Handle the closeing of the modal
-        function closeModal() {
+        // Handle the closeing of the modal when user interacts with the space around the modal
+        function closeModalFromWindow(modalToClose) {
+            modalToClose.classList.remove("animation");
+            setTimeout(() => {
+                if(!modalToClose.classList.contains("animation")){
+                    modalToClose.querySelector(".modal-content").classList.remove("modal-content-animation");
+                }
+            }, 300);
+        }
+        // Handle the closeing of the modal when user interacts with the close btn inside the modal
+        function closeModalFromBtn() {
             modal.classList.remove("animation");
             setTimeout(() => {
                 if(!modal.classList.contains("animation")){
@@ -42,20 +51,24 @@ class Modal extends Component {
         }
 
         if(closeBtn != undefined){
-            closeBtn.onclick = closeModal;
+            closeBtn.onclick = closeModalFromBtn;
         }
         // When the user clicks/hover outside of the modal, close it
         if(closeOnHover){
             window.onmouseover = function(event) {
-                if (event.target == modal) {
-                    closeModal();
-                }
+                document.querySelectorAll(".modal").forEach(m => {
+                    if (event.target === m) {
+                        closeModalFromWindow(m);
+                    }
+                });
             }
         }else{
             window.onclick = function(event) {
-                if (event.target == modal) {
-                    closeModal();
-                }
+                document.querySelectorAll(".modal").forEach(m => {
+                    if (event.target === m) {
+                        closeModalFromWindow(m);
+                    }
+                });
             }
         }
     }
@@ -65,9 +78,9 @@ class Modal extends Component {
         let { modal, modalContentContainer } = this.state;
 
         return (
-            <div ref={modal} className="modal">
-                <div ref={modalContentContainer} className="modal-content">
-                    {React.cloneElement(modalContent, {getOpenAndCloseBtns: this.getOpenAndCloseBtns})}
+            <div id={modal} ref={modal} className="modal">
+                <div id={modalContentContainer} ref={modalContentContainer} className="modal-content">
+                    {React.cloneElement(modalContent, {getCloseBtn: this.getCloseBtn})}
                 </div>
             </div>
         );

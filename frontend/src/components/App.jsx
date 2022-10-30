@@ -3,8 +3,8 @@ import React, { Component } from 'react';
 import "../styles/App.css";
 import "../styles/common.css";
 import Sidebar from './Sidebar/Sidebar';
-import Content from './Content';
-import TabList from './TabList';
+import Content from './Content/Content';
+import TabList from './Tabs/TabList';
 
 export default function App(){
     return (

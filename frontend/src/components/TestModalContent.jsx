@@ -7,7 +7,7 @@ class TestModalContent extends Component {
     }
 
     componentDidMount(){
-        this.props.getOpenAndCloseBtns(this.state.modalCloseBtnRef.current);
+        this.props.getCloseBtn(this.state.modalCloseBtnRef.current);
     }
 
     render() {

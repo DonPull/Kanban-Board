@@ -2,3 +2,11 @@
     background-color: var(--theme-color-bg);
     border-top-left-radius: 20px;
 }
+
+#filters-container, #people-filters-container{
+    margin-top: 1.5rem;
+}
+
+.kanban-board{
+    height: -webkit-fill-available;
+}

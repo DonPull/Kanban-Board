@@ -5,6 +5,7 @@
   --theme-color-accent: rgb(135 133 243);
   --theme-color-accent-1: rgb(179 177 244);
   --theme-color-accent-filter: invert(48%) sepia(88%) saturate(903%) hue-rotate(211deg) brightness(99%) contrast(92%);
+  --theme-color-accent-1-filter: invert(63%) sepia(50%) saturate(574%) hue-rotate(202deg) brightness(108%) contrast(91%);
   --theme-color-bg-element-filter: invert(14%) sepia(24%) saturate(0%) hue-rotate(263deg) brightness(90%) contrast(82%);
   /* --theme-color-accent: rgb(99, 97, 210); */
   
@@ -21,17 +22,16 @@
 }
 
 *{
-  /* For TESTING purposes 
-  outline: 5px solid;
-  outline-color: rgba(240, 128, 128, 0.2);
-  */
+  /* For TESTING purposes */
+  /* outline: 5px solid; */
+  /* outline-color: rgba(240, 128, 128, 0.2); */
 }
 
 body {
   margin: 0;
   padding: 0;
   font-size: 1.6rem; /* If there is an accessibility feature that changes font size this line will ensure that the settings of the user won't be messed with */
-  text-transform: uppercase;
+  /* text-transform: uppercase; */
   letter-spacing: 0.5px;
   font-family: var(--theme-font-family);
   background-color: var(--theme-color-bg-element);
