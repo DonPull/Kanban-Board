@@ -1,0 +1,43 @@
+.filter-pills-modal-container{
+    width: 100%;
+    overflow-y: scroll;
+    padding-top: 1rem;
+}
+
+.filter-pills-modal-container .filter{
+    margin: 0;
+    margin-bottom: 1.5rem;
+    width: 80%;
+}
+
+.filter-pills-modal-container::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.filter-pills-modal-container {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.tags-modal-search input{
+    margin: 2rem 0;
+    border: none;
+    border-radius: 10rem;
+    background-color: var(--theme-color-bg-element);
+    padding: 0.5rem 0 0.5rem 1.5rem;
+    font-size: 1.6rem;
+    font-weight: bold !important;
+    color: var(--theme-color-accent-1);
+    box-shadow: 0 0 5px 1px var(--theme-color-accent-1);
+}
+.tags-modal-search input:focus{
+    outline: 2px solid var(--theme-color-accent-1);
+    box-shadow: none;
+}
+
+.tags-modal-search > label{
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--theme-color-accent-1);
+}

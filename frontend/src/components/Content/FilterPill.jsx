@@ -10,7 +10,7 @@ class FilterPill extends Component {
         }
 
         return (
-            <div id="add-filter-btn" className={classes}>
+            <div id={this.props.id} className={classes}>
                 <div className='filter-label-container'>
                     <label>{this.props.label}</label>
                 </div>
