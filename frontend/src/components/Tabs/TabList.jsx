@@ -1,7 +1,7 @@
 import ReactDOM from 'react-dom';
 import React, { Component } from 'react';
 import Tab from './Tab';
-import newTab from '../../assets/new-tab.svg';
+import newTabIcon from '../../assets/+_and_x_icon.svg';
 import "../../styles/TabList.css";
 
 class TabList extends Component {
@@ -16,7 +16,7 @@ class TabList extends Component {
             <div id='tab-list'>
                 {tabs.map((key) => <Tab key={key} />)}
                 <div id="create-new-tab">
-                    <img src={newTab} />
+                    <img src={newTabIcon} />
                 </div>
             </div>
         );

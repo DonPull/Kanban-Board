@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import "../../styles/FilterPill.css";
+import addOrRemoveFilterIcon from '../../assets/+_and_x_icon.svg';
 
 class FilterPill extends Component { 
     render() {
-        let classes = 'filter';
+        let classes = 'filter flex';
         if (this.props.isAddFilterBtn) {
             classes += ' add-filter-btn';
         }
@@ -13,6 +14,10 @@ class FilterPill extends Component {
             <div id={this.props.id} className={classes}>
                 <div className='filter-label-container'>
                     <label>{this.props.label}</label>
+                </div>
+
+                <div className="add-or-remove-filter-img">
+                    <img src={addOrRemoveFilterIcon}/>
                 </div>
             </div>
         );

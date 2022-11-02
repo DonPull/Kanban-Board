@@ -1,4 +1,6 @@
 .filter{
+    position: relative;
+    align-items: center;
     width: 12rem;
     text-align: center;
     background-color: var(--theme-color-bg-element);
@@ -21,6 +23,7 @@
 }
 
 .filter-label-container{
+    transition: 200ms;
     margin: 0 auto;
     max-width: 85%;
     text-overflow: ellipsis;
@@ -37,4 +40,30 @@
     background-color: var(--theme-color-bg-element);
     color: var(--theme-color-accent-1);
     outline: 0.2rem solid var(--theme-color-accent);
+}
+
+.add-or-remove-filter-img{
+    transition: 200ms;
+    position: absolute;
+    height: 2.1rem;
+    width: calc(0% + 40px);
+    right: 0;
+    opacity: 0;
+}
+.add-or-remove-filter-img > img{
+    transition: 200ms;
+    height: 100%;
+    transform: rotate(45deg);
+}
+
+.filter:hover .add-or-remove-filter-img{
+    width: 100%;
+    opacity: 1;
+}
+.filter:hover .add-or-remove-filter-img > img{
+    /* transform: rotate(0deg); */
+}
+
+.filter:hover .filter-label-container{
+    filter: blur(2px);
 }
