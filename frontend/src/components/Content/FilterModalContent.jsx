@@ -11,7 +11,7 @@ class FilterModalContent extends Component {
         filterSearchRef2: React.createRef(),
         filtersContainerRef1: React.createRef(),
         filtersContainerRef2: React.createRef(),
-        availableTags: [ <FilterPill label="available-tag"/> ],
+        availableTags: [ <FilterPill label="available-tag"/>, <FilterPill label="randomTag"/> ],
         appliedTags: [ <FilterPill label="TEST"/>, <FilterPill label="test3"/>, <FilterPill label="test" /> ]
     }
 

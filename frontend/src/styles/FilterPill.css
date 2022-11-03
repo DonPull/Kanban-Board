@@ -54,16 +54,20 @@
     transition: 200ms;
     height: 100%;
     transform: rotate(45deg);
+    filter: invert(86%) sepia(9%) saturate(1235%) hue-rotate(209deg) brightness(99%) contrast(107%);
 }
 
-.filter:hover .add-or-remove-filter-img{
+.filter:not(.add-filter-btn):hover .add-or-remove-filter-img{
     width: 100%;
     opacity: 1;
 }
-.filter:hover .add-or-remove-filter-img > img{
-    /* transform: rotate(0deg); */
+/* .filter-pills-modal-container:nth-of-type(1) .filter:hover .add-or-remove-filter-img > img{ */
+
+.tags-modal-search:nth-of-type(1) .filter:hover .add-or-remove-filter-img > img{
+    transform: rotate(0deg);
 }
 
-.filter:hover .filter-label-container{
-    filter: blur(2px);
+.filter:not(.add-filter-btn):hover .filter-label-container{
+    /* filter: blur(2px); */
+    opacity: 0;
 }
