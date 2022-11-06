@@ -35,7 +35,7 @@ class FilterModalContent extends Component {
                 if(!regex.test(element.innerText.replaceAll(".", "").replaceAll(",", "").replaceAll("/", "").replaceAll("\\", "").replaceAll("-", "").replaceAll("_", "").replaceAll(" ", "").trim())){
                     element.style.display = "none";
                 }else{
-                    element.style.display = "initial";
+                    element.style.display = "";
                 }
             }        
         }

@@ -9,4 +9,21 @@
 
 .kanban-board{
     height: -webkit-fill-available;
+    margin-top: 3rem;
+}
+
+.kanban-column{
+    min-width: 35rem;
+}
+.kanban-column-header{
+    background-color: var(--theme-color-bg-element);
+    padding: 0.5rem 0rem 1rem 0rem;
+    border-radius: 1.8rem;
+    width: 85%;
+    align-items: center;
+}
+.kanban-column-header label{
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--theme-color-accent);
 }
