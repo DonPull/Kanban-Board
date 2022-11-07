@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import "../../../styles/FilterPill.css";
+import "./FilterPill.css";
 import addOrRemoveFilterIcon from '../../../assets/+_and_x_icon.svg';
 
 class FilterPill extends Component { 

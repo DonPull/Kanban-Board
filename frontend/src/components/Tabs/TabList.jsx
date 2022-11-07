@@ -2,7 +2,7 @@ import ReactDOM from 'react-dom';
 import React, { Component } from 'react';
 import Tab from './Tab';
 import newTabIcon from '../../assets/+_and_x_icon.svg';
-import "../../styles/TabList.css";
+import "./TabList.css";
 
 class TabList extends Component {
     state = {

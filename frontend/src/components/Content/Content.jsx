@@ -1,8 +1,8 @@
 import ReactDOM from 'react-dom';
 import React, { Component } from 'react';
-import "../../styles/Content.css";
+import "./Content.css";
 import Filters from './Filters/Filters';
-import KanbanBoard from './KanbanBoard';
+import KanbanBoard from './KanbanBoard/KanbanBoard';
 
 class Content extends Component {
     render() {
