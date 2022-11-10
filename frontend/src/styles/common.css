@@ -31,6 +31,13 @@
     margin: auto 1rem;
 }
 
+.main-section-separator{
+    width: 100%;
+    height: 0.3rem;
+    background-color: var(--theme-color-bg-element);
+    margin-top: 1.5rem;
+}
+
 .width-100-percent{
     width: 100% !important;
 }

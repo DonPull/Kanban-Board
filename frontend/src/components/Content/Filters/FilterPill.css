@@ -1,3 +1,10 @@
+/* #filters-container, #people-filters-container{
+    margin-top: 1.5rem;
+} */
+#filters-container > *{
+    margin-top: 1.5rem;
+}
+
 .filter{
     position: relative;
     align-items: center;
@@ -10,7 +17,7 @@
     margin-right: 1.2rem;
     color: var(--theme-color-accent-1);
     cursor: pointer;
-    box-shadow: 0px 0px 5px rgb(112, 112, 112);
+    box-shadow: 0px 0px 4px rgb(112, 112, 112);
     font-size: 1.6rem;
     font-weight: 500 !important;
 }
@@ -20,6 +27,42 @@
 .filter:hover{
     background-color: rgb(105 105 105);
     color: rgb(237 236 255);
+}
+.collapsed-filter{
+    width: auto;
+    margin-right: 0;
+    background-color: inherit;
+    box-shadow: none;
+    pointer-events: none;
+}
+.collapsed-filter .filter-label-container{
+    max-width: 15rem;
+    width: max-content;
+}
+
+.collapsed-filters-label{
+    color: var(--theme-color-accent-1);
+    font-size: 1.8rem;
+    font-weight: 500;
+    align-self: center;
+    border: 2px solid;
+    border-radius: 20rem;
+    padding: 0.1rem 1rem;
+    margin: 0 0.8rem 0 2rem;
+}
+
+.tag-comma{
+    display: none;
+    color: var(--theme-color-accent-1);
+    font-size: 2rem;
+    font-weight: 500 !important;
+    margin: 0 0.4rem 0 0.1rem;
+}
+#filters-container > div:nth-child(1) > div:last-child .tag-comma{
+    opacity: 0;
+}
+#filters-container > div:nth-child(2) > div:last-child .tag-comma{
+    opacity: 0;
 }
 
 .filter-label-container{
@@ -34,7 +77,7 @@
 .add-filter-btn{
     margin-right: 0;
     margin-left: 2.5rem;
-    box-shadow: 0px 0px 5px rgb(146, 146, 146);
+    box-shadow: 0px 0px 4px rgb(146, 146, 146);
 }
 .add-filter-btn:hover{
     background-color: var(--theme-color-bg-element);
@@ -70,4 +113,31 @@
 .filter:not(.add-filter-btn):hover .filter-label-container{
     /* filter: blur(2px); */
     opacity: 0;
+}
+
+#collapse-filters-btn{
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    cursor: pointer;
+    top: 100%;
+    left: 1rem;
+    width: 5rem;
+    height: 2.5rem;
+    border-radius: 0 0 12px 12px;
+    background-color: var(--theme-color-bg-element);
+}
+#collapse-filters-btn > img{
+    height: 2.2rem;
+    filter: var(--theme-color-accent-1-filter);
+}
+
+.collapse-filters-animation{
+    animation-name: collapse-filters-animation;
+    animation-duration: 1s;
+}
+
+@keyframes collapse-filters-animation{
+    0% { transform: scale(1) }
+    100% { transform: scale(2) }
 }
