@@ -11,7 +11,7 @@ class FilterPill extends Component {
         }
 
         return (
-            <div id={this.props.id} className={classes}>
+            <div id={this.props.id} style={ this.props.hide ? { display: "none"} : { display: "" } } className={classes}>
                 <div className='filter-label-container'>
                     <label>{this.props.label}</label>
                 </div>

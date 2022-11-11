@@ -10,7 +10,7 @@
     align-items: center;
     width: 12rem;
     text-align: center;
-    background-color: var(--theme-color-bg-element);
+    /* background-color: var(--theme-color-bg-element); */
     border: none;
     border-radius: 10rem;
     padding: 0.5rem 0;
@@ -25,7 +25,8 @@
     cursor: pointer;
 }
 .filter:hover{
-    background-color: rgb(105 105 105);
+    /* background-color: rgb(105 105 105); */
+    background-color: var(--theme-color-bg-element);
     color: rgb(237 236 255);
 }
 .collapsed-filter{
@@ -80,9 +81,11 @@
     box-shadow: 0px 0px 4px rgb(146, 146, 146);
 }
 .add-filter-btn:hover{
-    background-color: var(--theme-color-bg-element);
+    /* background-color: var(--theme-color-bg-element); */
+    background-color: inherit;
     color: var(--theme-color-accent-1);
-    outline: 0.2rem solid var(--theme-color-accent);
+    /* outline: 0.2rem solid var(--theme-color-accent); */
+    outline: 0.2rem solid var(--theme-color-accent-1);
 }
 
 .add-or-remove-filter-img{
@@ -97,7 +100,8 @@
     transition: 200ms;
     height: 100%;
     transform: rotate(45deg);
-    filter: invert(86%) sepia(9%) saturate(1235%) hue-rotate(209deg) brightness(99%) contrast(107%);
+    /* filter: invert(86%) sepia(9%) saturate(1235%) hue-rotate(209deg) brightness(99%) contrast(107%); */
+    filter: var(--theme-color-accent-1-filter);
 }
 
 .filter:not(.add-filter-btn):hover .add-or-remove-filter-img{
@@ -123,16 +127,17 @@
     top: 100%;
     left: 1rem;
     width: 5rem;
-    height: 2.5rem;
+    height: 2.2rem;
     border-radius: 0 0 12px 12px;
     background-color: var(--theme-color-bg-element);
 }
 #collapse-filters-btn > img{
-    height: 2.2rem;
+    height: 2rem;
     filter: var(--theme-color-accent-1-filter);
+    transform: rotate(180deg);
 }
 
-.collapse-filters-animation{
+/* .collapse-filters-animation{
     animation-name: collapse-filters-animation;
     animation-duration: 1s;
 }
@@ -140,4 +145,10 @@
 @keyframes collapse-filters-animation{
     0% { transform: scale(1) }
     100% { transform: scale(2) }
+} */
+
+#filter-animation-spacer{
+    display: block;
+    opacity: 0;
+    height: 0px;
 }

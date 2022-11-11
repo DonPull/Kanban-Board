@@ -23,16 +23,27 @@ class Filters extends Component {
         let filtersContainer = filtersContainerRef.current;
         let outerFiltersContainer = outerFiltersContainerRef.current;
         
-        //TODO: make an animation for resizing of the filters container and make an animation for the collapse arrow (to make it actually good am gonna need 2 divs that transform: rotate() on btn press)
-        // also fix bug where after filter collapse if you click "Add Filter" or "Add Person" the modal window does not open (my guess is that because i give an event listener to the open btn and then unrender it maybe that removes the event listener idk)
-        console.log("computed height before btn click: ", window.getComputedStyle(outerFiltersContainer).height);
         collapseFiltersBtn.onclick = (e) => {
             // align all filter pills on the same row
             if(this.state.filtersAreCollapsed){
                 filtersContainer.style.flexDirection = "column"
+                //flip the "collapse filters" icon
+                collapseFiltersBtn.querySelector("img").style.transform = "rotate(180deg)";
+                //restore top margins to original size
+                outerFiltersContainer.querySelector(".main-section-separator").style.marginTop = "1.5rem";
+                filtersContainer.querySelectorAll(":scope > div").forEach(e => {
+                    e.style.marginTop = "1.5rem";
+                });
             }else{
                 filtersContainer.style.flexDirection = "row";
                 filtersContainer.style.justifyContent = "flex-start";
+                //flip the "collapse filters" icon
+                collapseFiltersBtn.querySelector("img").style.transform = "rotate(0deg)";
+                //make top margins smaller to save space
+                outerFiltersContainer.querySelector(".main-section-separator").style.marginTop = "0.8rem";
+                filtersContainer.querySelectorAll(":scope > div").forEach(e => {
+                    e.style.marginTop = "0.8rem";
+                });
             }
             // remove the ".filter" styles from the filter pills (because they are going to be on the same line and there won't be a lot of space)
             document.querySelectorAll(".filter").forEach((f) => {
@@ -42,8 +53,7 @@ class Filters extends Component {
             document.querySelectorAll(".tag-comma").forEach((c) => {
                 this.state.filtersAreCollapsed ? c.style.display = "none" : c.style.display = "block";
             });
-            console.log("computed height AFTER btn click: ", window.getComputedStyle(outerFiltersContainer).height);
-            //collapseFiltersBtn.querySelector("img").classList.add("collapse-filters-animation");
+
             this.setState({ filtersAreCollapsed: !this.state.filtersAreCollapsed });
         };
     }
@@ -56,7 +66,8 @@ class Filters extends Component {
                 <div ref={filtersContainerRef} id="filters-container" className='flex column'>
                     {/* <div id="filters-container" className='flex'> */}
                     <div className='flex'>
-                        {filtersAreCollapsed ? <div className='collapsed-filters-label'>Filters</div> : <FilterPill id={addTagBtnId} isAddFilterBtn={true} label="Add Filter" />}
+                        <FilterPill id={addTagBtnId} hide={filtersAreCollapsed} isAddFilterBtn={true} label="Add Filter" />
+                        {filtersAreCollapsed ? <div className='collapsed-filters-label'>Filters</div> : ""}
                         {filterTags.length > 0 && !filtersAreCollapsed ? <div className='separator-vertical' /> : ""}
                         {/* {filterTags.map(f => f)} */}
                         {filterTags.map(f => { return( <div className='flex justify-center align-center'> {f} <div className='tag-comma'>,</div> </div> ) })}
@@ -64,7 +75,8 @@ class Filters extends Component {
 
                     {/* <div id='people-filters-container' className='flex'> */}
                     <div className='flex'>
-                        {filtersAreCollapsed ? <div className='collapsed-filters-label'>People</div> : <FilterPill id={addPersonTagBtnId} isAddFilterBtn={true} label="Add Person" />}
+                        <FilterPill id={addPersonTagBtnId} hide={filtersAreCollapsed} isAddFilterBtn={true} label="Add Person" />
+                        {filtersAreCollapsed ? <div className='collapsed-filters-label'>People</div> : ""}
                         {filterPeople.length > 0 && !filtersAreCollapsed ? <div className='separator-vertical' /> : ""}
                         {filterPeople.map(f => { return( <div className='flex justify-center align-center'> {f} <div className='tag-comma'>,</div> </div> ) })}
                     </div>
