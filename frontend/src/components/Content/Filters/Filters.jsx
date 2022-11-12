@@ -63,30 +63,40 @@ class Filters extends Component {
 
         return (
             <div ref={outerFiltersContainerRef} style={{ position: "relative" }} className='flex column justify-space-between'>
-                <div ref={filtersContainerRef} id="filters-container" className='flex column'>
-                    {/* <div id="filters-container" className='flex'> */}
-                    <div className='flex'>
-                        <FilterPill id={addTagBtnId} hide={filtersAreCollapsed} isAddFilterBtn={true} label="Add Filter" />
-                        {filtersAreCollapsed ? <div className='collapsed-filters-label'>Filters</div> : ""}
-                        {filterTags.length > 0 && !filtersAreCollapsed ? <div className='separator-vertical' /> : ""}
-                        {/* {filterTags.map(f => f)} */}
-                        {filterTags.map(f => { return( <div className='flex justify-center align-center'> {f} <div className='tag-comma'>,</div> </div> ) })}
+                
+                {/* // the div below is temoporary */}
+                <div className='flex'>
+
+                    <div ref={this.state.collapseFiltersBtnRef} id="collapse-filters-btn">
+                        <img src={collapseArrow}/>
+                    </div>
+                    
+                    <div ref={filtersContainerRef} id="filters-container" className='flex column'>
+                        {/* <div id="filters-container" className='flex'> */}
+                        <div className='flex'>
+                            <FilterPill id={addTagBtnId} hide={filtersAreCollapsed} isAddFilterBtn={true} label="Add Filter" />
+                            {filtersAreCollapsed ? <div className='collapsed-filters-label' style={{ margin: "0", marginRight: "0.8rem" }}>Filters</div> : ""}
+                            {filterTags.length > 0 && !filtersAreCollapsed ? <div className='separator-vertical' /> : ""}
+                            {/* {filterTags.map(f => f)} */}
+                            {filterTags.map(f => { return( <div className='flex justify-center align-center'> {f} <div className='tag-comma'>,</div> </div> ) })}
+                        </div>
+
+                        {/* <div id='people-filters-container' className='flex'> */}
+                        <div className='flex'>
+                            <FilterPill id={addPersonTagBtnId} hide={filtersAreCollapsed} isAddFilterBtn={true} label="Add Person" />
+                            {filtersAreCollapsed ? <div className='collapsed-filters-label'>People</div> : ""}
+                            {filterPeople.length > 0 && !filtersAreCollapsed ? <div className='separator-vertical' /> : ""}
+                            {filterPeople.map(f => { return( <div className='flex justify-center align-center'> {f} <div className='tag-comma'>,</div> </div> ) })}
+                        </div>
                     </div>
 
-                    {/* <div id='people-filters-container' className='flex'> */}
-                    <div className='flex'>
-                        <FilterPill id={addPersonTagBtnId} hide={filtersAreCollapsed} isAddFilterBtn={true} label="Add Person" />
-                        {filtersAreCollapsed ? <div className='collapsed-filters-label'>People</div> : ""}
-                        {filterPeople.length > 0 && !filtersAreCollapsed ? <div className='separator-vertical' /> : ""}
-                        {filterPeople.map(f => { return( <div className='flex justify-center align-center'> {f} <div className='tag-comma'>,</div> </div> ) })}
-                    </div>
                 </div>
 
                 <div className='main-section-separator'/>
 
-                <div ref={this.state.collapseFiltersBtnRef} id="collapse-filters-btn">
+                {/* <div ref={this.state.collapseFiltersBtnRef} id="collapse-filters-btn">
                     <img src={collapseArrow}/>
-                </div>
+                </div> */}
 
                 {<Modal modalContent={<FilterModalContent />} openBtnId={addTagBtnId} />}
                 {<Modal modalContent={<FilterModalContent />} openBtnId={addPersonTagBtnId} />} 
