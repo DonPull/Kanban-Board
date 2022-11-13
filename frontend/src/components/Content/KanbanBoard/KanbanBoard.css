@@ -5,6 +5,7 @@
 }
 
 .kanban-column{
+    max-width: 40rem;
     min-width: 35rem;
 }
 .kanban-column-header{

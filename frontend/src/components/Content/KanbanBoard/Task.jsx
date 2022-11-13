@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import FilterPill from './../Filters/FilterPill';
+import taskIcon from '../../../assets/task_icon.png';
 import lowPriority from '../../../assets/low_priority.png';
 import mediumPriority from '../../../assets/medium_priority.png';
 import highPriority from '../../../assets/high_priority.png';
@@ -19,7 +20,19 @@ class Task extends Component {
 
         return (
             <div className='task flex column'>
-                <label style={{ fontSize: "2rem", margin: "0 0 0.8rem 1rem" }}>Task Name</label>
+
+                <div className='flex'>
+                    <div className='flex' style={{ position: "absolute", height: "3rem", marginLeft: "10px" }}>
+                        <img style={{
+                            height: "100%",
+                            borderRadius: "50%",
+                            outline: "2px solid var(--theme-color-bg-1)"
+                        }} src={testAssigneeProfilePic}/>
+                        <div className='separator-vertical' style={{ marginLeft: "0.8rem", height: "80%" }} />
+                    </div>
+                    
+                    <label style={{ lineHeight: "3rem", textIndent: "5rem", fontSize: "2rem", margin: "0 0 0.8rem 1rem" }}>Task Name lorem test hello this is a test task</label>
+                </div>
 
                 <div className='task-content flex column'>
 
@@ -38,9 +51,9 @@ class Task extends Component {
 
                     <div className='task-info-icons-container flex'>
                         <label style={{ marginRight: "auto" }}>Status: {status}</label>
-                        <img src={highPriority}/>
+                        <img src={taskIcon}/>
                         <div className='separator-vertical' />
-                        <img src={mediumPriority}/>
+                        <img src={highPriority}/>
                     </div>
 
                     <div className='task-filters-container flex'>
