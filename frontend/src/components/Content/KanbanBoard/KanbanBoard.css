@@ -54,3 +54,25 @@
     border-radius: 50%;
     margin-left: 1rem;
 }
+
+.task-filters-container{
+    overflow-x: clip;
+    border-radius: 1rem;
+    padding: 0.2rem;
+}
+.task-filter-container{
+    display: flex;
+    gap: 0.8rem;
+}
+.task-filter{
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 9rem;
+    text-align: center;
+    background-color: var(--theme-color-bg-element);
+    border-radius: 10rem;
+    padding: 0.3rem 0.8rem 0.3rem 0.8rem;
+    color: var(--theme-color-accent-1);
+    box-shadow: 0px 0px 2px rgb(112, 112, 112);
+}

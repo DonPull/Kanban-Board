@@ -13,8 +13,8 @@ class Filters extends Component {
         filtersContainerRef: React.createRef(),
         outerFiltersContainerRef: React.createRef(),
         filtersAreCollapsed: false,
-        filterTags: [<FilterPill label="Backend" />, <FilterPill label="Frontend" />],
-        filterPeople: [ <FilterPill label="Martin" />, <FilterPill label="Ivan" />, <FilterPill label="Dimitur Dimitrov" />]
+        filterTags: ["Backend", "Frontend"],
+        filterPeople: ["Martin", "Ivan", "Dimitur Dimitrov"]
     }
 
     componentDidMount(){
@@ -78,7 +78,7 @@ class Filters extends Component {
                             {filtersAreCollapsed ? <div className='collapsed-filters-label' style={{ margin: "0", marginRight: "0.8rem" }}>Filters</div> : ""}
                             {filterTags.length > 0 && !filtersAreCollapsed ? <div className='separator-vertical' /> : ""}
                             {/* {filterTags.map(f => f)} */}
-                            {filterTags.map(f => { return( <div className='flex justify-center align-center'> {f} <div className='tag-comma'>,</div> </div> ) })}
+                            {filterTags.map(f => { return( <div className='flex justify-center align-center'> <FilterPill label={f} /> <div className='tag-comma'>,</div> </div> ) })}
                         </div>
 
                         {/* <div id='people-filters-container' className='flex'> */}
@@ -86,7 +86,7 @@ class Filters extends Component {
                             <FilterPill id={addPersonTagBtnId} hide={filtersAreCollapsed} isAddFilterBtn={true} label="Add Person" />
                             {filtersAreCollapsed ? <div className='collapsed-filters-label'>People</div> : ""}
                             {filterPeople.length > 0 && !filtersAreCollapsed ? <div className='separator-vertical' /> : ""}
-                            {filterPeople.map(f => { return( <div className='flex justify-center align-center'> {f} <div className='tag-comma'>,</div> </div> ) })}
+                            {filterPeople.map(f => { return( <div className='flex justify-center align-center'> <FilterPill label={f} /> <div className='tag-comma'>,</div> </div> ) })}
                         </div>
                     </div>
 

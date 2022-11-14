@@ -11,9 +11,19 @@ import testAssigneeProfilePic from '../../../assets/test_profile_pic_2.jpg';
 
 class Task extends Component {
     state = {
-        taskFilters: [<FilterPill label="Backend" />, <FilterPill label="Frontend" />],
+        taskFilters: ["Backend", "Frontend", "Ivan"],
         status: "Done"
     };
+
+    renderTaskFilters() {
+        let { taskFilters } = this.state;
+
+        return (
+            <div className='task-filter-container'>
+                {taskFilters.map(filter => { return( <label className='task-filter'>{filter}</label> ) })}
+            </div>
+        );
+    }
 
     render() {
         let { taskFilters, status } = this.state;
@@ -31,7 +41,7 @@ class Task extends Component {
                         <div className='separator-vertical' style={{ marginLeft: "0.8rem", height: "80%" }} />
                     </div>
                     
-                    <label style={{ lineHeight: "3rem", textIndent: "5rem", fontSize: "2rem", margin: "0 0 0.8rem 1rem" }}>Task Name lorem test hello this is a test task</label>
+                    <label style={{ lineHeight: "3rem", textIndent: "5rem", fontSize: "2rem", margin: "0 0 0.8rem 1rem" }}>Task Name</label>
                 </div>
 
                 <div className='task-content flex column'>
@@ -57,7 +67,7 @@ class Task extends Component {
                     </div>
 
                     <div className='task-filters-container flex'>
-                        {taskFilters.map(f => f)}
+                        {this.renderTaskFilters()}
                     </div>
                 </div>
             </div>
