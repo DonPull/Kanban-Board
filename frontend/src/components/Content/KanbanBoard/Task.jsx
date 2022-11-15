@@ -11,7 +11,7 @@ import testAssigneeProfilePic from '../../../assets/test_profile_pic_2.jpg';
 
 class Task extends Component {
     state = {
-        taskFilters: ["Backend", "Frontend", "Ivan"],
+        taskFilters: ["Backend", "Frontend", "Ivan", "Icovich"],
         status: "Done"
     };
 
@@ -19,14 +19,14 @@ class Task extends Component {
         let { taskFilters } = this.state;
 
         return (
-            <div className='task-filter-container'>
+            <div className='flex'>
                 {taskFilters.map(filter => { return( <label className='task-filter'>{filter}</label> ) })}
             </div>
         );
     }
 
     render() {
-        let { taskFilters, status } = this.state;
+        let { status } = this.state;
 
         return (
             <div className='task flex column'>
@@ -59,11 +59,29 @@ class Task extends Component {
                         </div>
                     </div> */}
 
-                    <div className='task-info-icons-container flex'>
+                    <div className='task-info-icons-container flex justify-space-between'>
                         <label style={{ marginRight: "auto" }}>Status: {status}</label>
-                        <img src={taskIcon}/>
-                        <div className='separator-vertical' />
-                        <img src={highPriority}/>
+
+                        <div className='task-info-icons-animation-container flex'>
+                            <div className="image-container">
+                                <img src={taskIcon}/>
+                            </div>
+                            <div className="text-container">
+                                <label>Task</label>
+                                <div className="fading-effect"></div>
+                            </div>
+                        
+                            <div className='separator-vertical' />
+
+                            <div className="image-container">
+                                <img src={highPriority}/>
+                            </div>
+                            <div className="text-container">
+                                <label>High</label>
+                                <div className="fading-effect"></div>
+                            </div>
+                        </div>
+
                     </div>
 
                     <div className='task-filters-container flex'>
