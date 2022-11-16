@@ -79,6 +79,12 @@
 }
 
 
+/* .task-type-info-container{
+    justify-self: flex-start;
+}
+.task-priority-info-container{
+    justify-self: flex-end;
+} */
 
 
 /* @keyframes image-slide {
@@ -98,6 +104,21 @@
 
 @keyframes image-slide {
     0% {
+        margin-right: 0px;
+    }
+    60% {
+        margin-right: 0px;
+    }
+    90% {
+        margin-right: 80px;
+    }
+    100% {
+        margin-right: 80px;
+    }
+}
+
+/* @keyframes image-slide {
+    0% {
         transform: translatex(0px);
     }
     60% {
@@ -109,7 +130,7 @@
     100% {
         transform: translatex(-80px);
     }
-}
+} */
 
 @keyframes text-slide {
     0% {
@@ -135,27 +156,33 @@
 } */
 
 .task-info-icons-animation-container{
+    justify-content: flex-end;
     width: 130px;
 }
 
 .image-container {
-    position: absolute;
+    /* position: absolute; */
+    /* position: relative; */
     z-index: 2;
 }
 
-.image-container img{
--webkit-animation: image-slide 1s cubic-bezier(.5,.5,0,1);
+.image-container img:hover{
+
+    -webkit-animation: image-slide 1s cubic-bezier(.5,.5,0,1);
     animation: image-slide 1s cubic-bezier(.5,.5,0,1);
+    /* animation-iteration-count: infinite; */
+
     animation-fill-mode: forwards;
     -webkit-animation-fill-mode: forwards;
-    height: 20px;
+    /* height: 20px; */
 }
   
   
 .text-container {
     position: absolute;
+    /* position: relative; */
     z-index: 1;
-    margin-left: -30px;
+    /* margin-left: -30px; */
 }
 .text-container .fading-effect {
     position: absolute;
@@ -164,8 +191,19 @@
     right: 0;
     width: 100%;
     background: var(--theme-color-bg);
+
+    /* -webkit-animation: text-slide 1s cubic-bezier(.5,.5,0,1);
+    animation: text-slide 1s cubic-bezier(.5,.5,0,1);
+    animation-iteration-count: infinite; */
+
+    /* animation-fill-mode: forwards;
+    -webkit-animation-fill-mode: forwards; */
+}
+
+.text-container .fading-effect:hover{
     -webkit-animation: text-slide 1s cubic-bezier(.5,.5,0,1);
     animation: text-slide 1s cubic-bezier(.5,.5,0,1);
+    /* animation-iteration-count: infinite; */
     animation-fill-mode: forwards;
     -webkit-animation-fill-mode: forwards;
 }

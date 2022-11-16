@@ -12,7 +12,7 @@ import testAssigneeProfilePic from '../../../assets/test_profile_pic_2.jpg';
 class Task extends Component {
     state = {
         taskFilters: ["Backend", "Frontend", "Ivan", "Icovich"],
-        status: "Done"
+        status: "Not Done"
     };
 
     renderTaskFilters() {
@@ -63,23 +63,28 @@ class Task extends Component {
                         <label style={{ marginRight: "auto" }}>Status: {status}</label>
 
                         <div className='task-info-icons-animation-container flex'>
-                            <div className="image-container">
-                                <img src={taskIcon}/>
-                            </div>
-                            <div className="text-container">
-                                <label>Task</label>
-                                <div className="fading-effect"></div>
+                            <div className='task-type-info-container flex'>
+                                <div className="image-container">
+                                    <img src={taskIcon}/>
+                                </div>
+                                <div className="text-container">
+                                    <label>Task</label>
+                                    <div className="fading-effect"></div>
+                                </div>
                             </div>
                         
                             <div className='separator-vertical' />
 
-                            <div className="image-container">
-                                <img src={highPriority}/>
+                            <div className='task-priority-info-container flex'>
+                                <div className="image-container">
+                                    <img src={highPriority}/>
+                                </div>
+                                <div className="text-container">
+                                    <label>High</label>
+                                    <div className="fading-effect"></div>
+                                </div>
                             </div>
-                            <div className="text-container">
-                                <label>High</label>
-                                <div className="fading-effect"></div>
-                            </div>
+
                         </div>
 
                     </div>
