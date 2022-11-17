@@ -37,6 +37,14 @@
     align-self: center;
 }
 
+.task-status{
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    position: absolute;
+    z-index: 5;
+}
+
 .task-content{
     padding: 1rem;
     border-radius: inherit;
@@ -49,6 +57,9 @@
 .task-info-icons-container img{
     filter: var(--theme-color-accent-1-filter);
     width: 2.5rem;
+}
+.task-info-icons-container label{
+    transition: 150ms cubic-bezier(0.67, 0.58, 0.41, 0.9);
 }
 
 .task-associated-people-container img{
@@ -88,7 +99,7 @@
 
 .task-info-icons-animation-container{
     justify-content: flex-end;
-    width: 130px;
+    margin-left: auto;
 }
 
 .image-container {
@@ -98,13 +109,8 @@
 
 .image-container img{
     margin-right: 0px;
-    transition: 150ms cubic-bezier(0.67, 0.58, 0.41, 0.9);;
+    transition: 150ms cubic-bezier(0.67, 0.58, 0.41, 0.9);
 }
-
-.image-slide-animation{
-    margin-right: 40px !important;
-}
-  
   
 .text-container {
     position: absolute;
@@ -114,7 +120,7 @@
     top: 48%;
 }
 .text-container .fading-effect {
-    transition: 150ms cubic-bezier(0.67, 0.58, 0.41, 0.9);;
+    transition: 150ms cubic-bezier(0.67, 0.58, 0.41, 0.9);
     height: 2.5rem;
     position: absolute;
     top: 0;
@@ -127,3 +133,11 @@
 .text-slide-animation{
     width: 0% !important;
 }
+
+/* .task-info-icons-container-hover-filler{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transition: 150ms cubic-bezier(0.67, 0.58, 0.41, 0.9);
+    z-index: 6;
+} */
