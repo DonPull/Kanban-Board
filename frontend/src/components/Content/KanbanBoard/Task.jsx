@@ -15,6 +15,28 @@ class Task extends Component {
         status: "Not Done"
     };
 
+    componentDidMount(){
+        let taskTypeContainer = document.querySelector(".task-type-info-container");
+        let taskPriorityContainer = document.querySelector(".task-priority-info-container");
+        taskTypeContainer.onmouseover = (event) => {
+            taskTypeContainer.querySelector(".image-container img").classList.add("image-slide-animation");
+            taskTypeContainer.querySelector(".fading-effect").classList.add("text-slide-animation");
+        };
+        taskTypeContainer.onmouseout = (event) => {
+            taskTypeContainer.querySelector(".image-container img").classList.remove("image-slide-animation");
+            taskTypeContainer.querySelector(".fading-effect").classList.remove("text-slide-animation");
+        };
+        
+        taskPriorityContainer.onmouseover = (event) => {
+            taskPriorityContainer.querySelector(".image-container img").classList.add("image-slide-animation");
+            taskPriorityContainer.querySelector(".fading-effect").classList.add("text-slide-animation");
+        };
+        taskPriorityContainer.onmouseout = (event) => {
+            taskPriorityContainer.querySelector(".image-container img").classList.remove("image-slide-animation");
+            taskPriorityContainer.querySelector(".fading-effect").classList.remove("text-slide-animation");
+        };
+    }
+
     renderTaskFilters() {
         let { taskFilters } = this.state;
 
@@ -73,7 +95,7 @@ class Task extends Component {
                                 </div>
                             </div>
                         
-                            <div className='separator-vertical' />
+                            <div className='separator-vertical' style={{ zIndex: "5" }} />
 
                             <div className='task-priority-info-container flex'>
                                 <div className="image-container">
