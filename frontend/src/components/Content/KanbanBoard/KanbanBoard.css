@@ -86,105 +86,44 @@
     position: relative;
 }
 
-/* @keyframes image-slide {
-    0% {
-        margin-right: 0px;
-    }
-    60% {
-        margin-right: 0px;
-    }
-    90% {
-        margin-right: 40px;
-    }
-    100% {
-        margin-right: 40px;
-    }
-} */
-
-@keyframes image-slide {
-    0% {
-        margin-right: 0px;
-    }
-    100% {
-        margin-right: 40px;
-    }
-}
-
-/* @keyframes text-slide {
-    0% {
-        width: 100%;
-    }
-    60% {
-        width: 100%;
-    }
-    77% {
-        width: 0;
-    }
-    100% {
-        width: 0;
-    }
-} */
-
-@keyframes text-slide {
-    0% {
-        width: 100%;
-    }
-    100% {
-        width: 0;
-    }
-}
-
 .task-info-icons-animation-container{
     justify-content: flex-end;
     width: 130px;
 }
 
 .image-container {
-    /* position: absolute; */
-    /* position: relative; */
     z-index: 2;
     height: 2.5rem;
 }
 
-/* .image-container img:hover{ */
+.image-container img{
+    margin-right: 0px;
+    transition: 150ms cubic-bezier(0.67, 0.58, 0.41, 0.9);;
+}
+
 .image-slide-animation{
-    /* -webkit-animation: image-slide 250ms cubic-bezier(.5,.5,0,1); */
-    animation: image-slide 250ms ease-in-out;
-    animation-fill-mode: forwards;
-    -webkit-animation-fill-mode: forwards;
+    margin-right: 40px !important;
 }
   
   
 .text-container {
     position: absolute;
-    /* position: relative; */
     z-index: 1;
     right: 0;
     transform: translateY(-50%);
-    top: 45%;
-    /* margin-left: -30px; */
+    top: 48%;
 }
 .text-container .fading-effect {
-    height: 3rem;
+    transition: 150ms cubic-bezier(0.67, 0.58, 0.41, 0.9);;
+    height: 2.5rem;
     position: absolute;
     top: 0;
     bottom: 0;
     left: 0;
     width: 100%;
     background: var(--theme-color-bg);
-
-    /* -webkit-animation: text-slide 1s cubic-bezier(.5,.5,0,1);
-    animation: text-slide 1s cubic-bezier(.5,.5,0,1);
-    animation-iteration-count: infinite; */
-
-    /* animation-fill-mode: forwards;
-    -webkit-animation-fill-mode: forwards; */
 }
 
-/* .text-container .fading-effect:hover{ */
 .text-slide-animation{
-    /* -webkit-animation: text-slide 250ms cubic-bezier(.5,.5,0,1); */
-    animation: text-slide 250ms ease-in-out;
-    animation-fill-mode: forwards;
-    -webkit-animation-fill-mode: forwards;
+    width: 0% !important;
 }

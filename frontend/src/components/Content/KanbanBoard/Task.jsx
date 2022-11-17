@@ -19,21 +19,25 @@ class Task extends Component {
         let taskTypeContainer = document.querySelector(".task-type-info-container");
         let taskPriorityContainer = document.querySelector(".task-priority-info-container");
         taskTypeContainer.onmouseover = (event) => {
-            taskTypeContainer.querySelector(".image-container img").classList.add("image-slide-animation");
+            // taskTypeContainer.querySelector(".image-container img").classList.add("image-slide-animation");
             taskTypeContainer.querySelector(".fading-effect").classList.add("text-slide-animation");
+            taskTypeContainer.querySelector(".image-container img").style.marginRight = Number(window.getComputedStyle(taskTypeContainer.querySelector(".text-container")).width.replace("px", "")) + 5 + "px";
         };
         taskTypeContainer.onmouseout = (event) => {
-            taskTypeContainer.querySelector(".image-container img").classList.remove("image-slide-animation");
+            // taskTypeContainer.querySelector(".image-container img").classList.remove("image-slide-animation");
             taskTypeContainer.querySelector(".fading-effect").classList.remove("text-slide-animation");
+            taskTypeContainer.querySelector(".image-container img").style.marginRight = "0px";
         };
         
         taskPriorityContainer.onmouseover = (event) => {
-            taskPriorityContainer.querySelector(".image-container img").classList.add("image-slide-animation");
+            //taskPriorityContainer.querySelector(".image-container img").classList.add("image-slide-animation");
             taskPriorityContainer.querySelector(".fading-effect").classList.add("text-slide-animation");
+            taskPriorityContainer.querySelector(".image-container img").style.marginRight = Number(window.getComputedStyle(taskPriorityContainer.querySelector(".text-container")).width.replace("px", "")) + 5 + "px";
         };
         taskPriorityContainer.onmouseout = (event) => {
-            taskPriorityContainer.querySelector(".image-container img").classList.remove("image-slide-animation");
+            //taskPriorityContainer.querySelector(".image-container img").classList.remove("image-slide-animation");
             taskPriorityContainer.querySelector(".fading-effect").classList.remove("text-slide-animation");
+            taskPriorityContainer.querySelector(".image-container img").style.marginRight = "0px";
         };
     }
 
