@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import Task from './Task';
 import "./KanbanBoard.css";
+import newTaskIcon from '../../../assets/+_and_x_icon.svg';
 import KanbanColumn from './KanbanColumn';
 
 class KanbanBoard extends Component {
@@ -68,6 +69,10 @@ class KanbanBoard extends Component {
                         ); 
                     })
                 }
+
+                <div className='add-new-task-btn'>
+                    <img src={newTaskIcon}/>
+                </div>
             </div>
         );
     }

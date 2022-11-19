@@ -2,7 +2,6 @@
     background-color: var(--theme-color-bg-element);
     /* width: clamp(100px, 300px, 500px); */
     min-width: 30rem;
-    height: 100vh;
 }
 
 #logo{
