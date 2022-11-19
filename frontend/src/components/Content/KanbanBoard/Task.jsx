@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import FilterPill from './../Filters/FilterPill';
 import taskIcon from '../../../assets/task_icon.png';
+import workpackIcon from '../../../assets/workpack.svg';
 import lowPriority from '../../../assets/low_priority.png';
 import mediumPriority from '../../../assets/medium_priority.png';
 import highPriority from '../../../assets/high_priority.png';
@@ -11,8 +12,10 @@ import testAssigneeProfilePic from '../../../assets/test_profile_pic_2.jpg';
 
 class Task extends Component {
     state = {
-        taskFilters: ["Backend", "Frontend", "Ivan", "Icovich"],
-        status: "Task Done",
+        taskFilters: this.props.taskInfo.taskFilters,
+        status: this.props.taskInfo.status,
+        // taskFilters: ["Backend", "Frontend", "Ivan", "Icovich"],
+        // status: "Task Is Very Much Done And Complete",
         taskInfoContainerRef: React.createRef(),
         taskIconsContainerRef: React.createRef(),
         taskTypeContainerRef: React.createRef(),
