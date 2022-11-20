@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import FilterPill from './../Filters/FilterPill';
+import "./Task.css";
+import FilterPill from '../Filters/FilterPill';
 import taskIcon from '../../../assets/task_icon.png';
 import workpackIcon from '../../../assets/workpack.svg';
 import lowPriority from '../../../assets/low_priority.png';
@@ -12,8 +13,7 @@ import testAssigneeProfilePic from '../../../assets/test_profile_pic_2.jpg';
 
 class Task extends Component {
     state = {
-        taskFilters: this.props.taskInfo.taskFilters,
-        status: this.props.taskInfo.status,
+        taskInfo: this.props.taskInfo,
         // taskFilters: ["Backend", "Frontend", "Ivan", "Icovich"],
         // status: "Task Is Very Much Done And Complete",
         taskInfoContainerRef: React.createRef(),
@@ -62,19 +62,19 @@ class Task extends Component {
     }
 
     renderTaskFilters() {
-        let { taskFilters } = this.state;
+        let { taskInfo } = this.state;
         return (
             <div className='flex'>
-                {taskFilters.map(filter => { return( <label className='task-filter'>{filter}</label> ) })}
+                {taskInfo.taskFilters.map(filter => { return( <label className='task-filter'>{filter}</label> ) })}
             </div>
         );
     }
 
     render() {
-        let { status, taskInfoContainerRef, taskIconsContainerRef, taskTypeContainerRef, taskPriorityContainerRef, statusLabelRef } = this.state;
+        let { taskInfo, taskInfoContainerRef, taskIconsContainerRef, taskTypeContainerRef, taskPriorityContainerRef, statusLabelRef } = this.state;
 
         return (
-            <div className='task flex column'>
+            <div id={this.props.taskId} className='task flex column'>
 
                 <div className='flex'>
                     <div className='flex' style={{ position: "absolute", height: "3rem", marginLeft: "10px" }}>
@@ -86,13 +86,13 @@ class Task extends Component {
                         <div className='separator-vertical' style={{ marginLeft: "0.8rem", height: "80%" }} />
                     </div>
                     
-                    <label style={{ lineHeight: "3rem", textIndent: "5rem", fontSize: "2rem", margin: "0 0 0.8rem 1rem" }}>Task Name</label>
+                    <label style={{ lineHeight: "3rem", textIndent: "5rem", fontSize: "2rem", margin: "0 0 0.8rem 1rem" }}>{taskInfo.taskTitle}</label>
                 </div>
 
                 <div className='task-content flex column'>
 
                     <div ref={taskInfoContainerRef} className='task-info-icons-container flex justify-space-between'>
-                        <label ref={statusLabelRef} className="task-status">Status: {status}</label>
+                        <label ref={statusLabelRef} className="task-status">Status: {taskInfo.taskStatus}</label>
 
                         <div ref={taskIconsContainerRef} className='task-info-icons-animation-container flex'>
 

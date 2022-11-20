@@ -16,7 +16,7 @@ class FilterModalContent extends Component {
     }
 
     componentDidMount(){
-        this.props.getCloseBtn();
+        // this.props.getCloseBtn();
 
         let { filterSearchRef1, filterSearchRef2, filtersContainerRef1, filtersContainerRef2 } = this.state;
         this.addSearchFunctionality(filterSearchRef1.current, filtersContainerRef1.current, ".filter");

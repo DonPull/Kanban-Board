@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import Task from './Task';
+import { v4 as uuid } from 'uuid';
+import Modal from '../../Modal';
+import Task from '../Tasks/Task';
+import TaskContent from '../Tasks/TaskContent';
 
 class KanbanColumn extends Component {
     state = { 
@@ -16,7 +19,15 @@ class KanbanColumn extends Component {
                     <label>{columnName}</label>
                 </div>
 
-                {tasks.map(info => { return( <Task taskInfo={info} /> ); })}
+                {tasks.map(info => {
+                    let taskUniqueId = uuid();
+                    return(
+                        <React.Fragment>
+                            <Task taskId={taskUniqueId} taskInfo={info} />
+                            <Modal modalContent={<TaskContent taskInfo={info} />} openBtnId={taskUniqueId} closeOnHover={true} />
+                        </React.Fragment>
+                    );
+                })}
             </div>
         );
     }

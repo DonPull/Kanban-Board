@@ -1,7 +1,7 @@
 .kanban-board{
     height: -webkit-fill-available;
     margin-top: 3rem;
-    padding-left: 3rem;
+    padding: 0 2rem;
 }
 
 .kanban-column{
@@ -19,119 +19,6 @@
     font-size: 3rem;
     font-weight: 700;
     color: var(--theme-color-accent);
-}
-
-.task{
-    width: 98%;
-    box-sizing: border-box;
-    background-color: var(--theme-color-bg-element);
-    border-radius: 2rem;
-    padding: 1rem;
-    margin-top: 3rem;
-    box-shadow: 0px 0px 4px rgb(112 112 112);
-}
-.task label{
-    color: var(--theme-color-accent-1);
-    font-weight: 500;
-    height: min-content;
-    align-self: center;
-}
-
-.task-status{
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-    position: absolute;
-    z-index: 5;
-}
-
-.task-content{
-    padding: 1rem;
-    border-radius: inherit;
-    background-color: var(--theme-color-bg);
-}
-
-.task-info-icons-container{
-    margin-bottom: 1rem;
-}
-.task-info-icons-container img{
-    filter: var(--theme-color-accent-1-filter);
-    width: 2.5rem;
-}
-.task-info-icons-container label{
-    transition: 150ms cubic-bezier(0.67, 0.58, 0.41, 0.9);
-}
-
-.task-associated-people-container img{
-    width: 3.5rem;
-    border-radius: 50%;
-    margin-left: 1rem;
-}
-
-.task-filters-container{
-    overflow-x: clip;
-    border-radius: 1rem;
-    padding: 0.2rem;
-}
-.task-filters-container > div{
-    gap: 0.8rem;
-}
-.task-filter{
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-    width: 9rem;
-    text-align: center;
-    background-color: var(--theme-color-bg-element);
-    border-radius: 10rem;
-    padding: 0.3rem 0.8rem 0.3rem 0.8rem;
-    color: var(--theme-color-accent-1);
-    box-shadow: 0px 0px 2px rgb(112, 112, 112);
-}
-
-
-.task-type-info-container{
-    position: relative;
-}
-.task-priority-info-container{
-    position: relative;
-}
-
-.task-info-icons-animation-container{
-    justify-content: flex-end;
-    margin-left: auto;
-}
-
-.image-container {
-    z-index: 2;
-    height: 2.5rem;
-}
-
-.image-container img{
-    margin-right: 0px;
-    transition: 150ms cubic-bezier(0.67, 0.58, 0.41, 0.9);
-}
-  
-.text-container {
-    position: absolute;
-    z-index: 1;
-    right: 0;
-    transform: translateY(-50%);
-    top: 48%;
-}
-.text-container .fading-effect {
-    transition: 150ms cubic-bezier(0.67, 0.58, 0.41, 0.9);
-    height: 2.3rem;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background: var(--theme-color-bg);
-}
-
-.text-slide-animation{
-    width: 0% !important;
 }
 
 .add-new-task-btn{
