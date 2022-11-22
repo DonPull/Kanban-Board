@@ -24,7 +24,7 @@ class TaskContent extends Component {
             let taskContentContainerPaddingBottom = Number(taskContentContainerStyles.paddingBottom.replace("px", ""));
 
             pill.querySelectorAll(".separator-vertical").forEach(e => {
-                //the line of code below makes all ".separator-vertical" 80% of the height of the
+                //the line of code below makes all ".separator-vertical" that are inside of ".content-pill" 80% of the height of the ".content-pill" (we subtract the padding to get the real height numbers we need)
                 e.style.height = ((taskContentContainerHeight - taskContentContainerPaddingTop - taskContentContainerPaddingBottom) / 100) * 80 + "px";
             });
         });
@@ -64,9 +64,16 @@ class TaskContent extends Component {
                 <div className='task-content-main-container flex justify-space-between margin-top-20px'>
                     <div className='task-content-main-container-column'>
                         <div className='task-description-container'>
-                            <label>Description</label>
+                            <label className='task-content-label'>Description</label>
                             <div>
                                 This is a sample description
+                            </div>
+                        </div>
+
+                        <div className='task-content-filters-container flex column'>
+                            <label className='task-content-label' style={{ fontSize: "1.8rem" }}>Filters</label>
+                            <div className='flex'>
+                                {taskInfo.taskFilters.map(f => { return( <label className='task-filter'>{f}</label> ); })}
                             </div>
                         </div>
                     </div>
@@ -86,9 +93,19 @@ class TaskContent extends Component {
                         </div>
 
                         <div className='task-log-container'>
-                            <label>Log</label>
+                            <label className='task-content-label'>Log</label>
                             <div>
                                 This is a sample Log
+                            </div>
+                        </div>
+
+                        <div className='task-content-duration-info'>
+                            <div className='content-pill column margin-top-10px'>
+                                <label>Time Estimate: {taskInfo.taskEstimate}</label>
+                                <div className='separator'/>
+                                <label>Time Remaining: {taskInfo.timeRemainingBeforeDone}</label>
+                                <div className='separator'/>
+                                <label>Time In Current Column: {taskInfo.taskDurationInCurrentColumn}</label>
                             </div>
                         </div>
                     </div>

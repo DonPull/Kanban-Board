@@ -14,7 +14,7 @@ class KanbanBoard extends Component {
                         taskType: "Task",
                         taskPriority: "High",
                         taskStatus: "ToDo",
-                        taskTitle: "Task 1 in ToDo",
+                        taskTitle: "Task 1 in ToDo Task 1 in ToDo Task 1 in ToDo Task 1 in ToDo Task 1 in ToDo Task 1 in ToDo Task 1 in ToDo Task 1 in ToDo Task 1 in ToDo Task 1 in ToDo Task 1 in ToDo",
                         taskDescription: "Sample HTML",
                         taskAttachments: "Sample attachments",
                         taskAssignee: {

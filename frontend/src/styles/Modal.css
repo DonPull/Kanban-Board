@@ -30,6 +30,7 @@
 /* Modal Content */
 .modal-content {
   width: max-content;
+  max-width: 90%;
   height: max-content;
   position: relative;
   /* transform: translate(-50%, -50%);

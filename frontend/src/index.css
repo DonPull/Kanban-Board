@@ -41,18 +41,18 @@ body {
   background-color: var(--theme-color-bg-element);
 }
 
-body::-webkit-scrollbar {
+::-webkit-scrollbar {
   height: 0.8rem;
   width: 0.8rem;
 }
 
-body::-webkit-scrollbar-track {
+::-webkit-scrollbar-track {
   box-shadow: 0 0 16px 2px rgba(0,0,0,0.8);
   /* background-color: var(--theme-color-bg); */
   background-color: transparent;
 }
 
-body::-webkit-scrollbar-thumb {
+::-webkit-scrollbar-thumb {
   box-shadow: 0 0 6px rgba(0,0,0,0.8);
   background-color: var(--theme-color-accent);
   border-radius: 5rem;
