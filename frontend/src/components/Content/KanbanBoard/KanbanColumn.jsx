@@ -24,7 +24,7 @@ class KanbanColumn extends Component {
                     return(
                         <React.Fragment>
                             <Task taskId={taskUniqueId} taskInfo={info} />
-                            <Modal modalContent={<TaskContent taskInfo={info} />} openBtnId={taskUniqueId} closeOnHover={true} />
+                            <Modal modalContent={<TaskContent taskInfo={info} />} openBtnId={taskUniqueId} />
                         </React.Fragment>
                     );
                 })}

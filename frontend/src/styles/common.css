@@ -18,6 +18,20 @@
     background-color: var(--theme-color-accent);
 }
 
+.content-pill{
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 1.5rem;
+    width: max-content;
+    background-color: var(--theme-color-bg-element);
+    border-radius: 10rem;
+    font-weight: 500;
+    box-shadow: 0 0 5px #0000005e;
+}
+.content-pill label{
+    margin-bottom: 0.2rem;
+}
+
 .separator{
     width: 90%;
     height: 0.2rem;
