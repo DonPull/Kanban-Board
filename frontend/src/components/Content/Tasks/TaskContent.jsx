@@ -79,7 +79,7 @@ class TaskContent extends Component {
                     </div>
 
                     <div className='task-content-main-container-column' style={{ marginTop: "1rem" }}>
-                        <div className='flex column'>
+                        <div className='flex column' style={{ width: "max-content" }}>
                             <div className='task-associated-people-container content-pill'>
                                 <label>Creator:</label>
                                 <label>{taskInfo.taskCreator.name}</label>

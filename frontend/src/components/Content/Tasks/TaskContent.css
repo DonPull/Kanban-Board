@@ -66,17 +66,19 @@
 .task-associated-people-container img{
     width: 2.8rem;
     border-radius: 50%;
-    margin-left: 0.8rem;
+    /* margin-left: 0.8rem; */
+    margin-left: auto;
 }
 .task-associated-people-container label{
     height: fit-content;
 }
 .task-associated-people-container label:nth-of-type(1){
-    margin-right: auto;
+    /* margin-right: auto; */
 }
 .task-associated-people-container label:nth-of-type(2){
     margin-left: 0.6rem;
-    margin-right: auto;
+    /* margin-right: auto; */
+    margin-right: 1rem;
 }
 
 .task-content-filters-container > div:first-of-type{

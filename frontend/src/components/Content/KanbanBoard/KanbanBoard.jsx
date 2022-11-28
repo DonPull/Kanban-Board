@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import Task from '../Tasks/Task';
 import "./KanbanBoard.css";
-import newTaskIcon from '../../../assets/+_and_x_icon.svg';
+import addBtn from '../../../assets/+_and_x_icon.svg';
 import KanbanColumn from './KanbanColumn';
 
 class KanbanBoard extends Component {
-    state = { 
+    state = {
+        mainActionBtnIsToggled: false,
         tasksInfo: [
             { columnName: "ToDo", tasks: [
                     {
@@ -215,6 +216,55 @@ class KanbanBoard extends Component {
         ]
     }
 
+    componentDidMount(){
+        let listOfActionButtons = document.querySelectorAll(".create-action-btn-container > *");
+        let mainActionBtn = listOfActionButtons[listOfActionButtons.length - 1];
+        let { mainActionBtnIsToggled } = this.state;
+
+        mainActionBtn.onclick = (event) => {
+            mainActionBtnIsToggled = !mainActionBtnIsToggled;
+
+            if(mainActionBtnIsToggled){
+                mainActionBtn.style.transform = "rotate(45deg)";
+                //mainActionBtn.style.transform = "rotate(135deg)";
+                listOfActionButtons.forEach(e => {
+                    if(e !== mainActionBtn){
+                        e.style.transform = "translateY(0)";
+                        e.style.opacity = "1";
+                    }
+                });
+            }else{
+                mainActionBtn.style.transform = "rotate(0deg)";
+                listOfActionButtons.forEach(e => {
+                    if(e !== mainActionBtn){
+                        e.style.transform = "translateY(-3rem)";
+                        e.style.opacity = "0";
+                    }
+                });
+            }
+        }
+
+        listOfActionButtons.forEach(e => {
+            if(e !== mainActionBtn){
+                //center each action button relative to the main action button
+                e.style.marginRight = `calc(${(Number(mainActionBtn.getBoundingClientRect().width) - Number(e.getBoundingClientRect().width)) + "px"} / 2)`;
+
+                let eImg = e.querySelector("img");
+                let eLabel = e.querySelector("label");
+
+                e.onmouseover = (event) => {
+                    // eImg.style.margin = `0 ${parseInt(Number(eLabel.getBoundingClientRect().width)) + 22 + "px"} 0 1rem`;
+                    eImg.style.marginRight = parseInt(Number(eLabel.getBoundingClientRect().width)) + 12 + "px";
+                    eLabel.style.opacity = "1";
+                }
+                e.onmouseout = (event) => {
+                    eImg.style.margin = "0";
+                    eLabel.style.opacity = "0";
+                }
+            }
+        });
+    }
+
     render() {
         let { tasksInfo } = this.state;
         return (
@@ -229,8 +279,24 @@ class KanbanBoard extends Component {
                         ); 
                     })
                 }
-                <div className='add-new-task-btn'>
-                    <img src={newTaskIcon}/>
+                <div className='create-action-btn-container flex column'>
+                    <div className='new-task-action-btn action-btn' >
+                        <img src={addBtn} style={{ width: "2rem" }} />
+                        <div className="action-btn-text-container">
+                            <label>New Task</label>
+                        </div>
+                    </div>
+                    
+                    <div className='new-column-action-btn action-btn' >
+                        <img src={addBtn} style={{ width: "2rem" }} />
+                        <div className="action-btn-text-container">
+                            <label>New Column</label>
+                        </div>
+                    </div>
+
+                    <div className='action-btn'>
+                        <img src={addBtn}/>
+                    </div>
                 </div>
             </div>
         );
