@@ -17,7 +17,7 @@ class ProjectTree extends Component {
             <div id="navbar-project-tree-container" className='flex column align-center navbar-content-container margin-top-20px'>
                 <div className='title-with-underline-container'>
                     <label id={openBtnId}>Project Tree</label>
-                    <div className='separator' style={{ margin: "5px auto" }}/>
+                    <div className='separator-2'/>
                 </div>
 
                 {/* <Modal modalContent={<TestModalContent />} openBtnId={openBtnId} openOnHover={true} /> */}

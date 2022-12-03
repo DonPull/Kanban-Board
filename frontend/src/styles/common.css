@@ -38,6 +38,13 @@
     background-color: var(--theme-color-bg-1);
     margin: 2rem auto;
 }
+.separator-2{
+    width: 90%;
+    height: 4px;
+    border-radius: 50px;
+    background-color: var(--theme-color-bg-1);
+    margin: 0.5rem auto;
+}
 .separator-vertical{
     width: 0.2rem;
     height: 90%;

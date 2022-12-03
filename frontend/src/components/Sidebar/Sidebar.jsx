@@ -18,7 +18,6 @@ class Sidebar extends Component {
 
                 <ProjectButtons />
                 <ProjectTree />
-                <div className='separator' style={{ marginTop: "auto" }} />
                 <SidebarFooter />
 
             </aside>

@@ -18,7 +18,7 @@ class ProjectButtons extends Component {
             <div id="navbar-project-btn-container" className='flex column align-center navbar-content-container' style={{ marginTop: "30px" }}>
                 <div className='title-with-underline-container'>
                     <label>Projects</label>
-                    <div className='separator margin-top-5px' style={{ margin: "5px auto" }}/>
+                    <div className='separator-2'/>
                 </div>
                 <button id={createProjectId} className='button'>Create New Project</button>
                 <button id={joinProjectId} className='button'>Join Project</button>

@@ -9,34 +9,37 @@ import "./SidebarFooter.css";
 class SidebarFooter extends Component {
     render() { 
         return (
-            <div className='flex column navbar-content-container'>
-                <div id="sidebar-footer-container" className='flex justify-space-between'>
-                    <button className='button flex justify-space-between align-center'>
-                        <p>Settings</p>
-                        <img className="img-with-icon-hover-animation" src={settingsImg} />
-                    </button>
+            <React.Fragment>
+                <div className='separator' style={{ marginTop: "auto", marginBottom: "1.5rem" }} />
+                <div className='flex column navbar-content-container'>
+                    <div id="sidebar-footer-container" className='flex justify-space-between'>
+                        <button className='button flex justify-space-between align-center'>
+                            <p>Settings</p>
+                            <img className="img-with-icon-hover-animation" src={settingsImg} />
+                        </button>
 
-                    <button id="home-btn" className='button flex justify-space-between align-center'>
-                        <p id="home-btn-p">Home</p>
-                        <img className="img-with-icon-hover-animation" src={homeImg} style={{ marginBottom: "2.5px" }} />
-                    </button>
-                </div>
+                        <button id="home-btn" className='button flex justify-space-between align-center'>
+                            <p id="home-btn-p">Home</p>
+                            <img className="img-with-icon-hover-animation" src={homeImg} style={{ marginBottom: "2.5px" }} />
+                        </button>
+                    </div>
 
-                <div id="profile-btn-container" className='align-center'>
-                    <button style={{ margin: "1.2rem 0", padding: "0.5rem 0.7rem 0.5rem 2rem", justifyContent: "unset" }} className='button flex justify-space-between align-center width-100-percent'>
-                        <p>My Profile</p>
-                        <div id="profile-animation-container" className='flex width-100-percent relative'>
-                            <div id="profile-picture-animation">
-                                <img src={profileImg} />
+                    <div id="profile-btn-container" className='align-center'>
+                        <button style={{ margin: "1.2rem 0", padding: "0.5rem 0.7rem 0.5rem 2rem", justifyContent: "unset" }} className='button flex justify-space-between align-center width-100-percent'>
+                            <p>My Profile</p>
+                            <div id="profile-animation-container" className='flex width-100-percent relative'>
+                                <div id="profile-picture-animation">
+                                    <img src={profileImg} />
+                                </div>
+
+                                <div id="go-to-profile-arrow-animation">
+                                    <img id="go-to-profile-arrow" src={goToArrowImg} />
+                                </div>
                             </div>
-
-                            <div id="go-to-profile-arrow-animation">
-                                <img id="go-to-profile-arrow" src={goToArrowImg} />
-                            </div>
-                        </div>
-                    </button>
+                        </button>
+                    </div>
                 </div>
-            </div>
+            </React.Fragment>
         );
     }
 }
