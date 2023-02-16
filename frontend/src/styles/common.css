@@ -18,6 +18,28 @@
     background-color: var(--theme-color-accent);
 }
 
+.no-hover{
+    color: blue;
+}
+
+.input{
+    border: 0.2rem solid var(--theme-color-accent);
+    border-radius: 10rem;
+
+    width: max-content;
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: var(--theme-color-accent);
+    background-color: var(--theme-color-bg-element);
+    padding: 0.9rem 2rem;
+    cursor: text;
+}
+
+.input:focus{
+    outline: none;
+}
+
 .content-pill{
     display: flex;
     align-items: center;
