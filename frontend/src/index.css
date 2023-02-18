@@ -9,9 +9,13 @@
   --theme-color-bg-element-filter: invert(14%) sepia(24%) saturate(0%) hue-rotate(263deg) brightness(90%) contrast(82%);
   /* --theme-color-accent: rgb(99, 97, 210); */
   
-  --theme-font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  /* --theme-font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
   'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-  sans-serif;
+  sans-serif; */
+
+  /* line-height: 20px; */
+  --theme-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji" !important;
+
 
   font-size: 62.5%; /* Converts rem to a 10base system so 57px = 5.7rem */
   width: 100vw;

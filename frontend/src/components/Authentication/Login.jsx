@@ -4,10 +4,16 @@ import './authentication.css';
 import { Link } from 'react-router-dom';
 
 class Login extends Component {
+    state = {
+        loginFormRef: React.createRef()
+    }
+
     componentDidMount(){
-        let loginForm = document.querySelector(".form-background");
+        let { loginFormRef } = this.state;
+        let [ loginForm ] = [ loginFormRef.current ];
+
         // event listener that presses the sign in button on enter key press
-        window.addEventListener("keypress", function(event) {
+        loginForm.addEventListener("keypress", function(event) {
             if (event.key === "Enter") {
                 // Cancel the default action
                 event.preventDefault();
@@ -26,7 +32,7 @@ class Login extends Component {
     render() {
         return (
             <div className="form-background flex column align-center height-100-percent width-100-percent bg-color-main">
-                <div className="form-container filter flex column no-hover align-center bg-color-main-element">
+                <div ref={this.state.loginFormRef} className="form-container filter flex column no-hover align-center bg-color-main-element">
                     <h1>Sign in</h1>
                     <div className='authentication-field-sections flex column align-center'>
                         <div className="authentication-field-section">

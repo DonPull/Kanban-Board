@@ -1,9 +1,11 @@
 import ReactDOM from 'react-dom';
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import EmailValidator from 'email-validator';
 
 class Register extends Component {
     state = {
+        registerFormRef: React.createRef(),
         actionBtnRef: React.createRef(),
         emailInputRef: React.createRef(),
         usernameInputRef: React.createRef(),
@@ -13,12 +15,11 @@ class Register extends Component {
     }
 
     componentDidMount(){
-        let { actionBtnRef, emailInputRef, usernameInputRef, passwordInputRef, confirmPasswordInputRef} = this.state;
-        let [ actionBtn, emailInput, usernameInput, passwordInput, confirmPasswordInput ] = [actionBtnRef.current, emailInputRef.current, usernameInputRef.current, passwordInputRef.current, confirmPasswordInputRef.current];
+        let { registerFormRef, actionBtnRef, emailInputRef, usernameInputRef, passwordInputRef, confirmPasswordInputRef} = this.state;
+        let [ registerForm, actionBtn, emailInput, usernameInput, passwordInput, confirmPasswordInput ] = [registerFormRef.current, actionBtnRef.current, emailInputRef.current, usernameInputRef.current, passwordInputRef.current, confirmPasswordInputRef.current];
 
-        let registerForm = document.querySelector(".form-background");
         // event listener that presses the sign in button on enter key press
-        window.addEventListener("keypress", function(event) {
+        registerForm.addEventListener("keypress", function(event) {
             if (event.key === "Enter") {
                 // Cancel the default action
                 event.preventDefault();
@@ -26,20 +27,39 @@ class Register extends Component {
             }
         });
 
-         // sign in button on click event listener
-         actionBtn.onclick = (event) => {
-            registerForm.querySelectorAll("input").forEach(element => {
-                console.log(element.value);
-            });
+        // sign in button on click event listener
+        actionBtn.onclick = (event) => {
+            let registerResult = this.isRegisterDataValid(emailInput.value, passwordInput.value, confirmPasswordInput.value);
+            
+            console.log(registerResult);
+            
+            if(registerResult !== true){
+                // if the register information is invalid show an error message and do a little shake animation of the registration form
+                if(!registerForm.classList.contains("shake-animation")){
+                    console.log("shake animation triggered");
+                    registerForm.classList.add("shake-animation");
+                }
+            }
         }
     }
 
+    isRegisterDataValid = (email, password, confirmPassword) => {
+        if(!EmailValidator.validate(email)){
+            return "Email is not valid";
+        }
+        if(password !== confirmPassword){
+            return "Confirm password is different from the password"; 
+        }
+
+        return true;
+    }
+
     render() {
-        let { actionBtnRef, emailInputRef, usernameInputRef, passwordInputRef, confirmPasswordInputRef, typingAnimationArray } = this.state;
+        let { registerFormRef, actionBtnRef, emailInputRef, usernameInputRef, passwordInputRef, confirmPasswordInputRef, typingAnimationArray } = this.state;
 
         return (
             <div className="form-background flex column align-center height-100-percent width-100-percent bg-color-main">
-                <div className="form-container filter flex column no-hover align-center bg-color-main-element" style={{ top: "18%" }}>
+                <div ref={registerFormRef} onAnimationEnd={() => { registerFormRef.current.classList.remove("shake-animation"); }} className="form-container filter flex column no-hover align-center bg-color-main-element" style={{ top: "18%" }}>
                     <h1>Sign up</h1>
                     <div className='authentication-field-sections flex column align-center'>
                         <div className="authentication-field-section">
