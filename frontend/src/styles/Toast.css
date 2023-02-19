@@ -27,6 +27,8 @@
 }
 .toast-icon-container:last-of-type:hover{
     background-color: #0000002a;
+    border-top-right-radius: 1rem;
+    border-bottom-right-radius: 1rem;
 }
 
 .toast-text-container{

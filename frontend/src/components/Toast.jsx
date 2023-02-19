@@ -12,10 +12,10 @@ class Toast extends Component {
         toastRef: React.createRef(),
         closeToastRef: React.createRef(),
         closeToastCallbackFunction: this.props.closeToastCallbackFunction,
-        toastMessage: this.props.toastMessage,
-        possition: this.props.possition,
-        notificationType: this.props.notificationType,
-        notificationDurationInMs: this.props.notificationDurationInMs + 1000,
+        toastMessage: this.props.toastMessage || "An unknown error occurred. Please try again later!",
+        possition: this.props.possition || "top",
+        notificationType: this.props.notificationType || "error",
+        notificationDurationInMs: this.props.notificationDurationInMs + 1000 || 3500,
         toastTypeObj: { 
             "error": {
                 icon: errorToastIcon,
@@ -41,6 +41,7 @@ class Toast extends Component {
         let [ toast, closeToast ] = [ toastRef.current, closeToastRef.current ];
 
         // when the toast is rendered ajust the color of the toast based on the type of notification and set it in the correct possition based on the possition prop passed from the parent component
+        console.log("Before setting the color base on notifiaction type: ", toastTypeObj[notificationType].color);
         toast.style.backgroundColor = toastTypeObj[notificationType].color;
         if(possition.includes("bottom")){
             toast.style.top = "100%";
@@ -71,51 +72,24 @@ class Toast extends Component {
     showAndCloseToast = (toast) => {
         let { possition, notificationDurationInMs } = this.state;
 
-        // function topOpen(toast, possition){
-        //     toast.style.top = "2rem";
-        // }
-        // function topClose(toast, possition){
-        //     toast.style.top = "-6.5rem";
-        // }
-        // function bottomOpen(toast, possition){
-        //     toast.style.top = "90%";
-        // }
-        // function bottomClose(toast, possition){
-        //     toast.style.top = "120%";
-        // }
-
         function toastOpen(toast, possition){
             if(possition.includes("top")){
-                //topOpen(toast, possition);
                 toast.style.top = "2rem";
             }else if(possition.includes("bottom")){
-                //bottomOpen(toast, possition);
                 toast.style.top = "calc(100% - 8.5rem)";
             }
-            // else if(possition.split("-")[0] === "top" && possition.split("-")[1] === "left"){
-            //     topLeftOpen(toast, possition);
-            // }
         }
         function toastClose(toast, possition){
             if(possition.includes("top")){
-                //topClose(toast, possition);
                 toast.style.top = "-6.5rem";
             }else if(possition.includes("bottom")){
-                //bottomClose(toast, possition);
                 toast.style.top = "100%";
             }
-            // else if(possition.split("-")[0] === "top" && possition.split("-")[1] === "left"){
-            //     topLeftClose(toast, possition);
-            // }
         }
         // here we set a 10ms timeout before popping up the toast because otherwise the css property 'transition' doesn't work and spans the element in place instead of smootly animating it (this happens only when you try to anime an element with 'transition' right after the element is rendered, which is the case here).
-        //setTimeout(() => { toast.style.top = "2rem"; }, 10);
-        // here we know the duration after which the toast needs to dissappear and we know the duration of the toast open/close animation which is 500ms so we can just calculate after how much time the toast should go back to its original position (offscreen) before being unrendered 
-        //setTimeout(() => { toast.style.top = "-6.5rem"; }, notificationDurationInMs - 500);
-
         setTimeout(() => { toastOpen(toast, possition) }, 10);
+        // here we know the duration after which the toast needs to dissappear and we know the duration of the toast open/close animation which is 500ms so we can just calculate after how much time the toast should go back to its original position (offscreen) before being unrendered 
         setTimeout(() => { toastClose(toast, possition) }, notificationDurationInMs - 500);
-
     }
     
     render() {
@@ -129,7 +103,7 @@ class Toast extends Component {
                 <div>
                     <div className='toast-text-container flex column'>
                         <label>{notificationType.charAt(0).toUpperCase() + notificationType.slice(1)}</label>
-                        <label>{toastMessage === null ? "An unknown error occurred. Please try again later!" : toastMessage }</label>
+                        <label>{toastMessage}</label>
                     </div>
                 </div>
                 <div ref={closeToastRef} className='toast-icon-container'>

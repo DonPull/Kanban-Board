@@ -16,9 +16,9 @@ class Register extends Component {
         toastObj: {
             show: false,
             message: null,
+            possition: "top",
             duration: 2000,
-            type: "error",
-            possition: "top"
+            type: "error"
         }
     }
 
@@ -96,16 +96,6 @@ class Register extends Component {
 
                     <div className='typing-animation-container flex column align-center' style={{ top: "18%" }}>
                         <label className="typing-animation-label"><Link to={"/login"}>{"Already have an account? {"}<span>Follow me</span>{"}"}</Link></label>
-
-                        {/* <label className="typing-animation-label"><Link to={"/login"}>
-                            {typingAnimationArray.map((item, index) => {
-                                let currentChar = "";
-                                setTimeout(() => {}, 100);
-
-                            })}
-                            <span>Follow me</span>
-                            {"}"}
-                        </Link></label> */}
                     </div>
                 </div>
             </React.Fragment>
