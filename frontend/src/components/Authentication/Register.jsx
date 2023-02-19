@@ -13,7 +13,13 @@ class Register extends Component {
         passwordInputRef: React.createRef(),
         confirmPasswordInputRef: React.createRef(),
         typingAnimationArray: "Already have an account? {Follow me}".split(""),
-        showToast: false
+        toastObj: {
+            show: false,
+            message: null,
+            duration: 2000,
+            type: "error",
+            possition: "top"
+        }
     }
 
     componentDidMount(){
@@ -31,38 +37,39 @@ class Register extends Component {
 
         // sign in button on click event listener
         actionBtn.onclick = (event) => {
-            let registerResult = this.isRegisterDataValid(emailInput.value, passwordInput.value, confirmPasswordInput.value);
+            let result = this.isRegisterDataValid(emailInput.value, passwordInput.value, confirmPasswordInput.value);
             
-            console.log(registerResult);
-            
-            if(registerResult !== true){
-                this.setState({ showToast: true });
+            this.setState(prevState => ({ toastObj: { ...prevState.toastObj, show: true, message: result.message } }));
+            if(result.dataIsValid !== true){
+                this.setState(prevState => ({ toastObj: { ...prevState.toastObj, type: "error" } }));
                 // if the register information is invalid show an error message and do a little shake animation of the registration form
                 if(!registerForm.classList.contains("shake-animation")){
                     console.log("shake animation triggered");
                     registerForm.classList.add("shake-animation");
                 }
+            }else{
+                this.setState(prevState => ({ toastObj: { ...prevState.toastObj, type: "success" } }));
             }
         }
     }
 
     isRegisterDataValid = (email, password, confirmPassword) => {
         if(!EmailValidator.validate(email)){
-            return "Email is not valid";
+            return { dataIsValid: false, message: "Email is not valid"};
         }
-        if(password !== confirmPassword){
-            return "Confirm password is different from the password"; 
+        if(password !== confirmPassword || password === ""){
+            return { dataIsValid: false, message: "Confirm password is different from the password"}; 
         }
 
-        return true;
+        return { dataIsValid: true, message: "Your registration is almost complete, please check your email to verify your account!"};
     }
 
     render() {
-        let { showToast, registerFormRef, actionBtnRef, emailInputRef, usernameInputRef, passwordInputRef, confirmPasswordInputRef, typingAnimationArray } = this.state;
+        let { toastObj, registerFormRef, actionBtnRef, emailInputRef, usernameInputRef, passwordInputRef, confirmPasswordInputRef, typingAnimationArray } = this.state;
 
         return (
             <React.Fragment>
-                {showToast && <Toast closeToastCallbackFunction={() => { this.setState({ showToast: false }) }} notificationDurationInMs={5000} notificationType="error" />}
+                {toastObj.show && <Toast closeToastCallbackFunction={() => { this.setState(prevState => ({ toastObj: { ...prevState.toastObj, show: false } })) }} toastMessage={toastObj.message} possition={toastObj.possition} notificationDurationInMs={toastObj.duration} notificationType={toastObj.type} />}
                 <div className="form-background flex column align-center height-100-percent width-100-percent bg-color-main">
                     <div ref={registerFormRef} onAnimationEnd={() => { registerFormRef.current.classList.remove("shake-animation"); }} className="form-container filter flex column no-hover align-center bg-color-main-element" style={{ top: "18%" }}>
                         <h1>Sign up</h1>

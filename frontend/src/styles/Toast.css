@@ -4,8 +4,6 @@
     position: absolute;
     top: -6.5rem;
     transition: 500ms;
-    transform: translateX(-50%);
-    left: 50%;
 }
 
 .toast-notification img{
@@ -45,6 +43,7 @@
 }
 .toast-text-container > label:last-child{
     font-size: 1.4rem;
+    margin-right: 1rem;
 }
 
 .toast-open-animation{
