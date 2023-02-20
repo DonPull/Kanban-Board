@@ -231,6 +231,7 @@ class KanbanBoard extends Component {
                     if(e !== mainActionBtn){
                         e.style.transform = "translateY(0)";
                         e.style.opacity = "1";
+                        e.style.cursor = "pointer";
                     }
                 });
             }else{
@@ -239,6 +240,7 @@ class KanbanBoard extends Component {
                     if(e !== mainActionBtn){
                         e.style.transform = "translateY(-3rem)";
                         e.style.opacity = "0";
+                        e.style.cursor = "default";
                     }
                 });
             }

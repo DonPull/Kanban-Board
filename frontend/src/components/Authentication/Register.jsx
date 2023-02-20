@@ -17,7 +17,7 @@ class Register extends Component {
             show: false,
             message: null,
             possition: "top",
-            duration: 2000,
+            duration: 3000,
             type: "error"
         }
     }

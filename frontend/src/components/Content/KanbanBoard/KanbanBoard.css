@@ -10,15 +10,18 @@
 }
 .kanban-column-header{
     background-color: var(--theme-color-bg-element);
-    padding: 0.5rem 0rem 1rem 0rem;
     border-radius: 1.8rem;
-    width: 85%;
+    /* padding: 0.5rem 0rem 1rem 0rem; old design */
+    /* width: 85%; old design */
+    width: max-content;
+    padding: 0.5rem 2rem 1rem 2rem;
     align-items: center;
+    box-shadow: 0px 0px 5px var(--theme-color-bg-dropoff);
 }
 .kanban-column-header label{
-    font-size: 3rem;
+    font-size: 2.5rem;
     font-weight: 700;
-    color: var(--theme-color-accent);
+    color: var(--theme-color-accent-1);
 }
 
 .create-action-btn-container{

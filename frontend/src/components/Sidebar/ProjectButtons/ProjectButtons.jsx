@@ -15,7 +15,7 @@ class ProjectButtons extends Component {
         const { createProjectId, joinProjectId, viewProjectsId } = this.state;
 
         return (
-            <div id="navbar-project-btn-container" className='flex column align-center navbar-content-container' style={{ marginTop: "30px" }}>
+            <div id="navbar-project-btn-container" className='flex column align-center navbar-content-container'>
                 <div className='title-with-underline-container'>
                     <label>Projects</label>
                     <div className='separator-2'/>

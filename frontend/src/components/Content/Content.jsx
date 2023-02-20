@@ -6,7 +6,7 @@ import KanbanBoard from './KanbanBoard/KanbanBoard';
 class Content extends Component {
     render() {
         return (
-            <div id="content" style={{ backgroundColor: "var(--theme-color-bg)", borderTopLeftRadius: "20px" }} className='flex column width-100-percent height-100-percent'>
+            <div id="content" style={{ backgroundColor: "var(--theme-color-bg)", borderTopLeftRadius: "20px" }} className='flex column width-100-percen min-width-max-content height-100-percent min-height-max-content'>
                 <Filters />
                 <KanbanBoard />
             </div>

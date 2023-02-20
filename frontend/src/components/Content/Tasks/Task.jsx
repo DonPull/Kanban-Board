@@ -86,7 +86,7 @@ class Task extends Component {
                         <div className='separator-vertical' style={{ marginLeft: "0.8rem", height: "80%" }} />
                     </div>
                     
-                    <label style={{ lineHeight: "3rem", textIndent: "5rem", fontSize: "2rem", margin: "0 0 0.8rem 1rem" }}>{taskInfo.taskTitle}</label>
+                    <label title={taskInfo.taskTitle} className='task-title'>{taskInfo.taskTitle}</label>
                 </div>
 
                 <div className='task-content flex column'>
