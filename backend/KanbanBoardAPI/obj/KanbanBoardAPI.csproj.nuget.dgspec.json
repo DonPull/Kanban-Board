@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\kon08\\Desktop\\Kanban-Board\\backend\\KanbanBoardAPI\\KanbanBoardAPI.csproj": {}
+    "F:\\Hristian projects\\WEBSITES\\Kanban-Board\\backend\\KanbanBoardAPI\\KanbanBoardAPI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\kon08\\Desktop\\Kanban-Board\\backend\\KanbanBoardAPI\\KanbanBoardAPI.csproj": {
+    "F:\\Hristian projects\\WEBSITES\\Kanban-Board\\backend\\KanbanBoardAPI\\KanbanBoardAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\kon08\\Desktop\\Kanban-Board\\backend\\KanbanBoardAPI\\KanbanBoardAPI.csproj",
+        "projectUniqueName": "F:\\Hristian projects\\WEBSITES\\Kanban-Board\\backend\\KanbanBoardAPI\\KanbanBoardAPI.csproj",
         "projectName": "KanbanBoardAPI",
-        "projectPath": "C:\\Users\\kon08\\Desktop\\Kanban-Board\\backend\\KanbanBoardAPI\\KanbanBoardAPI.csproj",
-        "packagesPath": "C:\\Users\\kon08\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\kon08\\Desktop\\Kanban-Board\\backend\\KanbanBoardAPI\\obj\\",
+        "projectPath": "F:\\Hristian projects\\WEBSITES\\Kanban-Board\\backend\\KanbanBoardAPI\\KanbanBoardAPI.csproj",
+        "packagesPath": "C:\\Users\\hrist\\.nuget\\packages\\",
+        "outputPath": "F:\\Hristian projects\\WEBSITES\\Kanban-Board\\backend\\KanbanBoardAPI\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\kon08\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\hrist\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -26,7 +26,6 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -74,8 +73,7 @@
             "net47",
             "net471",
             "net472",
-            "net48",
-            "net481"
+            "net48"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -87,7 +85,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.402\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     }

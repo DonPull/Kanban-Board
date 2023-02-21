@@ -37,5 +37,11 @@ namespace KanbanBoardAPI.Controllers
             return Ok(await _context.UsersDto.ToListAsync());
         }
 
+        [HttpGet]
+        public async Task<ActionResult<List<UserDto>>> Get()
+        {
+            return Ok(_context.UsersDto.ToListAsync());
+        }
+
     }
 }

@@ -4,6 +4,7 @@ import { v4 as uuid } from 'uuid';
 import Modal from '../../Modal';
 import Task from '../Tasks/Task';
 import TaskContent from '../Tasks/TaskContent';
+import '../Tasks/Task.css';
 
 class KanbanColumn extends Component {
     state = { 
@@ -15,8 +16,10 @@ class KanbanColumn extends Component {
         let { columnName, tasks } = this.state;
         return (
             <div className='kanban-column flex column align-center'>
-                <div className='kanban-column-header flex column'>
-                    <label>{columnName}</label>
+                <div className='kanban-column-header-background'>
+                    <div className='kanban-column-header flex column'>
+                        <label>{columnName}</label>
+                    </div>
                 </div>
 
                 {tasks.map(info => {

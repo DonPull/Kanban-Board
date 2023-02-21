@@ -76,7 +76,7 @@ class Task extends Component {
         return (
             <div id={this.props.taskId} className='task flex column'>
 
-                <div className='flex'>
+                <div className='flex' style={{ position: "relative" }}>
                     <div className='flex' style={{ position: "absolute", height: "3rem", marginLeft: "10px" }}>
                         <img style={{
                             height: "100%",

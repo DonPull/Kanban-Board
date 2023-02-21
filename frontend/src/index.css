@@ -45,8 +45,8 @@ body {
   overflow-y: hidden;
   width: 100%;
   height: 100%;
-  margin: 0;
-  padding: 0;
+  margin: 0 !important;
+  padding: 0 !important;
   font-size: 1.6rem; /* If there is an accessibility feature that changes font size this line will ensure that the settings of the user won't be messed with */
   /* text-transform: uppercase; */
   letter-spacing: 0.5px;
@@ -60,7 +60,7 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  box-shadow: 0 0 16px 2px rgba(0,0,0,0.8);
+  /* box-shadow: 0 0 16px 2px rgba(0,0,0,0.8); */
   /* background-color: var(--theme-color-bg); */
   background-color: transparent;
 }

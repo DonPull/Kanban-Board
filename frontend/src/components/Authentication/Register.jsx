@@ -38,7 +38,7 @@ class Register extends Component {
         });
 
         // sign in button on click event listener
-        actionBtn.onclick = (event) => {
+        actionBtn.onclick = async (event) => {
             let result = this.isRegisterDataValid(emailInput.value, passwordInput.value, confirmPasswordInput.value);
             
             this.setState(prevState => ({ toastObj: { ...prevState.toastObj, show: true, message: result.message } }));
@@ -50,11 +50,11 @@ class Register extends Component {
                     registerForm.classList.add("shake-animation");
                 }
             }else{
+                // if the data entered by the user is valid send it to the server and if the account email is not already registered then show the success toast notification
                 this.setState(prevState => ({ toastObj: { ...prevState.toastObj, type: "success" } }));
                 
-                let postEndpoint = apiEndpoint + "User";
-                console.log(postEndpoint);
-                axios.post(apiEndpoint + "/User", { "FullName": usernameInput.value, "Email": emailInput.value, "Password": passwordInput.value })
+                let result = await axios.post(apiEndpoint + "/User", { "FullName": usernameInput.value, "Email": emailInput.value, "Password": passwordInput.value })
+                console.log(result);
             }
         }
     }
