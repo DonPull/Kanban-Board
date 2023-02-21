@@ -5,6 +5,8 @@ import App from './components/App';
 import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+const apiEndpoint = "https://localhost:7261/api";
+export default apiEndpoint;
 root.render(
   // <React.StrictMode>
   //   <App />

@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import EmailValidator from 'email-validator';
 import Toast from '../Toast';
+import axios from 'axios';
+import apiEndpoint from '../..';
 
 class Register extends Component {
     state = {
@@ -49,6 +51,10 @@ class Register extends Component {
                 }
             }else{
                 this.setState(prevState => ({ toastObj: { ...prevState.toastObj, type: "success" } }));
+                
+                let postEndpoint = apiEndpoint + "User";
+                console.log(postEndpoint);
+                axios.post(apiEndpoint + "/User", { "FullName": usernameInput.value, "Email": emailInput.value, "Password": passwordInput.value })
             }
         }
     }

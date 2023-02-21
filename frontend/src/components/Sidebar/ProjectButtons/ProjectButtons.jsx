@@ -20,9 +20,9 @@ class ProjectButtons extends Component {
                     <label>Projects</label>
                     <div className='separator-2'/>
                 </div>
-                <button id={createProjectId} className='button'>Create New Project</button>
-                <button id={joinProjectId} className='button'>Join Project</button>
-                <button id={viewProjectsId} className='button'>View My Projects</button>
+                <button id={createProjectId} className='button width-100-percent'>Create New Project</button>
+                <button id={joinProjectId} className='button width-100-percent'>Join Project</button>
+                <button id={viewProjectsId} className='button width-100-percent'>View My Projects</button>
 
                 <Modal modalContent={<CreateProjectModalContent />} openBtnId={createProjectId} /> 
             </div>

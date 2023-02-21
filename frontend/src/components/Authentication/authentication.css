@@ -50,6 +50,7 @@ h1{
     padding: 2rem 2rem;
     border-radius: 2rem;
     width: -webkit-fill-available;
+    width: -moz-available;
     height: 100%;
     margin: 0 1.8rem;
 
