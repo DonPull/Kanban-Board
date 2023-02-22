@@ -1,4 +1,5 @@
 backend/KanbanBoardAPI/appsettings.json
+<<<<<<< HEAD
 # Created by https://www.toptal.com/developers/gitignore/api/aspnetcore,visualstudio,react,visualstudiocode
 # Edit at https://www.toptal.com/developers/gitignore?templates=aspnetcore,visualstudio,react,visualstudiocode
 
@@ -557,3 +558,5 @@ FodyWeavers.xsd
 
 # End of https://www.toptal.com/developers/gitignore/api/aspnetcore,visualstudio,react,visualstudiocode
 
+=======
+>>>>>>> 981f84f90f652e7b4eeab0931328df642e527365
