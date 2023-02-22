@@ -26,7 +26,7 @@ namespace KanbanBoardAPI.Controllers
         [EnableCors(origins: "http://localhost:3000", headers: "*", methods: "*")]
 
         [HttpPost("register")]
-        public async Task<ActionResult<UserDto>> Register(UserDto request) 
+        public async Task<ActionResult<User>> Register(UserDto request) 
         {
             CreatePasswordHash(request.Password, out byte[] passwordHash, out byte[] passwordSalt);
 
@@ -40,7 +40,7 @@ namespace KanbanBoardAPI.Controllers
 
             if (existingUser != null)
             {
-                return BadRequest("User already exists!");
+                return BadRequest("An account with this email already exists.");
             }
 
             _context.Add(user);

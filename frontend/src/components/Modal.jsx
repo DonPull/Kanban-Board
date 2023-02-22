@@ -111,7 +111,7 @@ class Modal extends Component {
         let { modalId, modalContentContainer, closeOnHoverBtnRef } = this.state;
 
         return (
-            <div id={modalId} ref={modalId} onAnimationEnd={(e) => {console.log("modal animation ended... also received this as argument: ", e)}} className="modal">
+            <div id={modalId} ref={modalId} className="modal">
                 <div id={modalContentContainer} ref={modalContentContainer} className="modal-content">
                     {React.cloneElement(modalContent, {getCloseBtn: this.getCloseBtn})}
                 </div>

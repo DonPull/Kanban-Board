@@ -41,7 +41,6 @@ class Toast extends Component {
         let [ toast, closeToast ] = [ toastRef.current, closeToastRef.current ];
 
         // when the toast is rendered ajust the color of the toast based on the type of notification and set it in the correct possition based on the possition prop passed from the parent component
-        console.log("Before setting the color base on notifiaction type: ", toastTypeObj[notificationType].color);
         toast.style.backgroundColor = toastTypeObj[notificationType].color;
         if(possition.includes("bottom")){
             toast.style.top = "100%";

@@ -41,20 +41,29 @@ class Register extends Component {
         actionBtn.onclick = async (event) => {
             let result = this.isRegisterDataValid(emailInput.value, passwordInput.value, confirmPasswordInput.value);
             
-            this.setState(prevState => ({ toastObj: { ...prevState.toastObj, show: true, message: result.message } }));
+            this.setState(prevState => ({ toastObj: { ...prevState.toastObj, message: result.message } }));
             if(result.dataIsValid !== true){
-                this.setState(prevState => ({ toastObj: { ...prevState.toastObj, type: "error" } }));
+                this.setState(prevState => ({ toastObj: { ...prevState.toastObj, show: true, type: "error" } }));
                 // if the register information is invalid show an error message and do a little shake animation of the registration form
                 if(!registerForm.classList.contains("shake-animation")){
-                    console.log("shake animation triggered");
+                    //console.log("shake animation triggered");
                     registerForm.classList.add("shake-animation");
                 }
             }else{
+                let result = await axios.post(apiEndpoint + "/User", { "FullName": usernameInput.value, "Email": emailInput.value, "Password": passwordInput.value }).catch((error) => {
+                    if (error.response) {
+                      console.log(error.response.data);
+                      console.log(error.response.status);
+                      console.log(error.response.headers);
+                      this.setState(prevState => ({ toastObj: { ...prevState.toastObj, show: true, type: "error", message: error.response.data } }));
+                    }
+                });
+                console.log("My console logs below.");
+                console.log(result.statusCode);
+                console.log(result.data);
+
                 // if the data entered by the user is valid send it to the server and if the account email is not already registered then show the success toast notification
-                this.setState(prevState => ({ toastObj: { ...prevState.toastObj, type: "success" } }));
-                
-                let result = await axios.post(apiEndpoint + "/User", { "FullName": usernameInput.value, "Email": emailInput.value, "Password": passwordInput.value })
-                console.log(result);
+                this.setState(prevState => ({ toastObj: { ...prevState.toastObj, show: true, type: "success" } }));
             }
         }
     }
