@@ -159,6 +159,78 @@ class KanbanBoard extends Component {
                         timeRemainingBeforeDone: "5days, 2hours",
                         taskWorkLog: "Ivan Konalev worked 2 hours on the task on 27.11.2022",
                         taskDurationInCurrentColumn: "11days"
+                    },
+                    {
+                        projectOriginOfTask: "Project 1",
+                        taskType: "WorkPack",
+                        taskPriority: "Medium",
+                        taskStatus: "Done",
+                        taskTitle: "Task 1 in Done",
+                        taskDescription: "Sample HTML",
+                        taskAttachments: "Sample attachments",
+                        taskAssignee: {
+                            name: "Ivan Konalev",
+                            picture: "Blob format picture"
+                        },
+                        taskCreator: {
+                            name: "Mitko Gatev",
+                            picture: "Blob format picture"
+                        },
+                        taskFilters: ["Backend", "Icovich"],
+                        taskCreatedDate: "25.11.2022",
+                        taskUpdatedDate: "03.12.2022",
+                        taskEstimate: "01.12.2022",
+                        timeRemainingBeforeDone: "5days, 2hours",
+                        taskWorkLog: "Ivan Konalev worked 2 hours on the task on 27.11.2022",
+                        taskDurationInCurrentColumn: "11days"
+                    },
+                    {
+                        projectOriginOfTask: "Project 1",
+                        taskType: "WorkPack",
+                        taskPriority: "Medium",
+                        taskStatus: "Done",
+                        taskTitle: "Task 1 in Done",
+                        taskDescription: "Sample HTML",
+                        taskAttachments: "Sample attachments",
+                        taskAssignee: {
+                            name: "Ivan Konalev",
+                            picture: "Blob format picture"
+                        },
+                        taskCreator: {
+                            name: "Mitko Gatev",
+                            picture: "Blob format picture"
+                        },
+                        taskFilters: ["Backend", "Icovich"],
+                        taskCreatedDate: "25.11.2022",
+                        taskUpdatedDate: "03.12.2022",
+                        taskEstimate: "01.12.2022",
+                        timeRemainingBeforeDone: "5days, 2hours",
+                        taskWorkLog: "Ivan Konalev worked 2 hours on the task on 27.11.2022",
+                        taskDurationInCurrentColumn: "11days"
+                    },
+                    {
+                        projectOriginOfTask: "Project 1",
+                        taskType: "WorkPack",
+                        taskPriority: "Medium",
+                        taskStatus: "Done",
+                        taskTitle: "Task 1 in Done",
+                        taskDescription: "Sample HTML",
+                        taskAttachments: "Sample attachments",
+                        taskAssignee: {
+                            name: "Ivan Konalev",
+                            picture: "Blob format picture"
+                        },
+                        taskCreator: {
+                            name: "Mitko Gatev",
+                            picture: "Blob format picture"
+                        },
+                        taskFilters: ["Backend", "Icovich"],
+                        taskCreatedDate: "25.11.2022",
+                        taskUpdatedDate: "03.12.2022",
+                        taskEstimate: "01.12.2022",
+                        timeRemainingBeforeDone: "5days, 2hours",
+                        taskWorkLog: "Ivan Konalev worked 2 hours on the task on 27.11.2022",
+                        taskDurationInCurrentColumn: "11days"
                     }
                 ]
             },
