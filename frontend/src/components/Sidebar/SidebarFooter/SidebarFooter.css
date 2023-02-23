@@ -28,7 +28,7 @@
     right: 10%;
     height: 2.5rem;
     /*margin-left: 0.7rem;*/
-    filter: var(--theme-color-accent-filter);
+    filter: var(--theme-color-accent-1-filter);
 }
 #sidebar-footer-container #home-btn img{
     right: 17%;

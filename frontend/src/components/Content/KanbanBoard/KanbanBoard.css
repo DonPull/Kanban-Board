@@ -6,6 +6,8 @@
 }
 
 .kanban-column{
+    height: max-content;
+    padding-bottom: 2.5rem;
     max-width: 40rem;
     min-width: 35rem;
 }
@@ -32,7 +34,7 @@
 .kanban-column-header label{
     font-size: 2.5rem;
     font-weight: 700;
-    color: var(--theme-color-accent-1);
+    color: var(--theme-color-accent-3);
 }
 
 .kanban-column .task:nth-of-type(2){
@@ -49,6 +51,7 @@
     right: 0;
     bottom: 0;
     margin: 0 3.5rem 3.5rem 0;
+    z-index: 9;
 }
 
 .create-action-btn-container > div:not(:last-of-type){
