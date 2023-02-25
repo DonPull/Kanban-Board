@@ -6,13 +6,14 @@ import { v4 as uuid } from 'uuid';
 class Modal extends Component {
     state = {
         modalId: uuid(),
+        modalBackgroundId: uuid(),
         modalContentContainer: uuid(),
         openBtnId: this.props.openBtnId,
         closeOnHoverBtnRef: React.createRef()
     }
 
     componentDidMount() {
-        let { modalId, modalContentContainer, openBtnId, closeOnHoverBtnRef } = this.state;
+        let { modalId, modalBackgroundId, modalContentContainer, openBtnId, closeOnHoverBtnRef } = this.state;
         let { openOnHover, closeOnHover } = this.props;
 
         let openBtn = "";
@@ -22,12 +23,16 @@ class Modal extends Component {
 
         // Get the modal
         let modal = document.getElementById(modalId);
+        // Get the modal-background
+        let modalBackground = document.getElementById(modalBackgroundId);
         // Get the modal-content
         let modalContent = document.getElementById(modalContentContainer);
         let closeOnHoverBtn = closeOnHoverBtnRef.current;
 
         //Handle the opening of the modal
         function openModal() {
+            modalBackground.style.opacity = "1";
+            modalBackground.style.zIndex = "10";
             modal.classList.add("animation");
             modalContent.classList.add("modal-content-animation");
             closeOnHoverBtn !== null ? closeOnHoverBtn.classList.add("modal-content-animation") : closeOnHoverBtn = null;
@@ -35,6 +40,8 @@ class Modal extends Component {
 
         // Handle the closeing of the modal (this function handles every type of closing e.g. close button; clicking outside the modal; or hovering on close modal section if available)
         function closeModalFromBtn() {
+            modalBackground.style.opacity = "0";
+            modalBackground.style.zIndex = "-1";
             modal.classList.remove("animation");
             modal.classList.add("animation-fadeout");
             setTimeout(() => {
@@ -71,10 +78,12 @@ class Modal extends Component {
     }
 
     getCloseBtn = (closeBtn) => {
-        let { modalId, modalContentContainer, closeOnHoverBtnRef } = this.state;
+        let { modalId, modalBackgroundId, modalContentContainer, closeOnHoverBtnRef } = this.state;
 
         // Get the modal
         let modal = document.getElementById(modalId);
+        // Get the modal-background
+        let modalBackground = document.getElementById(modalBackgroundId);
         // Get the modal-content
         let modalContent = document.getElementById(modalContentContainer);
         let closeOnHoverBtn = closeOnHoverBtnRef.current;
@@ -90,6 +99,8 @@ class Modal extends Component {
         // }
 
         function closeModalFromBtn() {
+            modalBackground.style.opacity = "0";
+            modalBackground.style.zIndex = "-1";
             modal.classList.remove("animation");
             modal.classList.add("animation-fadeout");
             setTimeout(() => {
@@ -106,18 +117,36 @@ class Modal extends Component {
         }
     }
 
+    handleModalOpenAndCloseAnimations = (event, modalId) => {
+        let modal = document.getElementById(modalId);
+
+        // if(event.animationName === "modal-fade-in"){
+        //     modal.style.zIndex = "10";
+        //     modal.style.opacity = "1";
+        //     modal.style.backgroundColor = "rgba(0,0,0,0.4)";
+        // }else
+        // if(event.animationName === "modal-fade-out"){
+        //     modal.style.zIndex = "-1";
+        //     // modal.style.opacity = "0";
+        //     // modal.style.backgroundColor = "rgba(0,0,0,0)";
+        // }
+    }
+
     render() {
         let { modalContent, closeOnHover } = this.props;
-        let { modalId, modalContentContainer, closeOnHoverBtnRef } = this.state;
+        let { modalId, modalBackgroundId, modalContentContainer, closeOnHoverBtnRef } = this.state;
 
         return (
-            <div id={modalId} ref={modalId} className="modal">
-                <div id={modalContentContainer} ref={modalContentContainer} className="modal-content">
-                    {React.cloneElement(modalContent, {getCloseBtn: this.getCloseBtn})}
-                </div>
+            <React.Fragment>
+                <div id={modalBackgroundId} ref={modalBackgroundId} className='modal-background' />
+                <div id={modalId} ref={modalId} className="modal" onAnimationEnd={(event) => {this.handleModalOpenAndCloseAnimations(event, modalId)}} >
+                    <div id={modalContentContainer} ref={modalContentContainer} className="modal-content">
+                        {React.cloneElement(modalContent, {getCloseBtn: this.getCloseBtn})}
+                    </div>
 
-                {closeOnHover ? <div ref={closeOnHoverBtnRef} className='close-modal-on-hover flex justify-center align-center'><label>Hover to close</label></div> : ""}
-            </div>
+                    {closeOnHover ? <div ref={closeOnHoverBtnRef} className='close-modal-on-hover flex justify-center align-center'><label>Hover to close</label></div> : ""}
+                </div>
+            </React.Fragment>
         );
     }
 }

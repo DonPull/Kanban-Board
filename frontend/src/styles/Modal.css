@@ -3,10 +3,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-	/* transition: 0.3s; */
-  opacity: 0;
+	transition: 200ms;
+  /* opacity: 0; */
   position: fixed; /* Stay in place */
   z-index: -1; /* Sit on top */
+  transform: scale(0);
   /*padding-top: 100px; /* Location of the box */
   overflow-y: scroll;
   left: 0;
@@ -21,23 +22,33 @@
   display: none;
 }
 
-.animation{
-  /* z-index: 10;
-  opacity: 1;
-  background-color: rgba(0,0,0,0.4); */
-  animation: modal-fade-in;
-  animation-duration: 300ms;
-  animation-fill-mode: forwards;
+.modal-background{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.4);
+  z-index: -1;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transition: 200ms;
 }
 
-.animation-fadeout{
-  /* z-index: 10;
-  opacity: 1;
-  background-color: rgba(0,0,0,0.4); */
+.animation{
+  z-index: 10;
+  /* opacity: 1; */
+  transform: scale(1);
+  /* background-color: rgba(0,0,0,0.4); */
+  /* animation: modal-fade-in;
+  animation-duration: 300ms;
+  animation-fill-mode: forwards; */
+}
+
+/* .animation-fadeout{
   animation: modal-fade-out;
   animation-duration: 300ms;
   animation-fill-mode: forwards;
-}
+} */
 
 @keyframes modal-fade-in {
   0% { z-index: -1; opacity: 0; background-color: rgba(0,0,0,0); }
@@ -64,11 +75,13 @@
   box-shadow: 0px 0px 8px var(--theme-color-bg-1);
   border: 2px solid var(--theme-color-accent-1);
   padding: 3rem;
+  background: transparent;
+  backdrop-filter: blur(20px);
   /* width: 0px;
   height: 0px; */
 
   /* background: transparent;
-  backdrop-filter: blur(25px); nqkoi den dano uspeq da napravq transparent s blue modalen window*/
+  backdrop-filter: blur(25px); nqkoi den dano uspeq da napravq transparent s blur modalen window*/
 
   /* background: #00000021;
     backdrop-filter: blur(14px);  tva e po dobra versiq na transparent blur-a mislq*/ 

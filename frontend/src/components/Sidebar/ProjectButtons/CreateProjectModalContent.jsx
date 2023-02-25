@@ -5,7 +5,7 @@ import searchIcon from '../../../assets/search.png';
 import './CreateProjectModalContent.css';
 import testPfpIcon from '../../../assets/test_profile_pic_1.jpg'
 import testPfp2Icon from '../../../assets/test_profile_pic_2.jpg'
-import removeAccountIcon from '../../../assets/+_and_x_icon.svg';
+import removeAccountIcon from '../../../assets/+_and_x_icon_v2.png';
 import addAccountIcon from '../../../assets/go_to_arrow.png';
 
 class CreateProjectModalContent extends Component {
