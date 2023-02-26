@@ -5,7 +5,7 @@ import addOrRemoveFilterIcon from '../../../assets/+_and_x_icon.svg';
 
 class FilterPill extends Component { 
     render() {
-        let classes = 'filter flex';
+        let classes = 'filter flex'; 
         if (this.props.isAddFilterBtn) {
             classes += ' add-filter-btn';
         }

@@ -11,21 +11,36 @@ class FilterModalContent extends Component {
         filterSearchRef2: React.createRef(),
         filtersContainerRef1: React.createRef(),
         filtersContainerRef2: React.createRef(),
+        baseFilterClass: ".filter",
         availableTags: [ <FilterPill label="available-tag"/>, <FilterPill label="randomTag"/> ],
         appliedTags: [ <FilterPill label="TEST"/>, <FilterPill label="test3"/>, <FilterPill label="test" /> ]
     }
 
-    componentDidMount(){
-        // this.props.getCloseBtn();
+    clearInputSearchFields = () => {
+        let { filterSearchRef1, filterSearchRef2, filtersContainerRef1, filtersContainerRef2, baseFilterClass } = this.state;
+        let [searchFields, arrFiltersFromContainer1, arrFiltersFromContainer2] = [[filterSearchRef1.current, filterSearchRef2.current], filtersContainerRef1.current.querySelectorAll(baseFilterClass), filtersContainerRef2.current.querySelectorAll(baseFilterClass)];
 
-        let { filterSearchRef1, filterSearchRef2, filtersContainerRef1, filtersContainerRef2 } = this.state;
-        this.addSearchFunctionality(filterSearchRef1.current, filtersContainerRef1.current, ".filter");
-        this.addSearchFunctionality(filterSearchRef2.current, filtersContainerRef2.current, ".filter");
+        searchFields.forEach(input => { input.value = ''; });
+        for(let element of arrFiltersFromContainer1){
+            element.style.display = "";
+        }
+        for(let element of arrFiltersFromContainer2){
+            element.style.display = "";
+        }
     }
 
-    addSearchFunctionality(searchFieldElement, containerOfSearchableElements, classOfElementsToBeSearched){
+    componentDidMount(){
+        let { filterSearchRef1, filterSearchRef2, filtersContainerRef1, filtersContainerRef2 } = this.state;
+        this.addSearchFunctionality(filterSearchRef1.current, filtersContainerRef1.current);
+        this.addSearchFunctionality(filterSearchRef2.current, filtersContainerRef2.current);
+    
+        // this.props.getCloseBtn();
+        this.props.modalOnCloseCallback(this.clearInputSearchFields);
+    }
+
+    addSearchFunctionality(searchFieldElement, containerOfSearchableElements){
         let searchBar = searchFieldElement;
-        let searchElements = containerOfSearchableElements.querySelectorAll("." + classOfElementsToBeSearched.replaceAll(".", "").trim());
+        let searchElements = containerOfSearchableElements.querySelectorAll(this.state.baseFilterClass);
 
         searchBar.addEventListener("input", conLog);
 

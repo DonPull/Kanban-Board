@@ -5,7 +5,7 @@ import searchIcon from '../../../assets/search.png';
 import './CreateProjectModalContent.css';
 import testPfpIcon from '../../../assets/test_profile_pic_1.jpg'
 import testPfp2Icon from '../../../assets/test_profile_pic_2.jpg'
-import removeAccountIcon from '../../../assets/+_and_x_icon_v2.png';
+import removeAccountIcon from '../../../assets/+_and_x_icon.svg';
 import addAccountIcon from '../../../assets/go_to_arrow.png';
 
 class CreateProjectModalContent extends Component {
@@ -20,8 +20,19 @@ class CreateProjectModalContent extends Component {
         remainingTitleCharacters: 60
     }
 
+    clearInput = () => {
+        let { currentModalRef, titleUnderlineRef, searchUnderlineRef } = this.state;
+        let [currentModal, titleUnderline, searchUnderline] = [currentModalRef.current, titleUnderlineRef.current, searchUnderlineRef.current];
+        
+        currentModal.querySelectorAll("input").forEach(input => { input.value = ''; });
+        titleUnderline.style.width = "0%";
+        searchUnderline.style.width = "0%";
+        this.setState({ remainingTitleCharacters: 60 });
+    };
+
     componentDidMount(){
         this.props.getCloseBtn(this.state.closeBtn.current);
+        this.props.modalOnCloseCallback(this.clearInput);
         
         let { currentModalRef, titleInputRef, searchInputRef, titleUnderlineRef, searchUnderlineRef } = this.state;
         let [currentModal, titleInput, searchInput, titleUnderline, searchUnderline] = [currentModalRef.current, titleInputRef.current, searchInputRef.current, titleUnderlineRef.current, searchUnderlineRef.current];

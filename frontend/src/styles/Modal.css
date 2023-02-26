@@ -4,6 +4,7 @@
   align-items: center;
   justify-content: center;
 	transition: 200ms;
+  transition-timing-function: cubic-bezier(0.14, 1.04, 0.58, 1);
   /* opacity: 0; */
   position: fixed; /* Stay in place */
   z-index: -1; /* Sit on top */
@@ -23,7 +24,7 @@
 }
 
 .modal-background{
-  position: absolute;
+  position: fixed;
   width: 100%;
   height: 100%;
   background-color: rgba(0,0,0,0.4);
@@ -51,8 +52,8 @@
 } */
 
 @keyframes modal-fade-in {
-  0% { z-index: -1; opacity: 0; background-color: rgba(0,0,0,0); }
-  100% { z-index: 10; opacity: 1; background-color: rgba(0,0,0,0.4); }
+  0% { z-index: -1; transform: scale(0); }
+  100% { z-index: 10; transform: scale(1); }
 }
 @keyframes modal-fade-out {
   0% { z-index: 10; opacity: 1; background-color: rgba(0,0,0,0.4); }
