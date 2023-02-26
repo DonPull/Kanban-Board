@@ -1,4 +1,6 @@
-﻿namespace KanbanBoardAPI.Models
+﻿using Microsoft.EntityFrameworkCore.Metadata;
+
+namespace KanbanBoardAPI.Models
 {
     public class User
     {
@@ -10,6 +12,9 @@
         public string RefreshToken { get; set; } = string.Empty;
         public DateTime TokenCreated { get; set; }
         public DateTime TokenExpires { get; set; }
+
+
+        public ICollection<Project> Projects { get; set; }
 
     }
 }
