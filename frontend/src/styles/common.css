@@ -15,7 +15,7 @@
 
 .button:hover{
     color: var(--theme-color-bg-element);
-    background-color: var(--theme-color-accent);
+    background-color: var(--theme-color-accent) !important;
 }
 
 .no-hover{

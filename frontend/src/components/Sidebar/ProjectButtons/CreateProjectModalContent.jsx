@@ -154,7 +154,7 @@ class CreateProjectModalContent extends Component {
 
                 </div>
 
-                <button style={{ marginTop: "3rem" }} className='button'>Create Project</button>
+                <button style={{ marginTop: "3rem", width: "max-content", backgroundColor: "transparent" }} className='button'>Create Project</button>
 
             </div>
         );
