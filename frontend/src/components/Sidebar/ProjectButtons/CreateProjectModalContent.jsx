@@ -7,6 +7,8 @@ import testPfpIcon from '../../../assets/test_profile_pic_1.jpg'
 import testPfp2Icon from '../../../assets/test_profile_pic_2.jpg'
 import removeAccountIcon from '../../../assets/+_and_x_icon.svg';
 import addAccountIcon from '../../../assets/go_to_arrow.png';
+import apiEndpoint from '../../../index.js';
+import axios from 'axios';
 
 class CreateProjectModalContent extends Component {
     state = {
@@ -16,6 +18,7 @@ class CreateProjectModalContent extends Component {
         searchInputRef: React.createRef(),
         titleUnderlineRef: React.createRef(),
         searchUnderlineRef: React.createRef(),
+        createProjectBtnRef: React.createRef(),
         titleMaxLength: 60,
         remainingTitleCharacters: 60
     }
@@ -34,9 +37,13 @@ class CreateProjectModalContent extends Component {
         this.props.getCloseBtn(this.state.closeBtn.current);
         this.props.modalOnCloseCallback(this.clearInput);
         
-        let { currentModalRef, titleInputRef, searchInputRef, titleUnderlineRef, searchUnderlineRef } = this.state;
-        let [currentModal, titleInput, searchInput, titleUnderline, searchUnderline] = [currentModalRef.current, titleInputRef.current, searchInputRef.current, titleUnderlineRef.current, searchUnderlineRef.current];
+        let { createProjectBtnRef, currentModalRef, titleInputRef, searchInputRef, titleUnderlineRef, searchUnderlineRef } = this.state;
+        let [createProjectBtn, currentModal, titleInput, searchInput, titleUnderline, searchUnderline] = [createProjectBtnRef.current, currentModalRef.current, titleInputRef.current, searchInputRef.current, titleUnderlineRef.current, searchUnderlineRef.current];
         
+        createProjectBtn.onclick = (event) => {
+            axios.post(apiEndpoint + "/project", { "Name": "Project Name", "OwnerId": "3", "Users": [ {"Username": "User1", "Email": "test@gm.com"}, {"Username": "User2", "Email": "test123@gm.com"} ]});
+        }
+
         // this is the remaining title characters counter logic.
         titleInput.oninput = (event) => {
             if(event.inputType === "insertText"){
@@ -64,7 +71,7 @@ class CreateProjectModalContent extends Component {
     }
 
     render() { 
-        let { currentModalRef, titleInputRef, searchInputRef, titleUnderlineRef, searchUnderlineRef, titleMaxLength, remainingTitleCharacters } = this.state;
+        let { createProjectBtnRef, currentModalRef, titleInputRef, searchInputRef, titleUnderlineRef, searchUnderlineRef, titleMaxLength, remainingTitleCharacters } = this.state;
 
         return (
             <div ref={currentModalRef} className='create-project-modal-content-container flex column justify-center align-center'>
@@ -154,7 +161,7 @@ class CreateProjectModalContent extends Component {
 
                 </div>
 
-                <button style={{ marginTop: "3rem", width: "max-content", backgroundColor: "transparent" }} className='button'>Create Project</button>
+                <button ref={createProjectBtnRef} style={{ marginTop: "3rem", width: "max-content", backgroundColor: "transparent" }} className='button'>Create Project</button>
 
             </div>
         );

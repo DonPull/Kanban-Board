@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KanbanBoardAPI.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230222094702_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20230228101956_InitalMigration")]
+    partial class InitalMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,28 @@ namespace KanbanBoardAPI.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("KanbanBoardAPI.Models.Project", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("OwnerId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OwnerId");
+
+                    b.ToTable("Projects");
+                });
 
             modelBuilder.Entity("KanbanBoardAPI.Models.User", b =>
                 {
@@ -87,6 +109,17 @@ namespace KanbanBoardAPI.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("UsersDto");
+                });
+
+            modelBuilder.Entity("KanbanBoardAPI.Models.Project", b =>
+                {
+                    b.HasOne("KanbanBoardAPI.Models.User", "Owner")
+                        .WithMany()
+                        .HasForeignKey("OwnerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Owner");
                 });
 #pragma warning restore 612, 618
         }

@@ -50,7 +50,7 @@ class Register extends Component {
                     registerForm.classList.add("shake-animation");
                 }
             }else{
-                let result = await axios.post(apiEndpoint + "/User", { "FullName": usernameInput.value, "Email": emailInput.value, "Password": passwordInput.value }).catch((error) => {
+                let result = await axios.post(apiEndpoint + "/Auth/register", { "FullName": usernameInput.value, "Email": emailInput.value, "Password": passwordInput.value }).catch((error) => {
                     if (error.response) {
                       console.log(error.response.data);
                       console.log(error.response.status);

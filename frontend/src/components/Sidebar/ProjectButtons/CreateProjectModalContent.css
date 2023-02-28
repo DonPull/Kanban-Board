@@ -22,6 +22,7 @@
 }
 .name-the-project-input-container{
     width: -webkit-fill-available;
+    width: -moz-available;
     margin: 0 1.5rem 0 1.5rem;
 }
 .name-the-project-input-container input{
@@ -30,6 +31,7 @@
     padding: 0.5rem 0 0 0.5rem;
     height: -webkit-fill-available;
     width: -webkit-fill-available;
+    width: -moz-available;
 }
 .character-counter{
     margin-left: 1.5rem;
@@ -77,7 +79,9 @@
 }
 .user-search-container input{
     width: -webkit-fill-available;
+    width: -moz-available;
     height: -webkit-fill-available;
+    height: -moz-available;
     color: var(--theme-color-accent-2);
     font-size: 1.6rem;
 }
@@ -101,6 +105,7 @@
 
 .user-showcase-account-container{
     width: -webkit-fill-available;
+    width: -moz-available;
     background-color: var(--theme-color-bg);
     border: 1px solid var(--theme-color-accent);
     border-radius: 1.4rem;
