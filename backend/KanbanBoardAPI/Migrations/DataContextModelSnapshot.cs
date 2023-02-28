@@ -139,13 +139,11 @@ namespace KanbanBoardAPI.Migrations
                     b.HasOne("KanbanBoardAPI.Models.Project", "Project")
                         .WithMany("ProjectParticipants")
                         .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("KanbanBoardAPI.Models.User", "User")
                         .WithMany("ProjectParticipants")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Project");

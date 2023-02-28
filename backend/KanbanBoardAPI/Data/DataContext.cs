@@ -1,6 +1,8 @@
 ﻿using KanbanBoardAPI.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 using System.Reflection.Metadata.Ecma335;
 using Task = KanbanBoardAPI.Models.Task;
 
@@ -20,6 +22,7 @@ namespace KanbanBoardAPI.Data
         //public DbSet<Task> Tasks { get; set; }
         public DbSet<ProjectParticipant> ProjectParticipants { get; set; }
 
+        
         protected override void OnModelCreating(ModelBuilder modelBuilder) 
         {
             modelBuilder.Entity<ProjectParticipant>()
@@ -27,11 +30,13 @@ namespace KanbanBoardAPI.Data
             modelBuilder.Entity<ProjectParticipant>()
                 .HasOne(u => u.User)
                 .WithMany(p => p.ProjectParticipants)
-                .HasForeignKey(p => p.UserId);
+                .HasForeignKey(p => p.UserId)
+                .OnDelete(DeleteBehavior.ClientSetNull);
             modelBuilder.Entity<ProjectParticipant>()
                 .HasOne(p => p.Project)
                 .WithMany(p => p.ProjectParticipants)
-                .HasForeignKey(p => p.ProjectId);
+                .HasForeignKey(p => p.ProjectId)
+                .OnDelete(DeleteBehavior.ClientSetNull); 
 
 
         }

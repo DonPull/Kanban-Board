@@ -8,7 +8,7 @@ namespace KanbanBoardAPI.Models
         public string Name { get; set; } = string.Empty;
         public User Owner { get; set; }
         public ICollection<ProjectParticipant> ProjectParticipants { get; set; }
-        //public ICollection<Board> Boards { get; set; }
-        //public ICollection<Task> Tasks { get; set; }
+        public ICollection<Board> Boards { get; set; }
+        public ICollection<Task> Tasks { get; set; }
     }
 }

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KanbanBoardAPI.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230228101956_InitalMigration")]
-    partial class InitalMigration
+    [Migration("20230228162258_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -45,6 +45,21 @@ namespace KanbanBoardAPI.Migrations
                     b.HasIndex("OwnerId");
 
                     b.ToTable("Projects");
+                });
+
+            modelBuilder.Entity("KanbanBoardAPI.Models.ProjectParticipant", b =>
+                {
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProjectId")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserId", "ProjectId");
+
+                    b.HasIndex("ProjectId");
+
+                    b.ToTable("ProjectParticipants");
                 });
 
             modelBuilder.Entity("KanbanBoardAPI.Models.User", b =>
@@ -114,12 +129,41 @@ namespace KanbanBoardAPI.Migrations
             modelBuilder.Entity("KanbanBoardAPI.Models.Project", b =>
                 {
                     b.HasOne("KanbanBoardAPI.Models.User", "Owner")
-                        .WithMany()
+                        .WithMany("OwnedProjects")
                         .HasForeignKey("OwnerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Owner");
+                });
+
+            modelBuilder.Entity("KanbanBoardAPI.Models.ProjectParticipant", b =>
+                {
+                    b.HasOne("KanbanBoardAPI.Models.Project", "Project")
+                        .WithMany("ProjectParticipants")
+                        .HasForeignKey("ProjectId")
+                        .IsRequired();
+
+                    b.HasOne("KanbanBoardAPI.Models.User", "User")
+                        .WithMany("ProjectParticipants")
+                        .HasForeignKey("UserId")
+                        .IsRequired();
+
+                    b.Navigation("Project");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("KanbanBoardAPI.Models.Project", b =>
+                {
+                    b.Navigation("ProjectParticipants");
+                });
+
+            modelBuilder.Entity("KanbanBoardAPI.Models.User", b =>
+                {
+                    b.Navigation("OwnedProjects");
+
+                    b.Navigation("ProjectParticipants");
                 });
 #pragma warning restore 612, 618
         }

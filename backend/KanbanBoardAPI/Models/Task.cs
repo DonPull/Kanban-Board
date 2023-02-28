@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace KanbanBoardAPI.Models
 {
     public class Task
-    {/*
+    {
         public int Id { get; set; }
         public Project Project { get; set; }
         
@@ -21,7 +21,7 @@ namespace KanbanBoardAPI.Models
         public DateTime CreatedDate { get; set; }
         public DateTime UpdateTime { get; set; }
         public DateTime Estimate { get; set; }
-        public DateTime TimeRemainingBeforeDone { get; set; }*/
+        public DateTime TimeRemainingBeforeDone { get; set; }
 
     }
 }
