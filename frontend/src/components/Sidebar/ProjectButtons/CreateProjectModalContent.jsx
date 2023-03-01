@@ -9,6 +9,7 @@ import removeAccountIcon from '../../../assets/+_and_x_icon.svg';
 import addAccountIcon from '../../../assets/go_to_arrow.png';
 import apiEndpoint from '../../../index.js';
 import axios from 'axios';
+import AccountAsListItem from '../../AccountAsListItem';
 
 class CreateProjectModalContent extends Component {
     state = {
@@ -20,7 +21,9 @@ class CreateProjectModalContent extends Component {
         searchUnderlineRef: React.createRef(),
         createProjectBtnRef: React.createRef(),
         titleMaxLength: 60,
-        remainingTitleCharacters: 60
+        remainingTitleCharacters: 60,
+        listOfSearchedAccounts: [{"FullName": "Hristian Tachev", "Email": "hristian.tachev@gmail.com"}, {"FullName": "Mincho Milev", "Email": "min40.milev@gmail.com"}, {"FullName": "Pencho Kalaijiev", "Email": "kalai40.pen@gmail.com"}],
+        listOfSelectedAccounts: []
     }
 
     clearInput = () => {
@@ -30,7 +33,7 @@ class CreateProjectModalContent extends Component {
         currentModal.querySelectorAll("input").forEach(input => { input.value = ''; });
         titleUnderline.style.width = "0%";
         searchUnderline.style.width = "0%";
-        this.setState({ remainingTitleCharacters: 60 });
+        this.setState({ remainingTitleCharacters: 60, listOfSearchedAccounts: [], listOfSelectedAccounts: [] });
     };
 
     componentDidMount(){
@@ -70,8 +73,28 @@ class CreateProjectModalContent extends Component {
         };
     }
 
+    onAccountClickCallback = (accountObj) => {
+        let { listOfSearchedAccounts, listOfSelectedAccounts } = this.state;
+        let searchedAccounts = listOfSearchedAccounts;
+        let selectedAccounts = listOfSelectedAccounts;
+
+        // the logic here moves an account (when it's clicked) to the opposite column. From "Choose participants" to "Selected People" and the other way around as well.
+        let clickedAccount = searchedAccounts.find(e => {return (e.FullName === accountObj.FullName && e.Email === accountObj.Email)});
+        if(clickedAccount === undefined){
+            clickedAccount = selectedAccounts.find(e => {return (e.FullName === accountObj.FullName && e.Email === accountObj.Email)});
+            let deletedAccount = selectedAccounts.splice(selectedAccounts.indexOf(clickedAccount), 1)[0];
+            searchedAccounts.push(deletedAccount);
+        }else{
+            let deletedAccount = searchedAccounts.splice(searchedAccounts.indexOf(clickedAccount), 1)[0];
+            selectedAccounts.push(deletedAccount);
+        }
+
+        // here we first null the lists and after they are nulled in the callback function of setState we update the lists (for some reason this is nessacary otherwise we get dublicate rendering of some accounts and in general it just does not work) in order to render the correct accounts in the correct place.
+        this.setState({ listOfSearchedAccounts: [], listOfSelectedAccounts: [] }, () => {this.setState({ listOfSearchedAccounts: searchedAccounts, listOfSelectedAccounts: selectedAccounts });});
+    }
+
     render() { 
-        let { createProjectBtnRef, currentModalRef, titleInputRef, searchInputRef, titleUnderlineRef, searchUnderlineRef, titleMaxLength, remainingTitleCharacters } = this.state;
+        let { listOfSearchedAccounts, listOfSelectedAccounts, createProjectBtnRef, currentModalRef, titleInputRef, searchInputRef, titleUnderlineRef, searchUnderlineRef, titleMaxLength, remainingTitleCharacters } = this.state;
 
         return (
             <div ref={currentModalRef} className='create-project-modal-content-container flex column justify-center align-center'>
@@ -104,35 +127,9 @@ class CreateProjectModalContent extends Component {
                                 <div className='input-animated-underline'><div ref={searchUnderlineRef} className='input-animated-underline-inside' /></div>
                             </div>
 
-                            <div className='user-showcase-account-container flex'>
-                                <div className='flex align-center'>
-                                    <img src={testPfpIcon} />
-                                </div>
-                                <div>
-                                <div className='flex column' style={{ margin: "0 1rem", maxWidth: "200px" }}>
-                                    <label>Hristian Tachev</label>
-                                    <label>hristian.tachev@gmail.com</label>
-                                </div>
-                                </div>
-                                <div className='flex align-center'>
-                                    <img src={addAccountIcon} />
-                                </div>
-                            </div>
-
-                            <div className='user-showcase-account-container flex'>
-                                <div className='flex align-center'>
-                                    <img src={testPfpIcon} />
-                                </div>
-                                <div>
-                                    <div className='flex column' style={{ margin: "0 1rem", maxWidth: "200px" }}>
-                                        <label>Aleksandar Koshov</label>
-                                        <label>aleks.airsoft@gmail.com</label>
-                                    </div>
-                                </div>
-                                <div className='flex align-center'>
-                                    <img src={addAccountIcon} />
-                                </div>
-                            </div>
+                            {listOfSearchedAccounts.map(accountObj => {
+                                return <AccountAsListItem onClickCallback={() => {this.onAccountClickCallback(accountObj)}} accountName={accountObj["FullName"]} accountEmail={accountObj["Email"]} accountActionIcon={addAccountIcon} />
+                            })}
 
                         </div>
                     </div>
@@ -141,20 +138,9 @@ class CreateProjectModalContent extends Component {
                         <label className='user-showcase-label'>Selected People</label>
                         <div className='user-showcase-container flex column'>
                             
-                            <div className='user-showcase-account-container flex'>
-                                <div className='flex align-center'>
-                                    <img src={testPfp2Icon} />
-                                </div>
-                                <div>
-                                <div className='flex column' style={{ margin: "0 1rem", maxWidth: "200px" }}>
-                                    <label>Marques Brownlee</label>
-                                    <label>mkbhd.recordstudio@gmail.com</label>
-                                </div>
-                                </div>
-                                <div className='flex align-center'>
-                                    <img src={removeAccountIcon} style={{ transform: "rotate(45deg)" }} />
-                                </div>
-                            </div>
+                            {listOfSelectedAccounts.map(accountObj => {
+                                return <AccountAsListItem onClickCallback={() => {this.onAccountClickCallback(accountObj)}} accountName={accountObj["FullName"]} accountEmail={accountObj["Email"]} accountActionIcon={removeAccountIcon} />
+                            })}
 
                         </div>
                     </div>
