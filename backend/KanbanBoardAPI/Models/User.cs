@@ -12,8 +12,8 @@ namespace KanbanBoardAPI.Models
         public string RefreshToken { get; set; } = string.Empty;
         public DateTime TokenCreated { get; set; }
         public DateTime TokenExpires { get; set; }
-        public ICollection<Project> OwnedProjects { get; set; }
-        public ICollection<ProjectParticipant> ProjectParticipants { get; set; }
+        public virtual ICollection<Project> OwnedProjects { get; set; }
+        public virtual ICollection<ProjectParticipant> ProjectParticipants { get; set; }
 
     }
 }

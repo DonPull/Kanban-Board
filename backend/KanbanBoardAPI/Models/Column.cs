@@ -6,7 +6,7 @@ namespace KanbanBoardAPI.Models
     {
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
-        public Board Board { get; set; }
-        public ICollection<Task> Tasks { get; set; }
+        public Board? Board { get; set; }
+        public virtual ICollection<Task>? Tasks { get; set; }
     }
 }

@@ -4,7 +4,6 @@ using KanbanBoardAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -12,11 +11,9 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KanbanBoardAPI.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230301072347_AddedModels")]
-    partial class AddedModels
+    partial class DataContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -44,7 +41,7 @@ namespace KanbanBoardAPI.Migrations
 
                     b.HasIndex("ProjectId");
 
-                    b.ToTable("Board");
+                    b.ToTable("Boards");
                 });
 
             modelBuilder.Entity("KanbanBoardAPI.Models.Column", b =>
@@ -55,7 +52,7 @@ namespace KanbanBoardAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("BoardId")
+                    b.Property<int?>("BoardId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -66,7 +63,7 @@ namespace KanbanBoardAPI.Migrations
 
                     b.HasIndex("BoardId");
 
-                    b.ToTable("Column");
+                    b.ToTable("Columns");
                 });
 
             modelBuilder.Entity("KanbanBoardAPI.Models.Project", b =>
@@ -81,12 +78,12 @@ namespace KanbanBoardAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("OwnerId")
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OwnerId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Projects");
                 });
@@ -114,7 +111,7 @@ namespace KanbanBoardAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("BoardId")
+                    b.Property<int?>("BoardId")
                         .HasColumnType("int");
 
                     b.Property<int>("ColumnId")
@@ -123,7 +120,7 @@ namespace KanbanBoardAPI.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("CreatorId")
+                    b.Property<int?>("CreatorId")
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
@@ -136,9 +133,6 @@ namespace KanbanBoardAPI.Migrations
                     b.Property<string>("Priority")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ProjectId")
-                        .HasColumnType("int");
 
                     b.Property<string>("Status")
                         .IsRequired()
@@ -166,9 +160,7 @@ namespace KanbanBoardAPI.Migrations
 
                     b.HasIndex("CreatorId");
 
-                    b.HasIndex("ProjectId");
-
-                    b.ToTable("Task");
+                    b.ToTable("Tasks");
                 });
 
             modelBuilder.Entity("KanbanBoardAPI.Models.User", b =>
@@ -199,9 +191,6 @@ namespace KanbanBoardAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("TaskId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("TokenCreated")
                         .HasColumnType("datetime2");
 
@@ -209,8 +198,6 @@ namespace KanbanBoardAPI.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("TaskId");
 
                     b.ToTable("Users");
                 });
@@ -255,22 +242,20 @@ namespace KanbanBoardAPI.Migrations
                 {
                     b.HasOne("KanbanBoardAPI.Models.Board", "Board")
                         .WithMany("Columns")
-                        .HasForeignKey("BoardId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("BoardId");
 
                     b.Navigation("Board");
                 });
 
             modelBuilder.Entity("KanbanBoardAPI.Models.Project", b =>
                 {
-                    b.HasOne("KanbanBoardAPI.Models.User", "Owner")
+                    b.HasOne("KanbanBoardAPI.Models.User", "User")
                         .WithMany("OwnedProjects")
-                        .HasForeignKey("OwnerId")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Owner");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("KanbanBoardAPI.Models.ProjectParticipant", b =>
@@ -278,11 +263,13 @@ namespace KanbanBoardAPI.Migrations
                     b.HasOne("KanbanBoardAPI.Models.Project", "Project")
                         .WithMany("ProjectParticipants")
                         .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("KanbanBoardAPI.Models.User", "User")
                         .WithMany("ProjectParticipants")
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Project");
@@ -292,11 +279,9 @@ namespace KanbanBoardAPI.Migrations
 
             modelBuilder.Entity("KanbanBoardAPI.Models.Task", b =>
                 {
-                    b.HasOne("KanbanBoardAPI.Models.Board", "Board")
+                    b.HasOne("KanbanBoardAPI.Models.Board", null)
                         .WithMany("Tasks")
-                        .HasForeignKey("BoardId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("BoardId");
 
                     b.HasOne("KanbanBoardAPI.Models.Column", "Column")
                         .WithMany("Tasks")
@@ -306,30 +291,11 @@ namespace KanbanBoardAPI.Migrations
 
                     b.HasOne("KanbanBoardAPI.Models.User", "Creator")
                         .WithMany()
-                        .HasForeignKey("CreatorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("KanbanBoardAPI.Models.Project", "Project")
-                        .WithMany("Tasks")
-                        .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Board");
+                        .HasForeignKey("CreatorId");
 
                     b.Navigation("Column");
 
                     b.Navigation("Creator");
-
-                    b.Navigation("Project");
-                });
-
-            modelBuilder.Entity("KanbanBoardAPI.Models.User", b =>
-                {
-                    b.HasOne("KanbanBoardAPI.Models.Task", null)
-                        .WithMany("Assignees")
-                        .HasForeignKey("TaskId");
                 });
 
             modelBuilder.Entity("KanbanBoardAPI.Models.Board", b =>
@@ -349,13 +315,6 @@ namespace KanbanBoardAPI.Migrations
                     b.Navigation("Boards");
 
                     b.Navigation("ProjectParticipants");
-
-                    b.Navigation("Tasks");
-                });
-
-            modelBuilder.Entity("KanbanBoardAPI.Models.Task", b =>
-                {
-                    b.Navigation("Assignees");
                 });
 
             modelBuilder.Entity("KanbanBoardAPI.Models.User", b =>

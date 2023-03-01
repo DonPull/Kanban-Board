@@ -2,10 +2,14 @@ import ReactDOM from 'react-dom';
 import React, { Component } from 'react';
 import './authentication.css';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+import apiEndpoint from '../..';
 
 class Login extends Component {
     state = {
-        loginFormRef: React.createRef()
+        loginFormRef: React.createRef(),
+        emailInputRef: React.createRef(),
+        passwordInputRef: React.createRef()
     }
 
     componentDidMount(){
@@ -22,26 +26,39 @@ class Login extends Component {
         });
 
          // sign in button on click event listener
-         document.getElementById("sign-in").onclick = (event) => {
+        document.getElementById("sign-in").onclick = async (event) => {
+            let { emailInputRef, passwordInputRef } = this.state;
+            let [emailInput, passwordInput] = [emailInputRef.current, passwordInputRef.current];
+
             loginForm.querySelectorAll("input").forEach(element => {
                 console.log(element.value);
+            });
+
+            let result = await axios.post(apiEndpoint + "/Auth/login", { "Email": emailInput.value, "Password": passwordInput.value }).catch((error) => {
+                if (error.response) {
+                    console.log(error.response.data);
+                    console.log(error.response.status);
+                    console.log(error.response.headers);
+                }
             });
         }
     }
 
     render() {
+        let { emailInputRef, passwordInputRef } = this.state;
+
         return (
             <div className="form-background flex column align-center height-100-percent width-100-percent bg-color-main">
                 <div ref={this.state.loginFormRef} className="form-container filter flex column no-hover align-center bg-color-main-element">
                     <h1>Sign in</h1>
                     <div className='authentication-field-sections flex column align-center'>
                         <div className="authentication-field-section">
-                            <label className="authentication-label">Username</label>
+                            <label ref={emailInputRef} className="authentication-label">Email</label>
                             <input type="text" className="authentication-field input"></input>
                         </div>
                         <div className="authentication-field-section">
                             <label className="authentication-label">Password</label>
-                            <input type="password" className="authentication-field input"></input>
+                            <input ref={passwordInputRef} type="password" className="authentication-field input"></input>
                         </div>
                     </div>
                     <button id='sign-in' className="button">Sign in</button>

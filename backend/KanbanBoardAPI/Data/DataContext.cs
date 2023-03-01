@@ -16,29 +16,31 @@ namespace KanbanBoardAPI.Data
         public DbSet<User> Users { get; set; }
         public DbSet<UserDto> UsersDto { get; set; }
         public DbSet<Project> Projects { get; set; }
-        //public DbSet<Board> Boards { get; set; }
-        //public DbSet<Column> Columns { get; set; }
+        public DbSet<Board> Boards { get; set; }
+        public DbSet<Column> Columns { get; set; }
         //public DbSet<RefreshToken> RefreshTokens { get; set; }
-        //public DbSet<Task> Tasks { get; set; }
+        public DbSet<Task> Tasks { get; set; }
         public DbSet<ProjectParticipant> ProjectParticipants { get; set; }
 
         
         protected override void OnModelCreating(ModelBuilder modelBuilder) 
         {
+            
             modelBuilder.Entity<ProjectParticipant>()
                 .HasKey(u => new { u.UserId, u.ProjectId });
             modelBuilder.Entity<ProjectParticipant>()
                 .HasOne(u => u.User)
                 .WithMany(p => p.ProjectParticipants)
                 .HasForeignKey(p => p.UserId)
-                .OnDelete(DeleteBehavior.ClientSetNull);
+                .OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<ProjectParticipant>()
                 .HasOne(p => p.Project)
                 .WithMany(p => p.ProjectParticipants)
                 .HasForeignKey(p => p.ProjectId)
-                .OnDelete(DeleteBehavior.ClientSetNull);
+                .OnDelete(DeleteBehavior.NoAction);
             
 
+            
 
 
         }

@@ -20,8 +20,8 @@ namespace KanbanBoardAPI.Controllers
         {
             Project project = new Project();
             project.Name = request.Name;
-            project.Owner = request.Owner;
-            project.ProjectParticipants = request.ProjectParticipants;
+            project.User = request.User;
+            //project.ProjectParticipants = request.ProjectParticipants;
 
             _context.Add(project);
             _context.SaveChangesAsync();
