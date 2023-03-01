@@ -15,12 +15,18 @@ namespace KanbanBoardAPI.Controllers
             _context = context;
         }
 
-        /*
-        [HttpPost("project")]
-        public Task<ActionResult<Project>> CreateProject(Project request)
+        [HttpPost("create")]
+        public async Task<ActionResult<Project>> CreateProject(Project request)
         {
-            return Ok();
+            Project project = new Project();
+            project.Name = request.Name;
+            project.Owner = request.Owner;
+            project.ProjectParticipants = request.ProjectParticipants;
+
+            _context.Add(project);
+            _context.SaveChangesAsync();
+
+            return Ok(project);
         }
-        */
     }
 }

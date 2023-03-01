@@ -6,10 +6,10 @@ namespace KanbanBoardAPI.Models
     public class Task
     {
         public int Id { get; set; }
-        public Project Project { get; set; }
+        public Project ProjectId { get; set; }
         
-        public Board Board { get; set; }
-        public Column Column { get; set; }
+        public Board BoardId { get; set; }
+        public Column ColumnId { get; set; }
         public string Title { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
         public string Type { get; set; } = string.Empty;

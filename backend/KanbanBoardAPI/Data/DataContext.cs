@@ -36,7 +36,9 @@ namespace KanbanBoardAPI.Data
                 .HasOne(p => p.Project)
                 .WithMany(p => p.ProjectParticipants)
                 .HasForeignKey(p => p.ProjectId)
-                .OnDelete(DeleteBehavior.ClientSetNull); 
+                .OnDelete(DeleteBehavior.ClientSetNull);
+            
+
 
 
         }

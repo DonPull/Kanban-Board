@@ -34,7 +34,7 @@ namespace KanbanBoardAPI.Controllers
             _context.Add(userDto);
             var result = await _context.SaveChangesAsync();
 
-            return Ok(await _context.UsersDto.ToListAsync());
+            return Ok(userDto);
         }
 
         [HttpGet]

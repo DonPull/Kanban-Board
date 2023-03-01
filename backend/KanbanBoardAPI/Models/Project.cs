@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace KanbanBoardAPI.Models
 {
@@ -6,6 +7,7 @@ namespace KanbanBoardAPI.Models
     {
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
+        
         public User Owner { get; set; }
         public ICollection<ProjectParticipant> ProjectParticipants { get; set; }
         public ICollection<Board> Boards { get; set; }
