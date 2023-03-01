@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import "./ProjectButtons.css";
 import CreateProjectModalContent from './CreateProjectModalContent';
 import Modal from './../../Modal';
+import JoinProjectModalContent from './JoinProjectModalContent';
 
 class ProjectButtons extends Component {
     state = {
@@ -25,6 +26,7 @@ class ProjectButtons extends Component {
                 <button id={viewProjectsId} className='button width-100-percent'>View My Projects</button>
 
                 <Modal modalContent={<CreateProjectModalContent />} openBtnId={createProjectId} /> 
+                <Modal modalContent={<JoinProjectModalContent />} openBtnId={joinProjectId} /> 
             </div>
         );
     }

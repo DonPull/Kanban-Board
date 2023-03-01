@@ -13,7 +13,7 @@ class TabList extends Component {
         let tabs = this.state.tabs;
 
         return (
-            <div id='tab-list'>
+            <div id='tab-list' style={{ opacity: "0", height: "6px" }} >
                 {tabs.map((key) => <Tab key={key} />)}
                 <div id="create-new-tab">
                     <img src={newTabIcon} />
