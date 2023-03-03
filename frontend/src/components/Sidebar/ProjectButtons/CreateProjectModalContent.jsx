@@ -139,7 +139,7 @@ class CreateProjectModalContent extends Component {
                         <div className='user-showcase-container flex column'>
                             
                             {listOfSelectedAccounts.map(accountObj => {
-                                return <AccountAsListItem onClickCallback={() => {this.onAccountClickCallback(accountObj)}} accountName={accountObj["FullName"]} accountEmail={accountObj["Email"]} accountActionIcon={removeAccountIcon} />
+                                return <AccountAsListItem onClickCallback={() => {this.onAccountClickCallback(accountObj)}} accountName={accountObj["FullName"]} accountEmail={accountObj["Email"]} accountActionIcon={removeAccountIcon} rotateActionIcon={true} />
                             })}
 
                         </div>

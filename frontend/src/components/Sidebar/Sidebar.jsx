@@ -6,6 +6,7 @@ import logoImg from "../../assets/logo.jpg";
 import ProjectButtons from './ProjectButtons/ProjectButtons';
 import ProjectTree from './ProjectTree/ProjectTree';
 import SidebarFooter from './SidebarFooter/SidebarFooter';
+import { Link } from 'react-router-dom';
 
 class Sidebar extends Component {
     state = {
@@ -29,10 +30,12 @@ class Sidebar extends Component {
         return (
             <aside id="sidebar" className='flex column'>
 
-                <div ref={this.state.logoRef} id="logo">
-                    {/* <img src={logoImg} /> */}
-                    <label>FlexBoard</label>
-                </div>
+                <Link to={"/"} style={{ all: "unset" }} >
+                    <div ref={this.state.logoRef} id="logo">
+                        {/* <img src={logoImg} /> */}
+                        <label>FlexBoard</label>
+                    </div>
+                </Link>
 
                 <ProjectButtons />
                 <ProjectTree />

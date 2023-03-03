@@ -1,0 +1,43 @@
+#view-projects-container{
+    width: 100%;
+    height: 100%;
+    padding: 3rem 0 0 3rem;
+    align-items: baseline;
+    position: relative;
+    gap: 2rem;
+}
+
+.project-cards-label-container{
+    width: max-content;
+    padding: 0.8rem 2rem;
+    border: 2px solid var(--theme-color-bg-1);
+    border-radius: 10rem;
+    background-color: var(--theme-color-bg);
+    color: var(--theme-color-accent-2);
+    font-size: 22px;
+    font-weight: 700;
+    gap: 1rem;
+    cursor: pointer;
+}
+.project-cards-label-container *{
+    cursor: pointer;
+}
+.project-cards-label-container img{
+    width: 2rem;
+    height: 2rem;
+    filter: var(--theme-color-accent-1-filter);
+    margin-top: 0.2rem;
+    transform: rotate(0deg);
+    transition: 200ms;
+}
+
+.collapse-project-cards-icon-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.project-cards-container{
+    padding: 1rem 2rem;
+    gap: 3rem;
+}
