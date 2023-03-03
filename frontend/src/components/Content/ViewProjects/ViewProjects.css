@@ -38,6 +38,30 @@
 }
 
 .project-cards-container{
-    padding: 1rem 2rem;
+    padding: 2rem 0;
     gap: 3rem;
+}
+
+.project-card{
+    padding: 1rem;
+    background-color: var(--theme-color-bg-element);
+    /* border: 2px solid var(--theme-color-bg-1); */
+    box-shadow: 0 0 3px var(--theme-color-accent-3);
+    border-radius: 2rem;
+}
+
+.project-card-title{
+    color: var(--theme-color-accent-3);
+    font-size: 22px;
+    font-weight: 700;
+    margin: 0 0.6rem 0.5rem 0.6rem;
+}
+
+.project-card-dates-container{
+    padding: 0.6rem 1rem;
+    background-color: var(--theme-color-bg);
+    border-radius: 1.5rem;
+    color: var(--theme-color-accent-2);
+    font-size: 16px;
+    font-weight: 500;
 }

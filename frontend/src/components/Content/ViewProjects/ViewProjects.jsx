@@ -79,6 +79,7 @@ class ViewProjects extends Component {
                     <div className='project-cards-container flex'>
                         <ProjectCard />
                         <ProjectCard />
+                        <ProjectCard />
                     </div>
                 </div>
             </div>

@@ -348,7 +348,7 @@ class KanbanBoard extends Component {
                             <React.Fragment>
                                 <KanbanColumn tasksInfo={info} />
                                 {/* the line of code below renders separators between the columns but not after the last one so that we don't have a trailing separator */}
-                                {tasksInfo.indexOf(info) !== tasksInfo.length - 1 ? <div className="separator-vertical" style={{ margin: "auto 2rem" }} /> : ""}
+                                {tasksInfo.indexOf(info) !== tasksInfo.length - 1 ? <div className="separator-vertical" style={{ margin: "auto 2rem", backgroundColor: "rgb(56 56 56)" }} /> : ""}
                             </React.Fragment>
                         ); 
                     })

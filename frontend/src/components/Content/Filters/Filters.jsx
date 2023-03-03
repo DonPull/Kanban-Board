@@ -76,7 +76,7 @@ class Filters extends Component {
                         <div className='flex'>
                             <FilterPill id={addTagBtnId} hide={filtersAreCollapsed} isAddFilterBtn={true} label="Add Filter" />
                             {filtersAreCollapsed ? <div className='collapsed-filters-label' style={{ margin: "0", marginRight: "0.8rem" }}>Filters</div> : ""}
-                            {filterTags.length > 0 && !filtersAreCollapsed ? <div className='separator-vertical' /> : ""}
+                            {filterTags.length > 0 && !filtersAreCollapsed ? <div style={{ backgroundColor: "rgb(56 56 56)" }} className='separator-vertical' /> : ""}
                             {/* {filterTags.map(f => f)} */}
                             {filterTags.map(f => { return( <div className='flex justify-center align-center'> <FilterPill label={f} /> <div className='tag-comma'>,</div> </div> ) })}
                         </div>
@@ -85,7 +85,7 @@ class Filters extends Component {
                         <div className='flex'>
                             <FilterPill id={addPersonTagBtnId} hide={filtersAreCollapsed} isAddFilterBtn={true} label="Add Person" />
                             {filtersAreCollapsed ? <div className='collapsed-filters-label'>People</div> : ""}
-                            {filterPeople.length > 0 && !filtersAreCollapsed ? <div className='separator-vertical' /> : ""}
+                            {filterPeople.length > 0 && !filtersAreCollapsed ? <div style={{ backgroundColor: "rgb(56 56 56)" }} className='separator-vertical' /> : ""}
                             {filterPeople.map(f => { return( <div className='flex justify-center align-center'> <FilterPill label={f} /> <div className='tag-comma'>,</div> </div> ) })}
                         </div>
                     </div>
