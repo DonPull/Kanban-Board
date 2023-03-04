@@ -7,7 +7,8 @@ class AccountAsListItem extends Component {
         accountRef: React.createRef(),
         accountName: this.props.accountName,
         accountEmail: this.props.accountEmail,
-        accountActionIcon: this.props.accountActionIcon
+        accountActionIcon: this.props.accountActionIcon,
+        rotateActionIcon: this.props.rotateActionIcon
     }
 
     componentDidMount(){
@@ -15,7 +16,7 @@ class AccountAsListItem extends Component {
     }
 
     render() {
-        let { accountRef, accountName, accountEmail, accountActionIcon } = this.state;
+        let { accountRef, accountName, accountEmail, accountActionIcon, rotateActionIcon } = this.state;
 
         return (
             <div ref={accountRef} className='user-showcase-account-container flex'>
@@ -29,7 +30,7 @@ class AccountAsListItem extends Component {
                 </div>
                 </div>
                 <div className='flex align-center'>
-                    <img src={accountActionIcon} />
+                    <img style={ rotateActionIcon ? { transform: "rotate(45deg)" } : {} } src={accountActionIcon} />
                 </div>
             </div>
         );

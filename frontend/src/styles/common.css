@@ -72,8 +72,8 @@
     width: 0.2rem;
     min-width: 0.2rem;
     height: 90%;
-    /* background-color: var(--theme-color-bg-1); */
-    background-color: rgb(56 56 56);
+    background-color: var(--theme-color-bg-1);
+    /* background-color: rgb(56 56 56); */
     margin: auto 1rem;
 }
 

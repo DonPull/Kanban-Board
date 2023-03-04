@@ -5,6 +5,7 @@ import homeImg from "../../../assets/main_menu_home_icon.png";
 import profileImg from "../../../assets/test_profile_pic.jpg";
 import goToArrowImg from "../../../assets/go_to_arrow.png";
 import "./SidebarFooter.css";
+import { Link } from 'react-router-dom';
 
 class SidebarFooter extends Component {
     render() { 
@@ -18,10 +19,12 @@ class SidebarFooter extends Component {
                             <img className="img-with-icon-hover-animation" src={settingsImg} />
                         </button>
 
-                        <button id="home-btn" className='button flex justify-space-between align-center'>
-                            <p id="home-btn-p">Home</p>
-                            <img className="img-with-icon-hover-animation" src={homeImg} style={{ marginBottom: "2.5px" }} />
-                        </button>
+                        <Link to={"/"} style={{ all: "unset" }}>
+                            <button id="home-btn" className='button flex justify-space-between align-center'>
+                                <p id="home-btn-p">Home</p>
+                                <img className="img-with-icon-hover-animation" src={homeImg} style={{ marginBottom: "2.5px" }} />
+                            </button>
+                        </Link>
                     </div>
 
                     <div id="profile-btn-container" className='align-center'>
