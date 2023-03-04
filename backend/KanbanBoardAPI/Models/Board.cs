@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace KanbanBoardAPI.Models
 {
@@ -10,5 +11,8 @@ namespace KanbanBoardAPI.Models
         public virtual Project Project { get; set; }
         public virtual ICollection<Column> Columns { get; set; }
         public virtual ICollection<Task> Tasks { get; set; }
+        public string FilterName { get; set; }
+        [ForeignKey("FilterName")]
+        public Filters Filter { get; set; }
     }
 }

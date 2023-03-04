@@ -7,6 +7,7 @@ using System.Reflection.Metadata.Ecma335;
 using Task = KanbanBoardAPI.Models.Task;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Column = KanbanBoardAPI.Models.Column;
+using System.Web.Http.Validation;
 
 namespace KanbanBoardAPI.Data
 {
@@ -24,7 +25,8 @@ namespace KanbanBoardAPI.Data
         public DbSet<Task> Tasks { get; set; }
         public DbSet<ProjectParticipant> ProjectParticipants { get; set; }
         public DbSet<TaskAssignees> TaskAssignees { get; set; }
-        
+        public DbSet<Filters> Filters { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder) 
         {
             
@@ -61,13 +63,35 @@ namespace KanbanBoardAPI.Data
                 .HasForeignKey(e => e.OwnerId)
                 .OnDelete(DeleteBehavior.NoAction);
 
-
-            
             modelBuilder.Entity<Board>()
                 .HasOne(e => e.Project)
                 .WithMany()
                 .HasForeignKey(e => e.ProjectId)
                 .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Board>().OwnsOne(x => x.Filter);
+
+            /* modelBuilder.Entity<Board>()
+                 .HasOne(e => e.Filter)
+                 .WithMany()
+                 .HasForeignKey(e => e.FilterName)
+                 .OnDelete(DeleteBehavior.NoAction);*/
+
+            /*modelBuilder.Entity<Board>()
+                .HasKey(u => new { u.Project, u.Filter });
+            modelBuilder.Entity<Board>()
+                .HasOne(e => e.Project)
+                .WithMany(e => e.Boards)
+                .HasForeignKey(e => e.ProjectId)
+                .OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<Board>()
+                .HasOne(p => p.Filter)
+                .WithMany(e => e.Boards)
+                .HasForeignKey(p => p.FilterName)
+                .OnDelete(DeleteBehavior.NoAction);*/
+
+
+
 
             /*
             modelBuilder.Entity<Task>()
