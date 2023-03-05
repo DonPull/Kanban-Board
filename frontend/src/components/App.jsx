@@ -53,10 +53,12 @@ export default class App extends Component{
                         <Sidebar />
                         <div className='flex column width-100-percent'>
                             {/* <TabList /> */}
-                            <Content renderComp={<React.Fragment>
-                                                <Filters />
-                                                <KanbanBoard />
-                                            </React.Fragment>} />
+                            <Content renderComp={
+                                <React.Fragment>
+                                    <Filters />
+                                    <KanbanBoard />
+                                </React.Fragment>
+                            }/>
                         </div>
                     </React.Fragment>
             },

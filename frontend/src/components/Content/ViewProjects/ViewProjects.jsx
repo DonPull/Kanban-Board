@@ -3,7 +3,8 @@ import ReactDOM from 'react-dom';
 import './ViewProjects.css';
 import collapseArrowIcon from '../../../assets/collapse_arrow.png';
 import ProjectCard from './ProjectCard';
-import addProjectIcon from '../../../assets/+_and_x_icon_v2.png';
+// import addProjectIcon from '../../../assets/+_and_x_icon_v2.png';
+import addProjectIcon from '../../../assets/+_and_x_icon_v4.png';
 
 class ViewProjects extends Component {
     state = {

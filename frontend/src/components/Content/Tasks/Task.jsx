@@ -16,6 +16,7 @@ class Task extends Component {
         taskInfo: this.props.taskInfo,
         // taskFilters: ["Backend", "Frontend", "Ivan", "Icovich"],
         // status: "Task Is Very Much Done And Complete",
+        taskRef: React.createRef(),
         taskInfoContainerRef: React.createRef(),
         taskIconsContainerRef: React.createRef(),
         taskTypeContainerRef: React.createRef(),
@@ -24,12 +25,10 @@ class Task extends Component {
     };
 
     componentDidMount(){
-        let { taskInfoContainerRef, taskIconsContainerRef, taskTypeContainerRef, taskPriorityContainerRef, statusLabelRef } = this.state;
-        let taskInfoContainer = taskInfoContainerRef.current;
-        let taskIconsContainer = taskIconsContainerRef.current;
-        let taskTypeContainer = taskTypeContainerRef.current;
-        let taskPriorityContainer = taskPriorityContainerRef.current;
-        let statusLabel = statusLabelRef.current;
+        let { taskRef, taskInfoContainerRef, taskIconsContainerRef, taskTypeContainerRef, taskPriorityContainerRef, statusLabelRef } = this.state;
+        let [task, taskInfoContainer, taskIconsContainer, taskTypeContainer, taskPriorityContainer, statusLabel] = [taskRef.current, taskInfoContainerRef.current, taskIconsContainerRef.current, taskTypeContainerRef.current, taskPriorityContainerRef.current, statusLabelRef.current];
+        
+        this.taskOnDrag(task);
 
         let taskInfoContainerWidth = Number(window.getComputedStyle(taskInfoContainer).width.replace("px", ""));
         let taskIconsContainerWidth = Number(window.getComputedStyle(taskIconsContainer).width.replace("px", ""));
@@ -61,6 +60,12 @@ class Task extends Component {
         taskPriorityContainer.onmouseout = (event) => { onMouseOut(event, taskPriorityContainer) };
     }
 
+    taskOnDrag(task) {
+        task.ondrag = (event) => {
+            console.log("task on drag: ", event);
+        };
+    }
+
     renderTaskFilters() {
         let { taskInfo } = this.state;
         return (
@@ -71,10 +76,10 @@ class Task extends Component {
     }
 
     render() {
-        let { taskInfo, taskInfoContainerRef, taskIconsContainerRef, taskTypeContainerRef, taskPriorityContainerRef, statusLabelRef } = this.state;
+        let { taskRef, taskInfo, taskInfoContainerRef, taskIconsContainerRef, taskTypeContainerRef, taskPriorityContainerRef, statusLabelRef } = this.state;
 
         return (
-            <div id={this.props.taskId} className='task flex column'>
+            <div ref={taskRef} id={this.props.taskId} className='task flex column'>
 
                 <div className='flex' style={{ position: "relative" }}>
                     <div className='flex' style={{ position: "absolute", height: "3rem", marginLeft: "1rem", marginTop: "0.1rem" }}>

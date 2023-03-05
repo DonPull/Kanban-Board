@@ -14,7 +14,7 @@ class Filters extends Component {
         outerFiltersContainerRef: React.createRef(),
         filtersAreCollapsed: false,
         filterTags: ["Backend", "Frontend"],
-        filterPeople: ["Martin", "Ivan", "Dimitur Dimitrov"]
+        filterPeople: ["Martin", "Ivan", "Dimitur Dimitrov", "Dimitur Dimitrov", "Dimitur Dimitrov", "Dimitur Dimitrov", "Dimitur Dimitrov", "Dimitur Dimitrov", "Dimitur Dimitrov", "Dimitur Dimitrov", "Dimitur Dimitrov", "Dimitur Dimitrov", "Dimitur Dimitrov", "Dimitur Dimitrov", "Dimitur Dimitrov"]
     }
 
     componentDidMount(){

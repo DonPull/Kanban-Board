@@ -5,7 +5,7 @@ import searchIcon from '../../../assets/search.png';
 import './CreateProjectModalContent.css';
 import testPfpIcon from '../../../assets/test_profile_pic_1.jpg'
 import testPfp2Icon from '../../../assets/test_profile_pic_2.jpg'
-import removeAccountIcon from '../../../assets/+_and_x_icon.svg';
+import removeAccountIcon from '../../../assets/+_and_x_icon_v4.png';
 import addAccountIcon from '../../../assets/go_to_arrow.png';
 import apiEndpoint from '../../../index.js';
 import axios from 'axios';
@@ -44,7 +44,7 @@ class CreateProjectModalContent extends Component {
         let [createProjectBtn, currentModal, titleInput, searchInput, titleUnderline, searchUnderline] = [createProjectBtnRef.current, currentModalRef.current, titleInputRef.current, searchInputRef.current, titleUnderlineRef.current, searchUnderlineRef.current];
         
         createProjectBtn.onclick = async (event) => {
-            let result = await axios.post(apiEndpoint + "/Project/create", { "Name": "Project Name", "Owner": "3", "ProjectParticipants": [ {"Username": "User1", "Email": "test@gm.com"}, {"Username": "User2", "Email": "test123@gm.com"} ]});
+            let result = await axios.post(apiEndpoint + "/Project/create", { "Name": "Project Name", "OwnerId": "3", "ProjectParticipants": [ {"Username": "User1", "Email": "test@gm.com"}, {"Username": "User2", "Email": "test123@gm.com"} ]});
         }
 
         // this is the remaining title characters counter logic.
