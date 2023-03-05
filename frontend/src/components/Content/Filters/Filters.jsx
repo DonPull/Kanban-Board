@@ -15,6 +15,7 @@ class Filters extends Component {
         filtersContainerRef: React.createRef(),
         outerFiltersContainerRef: React.createRef(),
         editBoardButtonRef: React.createRef(),
+        currentlyEditingBoard: false,
         filtersAreCollapsed: false,
         filterTags: ["Backend", "Frontend"],
         filterPeople: ["Martin", "Ivan", "Dimitur Dimitrov"]
@@ -24,7 +25,7 @@ class Filters extends Component {
         let { collapseFiltersBtnRef, filtersContainerRef, outerFiltersContainerRef, editBoardButtonRef } = this.state;
         let [collapseFiltersBtn, filtersContainer, outerFiltersContainer, editBoardButton] = [collapseFiltersBtnRef.current, filtersContainerRef.current, outerFiltersContainerRef.current, editBoardButtonRef.current];
         
-        editBoardButton.onclick = () => { this.editBoardButtonOnClick(collapseFiltersBtn) };
+        editBoardButton.onclick = (event) => { console.log("collapse filter btn: ", editBoardButton);this.editBoardButtonOnClick(event, editBoardButton) };
 
         collapseFiltersBtn.onclick = (e) => {
             // align all filter pills on the same row
@@ -63,8 +64,24 @@ class Filters extends Component {
         };
     }
 
-    editBoardButtonOnClick = (e, collapseFiltersBtn) => { 
-        console.log(collapseFiltersBtn);   
+    editBoardButtonOnClick = (e, editBoardButton) => {
+        let editBtnLabel = editBoardButton.querySelector("label");
+        let editBtnImage = editBoardButton.querySelector("img");
+        let { currentlyEditingBoard } = this.state; 
+
+        if(currentlyEditingBoard){
+            editBoardButton.classList.remove("edit-board-button-new-hover");
+            editBtnLabel.innerText = "Edit Board";
+            editBtnLabel.style.color = "var(--theme-color-accent-1)";
+            editBtnImage.style.filter = "var(--theme-color-accent-1-filter)";
+        }else{
+            editBoardButton.classList.add("edit-board-button-new-hover");
+            editBtnLabel.innerText = "Finish Editing";
+            editBtnLabel.style.color = "#B7F7C4";
+            editBtnImage.style.filter = "invert(94%) sepia(7%) saturate(1386%) hue-rotate(68deg) brightness(99%) contrast(96%)";
+        }
+        
+        this.setState({ currentlyEditingBoard: !currentlyEditingBoard });
     }
 
     render() { 

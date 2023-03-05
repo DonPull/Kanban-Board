@@ -23,5 +23,8 @@
     filter: var(--theme-color-accent-1-filter);
 }
 #edit-board-button:hover{
-    box-shadow: 0 0 6px var(--theme-color-accent-1);
+    box-shadow: 0 0 5px var(--theme-color-accent-3);
+}
+.edit-board-button-new-hover:hover{
+    box-shadow: 0 0 5px #B7F7C4 !important;
 }
