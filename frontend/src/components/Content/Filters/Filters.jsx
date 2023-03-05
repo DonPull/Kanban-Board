@@ -4,6 +4,8 @@ import FilterPill from './FilterPill';
 import Modal from '../../Modal';
 import FilterModalContent from './FilterModalContent';
 import collapseArrow from "../../../assets/collapse_arrow.png";
+import editBoardIcon from "../../../assets/edit.png";
+import './Filters.css';
 
 class Filters extends Component {
     state = {
@@ -12,38 +14,41 @@ class Filters extends Component {
         collapseFiltersBtnRef: React.createRef(),
         filtersContainerRef: React.createRef(),
         outerFiltersContainerRef: React.createRef(),
+        editBoardButtonRef: React.createRef(),
         filtersAreCollapsed: false,
         filterTags: ["Backend", "Frontend"],
-        filterPeople: ["Martin", "Ivan", "Dimitur Dimitrov", "Dimitur Dimitrov", "Dimitur Dimitrov", "Dimitur Dimitrov", "Dimitur Dimitrov", "Dimitur Dimitrov", "Dimitur Dimitrov", "Dimitur Dimitrov", "Dimitur Dimitrov", "Dimitur Dimitrov", "Dimitur Dimitrov", "Dimitur Dimitrov", "Dimitur Dimitrov"]
+        filterPeople: ["Martin", "Ivan", "Dimitur Dimitrov"]
     }
 
     componentDidMount(){
-        let { collapseFiltersBtnRef, filtersContainerRef, outerFiltersContainerRef } = this.state;
-        let collapseFiltersBtn = collapseFiltersBtnRef.current;
-        let filtersContainer = filtersContainerRef.current;
-        let outerFiltersContainer = outerFiltersContainerRef.current;
+        let { collapseFiltersBtnRef, filtersContainerRef, outerFiltersContainerRef, editBoardButtonRef } = this.state;
+        let [collapseFiltersBtn, filtersContainer, outerFiltersContainer, editBoardButton] = [collapseFiltersBtnRef.current, filtersContainerRef.current, outerFiltersContainerRef.current, editBoardButtonRef.current];
         
+        editBoardButton.onclick = () => { this.editBoardButtonOnClick(collapseFiltersBtn) };
+
         collapseFiltersBtn.onclick = (e) => {
             // align all filter pills on the same row
             if(this.state.filtersAreCollapsed){
-                filtersContainer.style.flexDirection = "column"
+                filtersContainer.style.flexDirection = "column";
+                filtersContainer.style.margin = "1.5rem 0";
                 //flip the "collapse filters" icon
                 collapseFiltersBtn.querySelector("img").style.transform = "rotate(180deg)";
-                //restore top margins to original size
-                outerFiltersContainer.querySelector(".main-section-separator").style.marginTop = "1.5rem";
-                filtersContainer.querySelectorAll(":scope > div").forEach(e => {
-                    e.style.marginTop = "1.5rem";
-                });
+                //make the text and the img in the editBoardButton big again
+                editBoardButton.style.padding = "1rem";
+                editBoardButton.querySelector("label").style.fontSize = "18px";
+                editBoardButton.querySelector("img").style.width = "3rem";
+                editBoardButton.querySelector("img").style.height = "3rem";
             }else{
                 filtersContainer.style.flexDirection = "row";
                 filtersContainer.style.justifyContent = "flex-start";
+                filtersContainer.style.margin = "0.8rem 0";
                 //flip the "collapse filters" icon
                 collapseFiltersBtn.querySelector("img").style.transform = "rotate(0deg)";
-                //make top margins smaller to save space
-                outerFiltersContainer.querySelector(".main-section-separator").style.marginTop = "0.8rem";
-                filtersContainer.querySelectorAll(":scope > div").forEach(e => {
-                    e.style.marginTop = "0.8rem";
-                });
+                //make the text and the img in the editBoardButton smaller so they fit in the collapsed filter section
+                editBoardButton.style.padding = "0.6rem 1rem";
+                editBoardButton.querySelector("label").style.fontSize = "14px";
+                editBoardButton.querySelector("img").style.width = "2rem";
+                editBoardButton.querySelector("img").style.height = "2rem";
             }
             // remove the ".filter" styles from the filter pills (because they are going to be on the same line and there won't be a lot of space)
             document.querySelectorAll(".filter").forEach((f) => {
@@ -58,8 +63,12 @@ class Filters extends Component {
         };
     }
 
+    editBoardButtonOnClick = (e, collapseFiltersBtn) => { 
+        console.log(collapseFiltersBtn);   
+    }
+
     render() { 
-        let { addTagBtnId, addPersonTagBtnId, filtersAreCollapsed, filtersContainerRef, outerFiltersContainerRef, filterTags, filterPeople } = this.state;
+        let { editBoardButtonRef, addTagBtnId, addPersonTagBtnId, filtersAreCollapsed, filtersContainerRef, outerFiltersContainerRef, filterTags, filterPeople } = this.state;
 
         return (
             <div ref={outerFiltersContainerRef} style={{ position: "relative" }} className='flex column justify-space-between'>
@@ -77,7 +86,6 @@ class Filters extends Component {
                             <FilterPill id={addTagBtnId} hide={filtersAreCollapsed} isAddFilterBtn={true} label="Add Filter" />
                             {filtersAreCollapsed ? <div className='collapsed-filters-label' style={{ margin: "0", marginRight: "0.8rem" }}>Filters</div> : ""}
                             {filterTags.length > 0 && !filtersAreCollapsed ? <div style={{ backgroundColor: "rgb(56 56 56)" }} className='separator-vertical' /> : ""}
-                            {/* {filterTags.map(f => f)} */}
                             {filterTags.map(f => { return( <div className='flex justify-center align-center'> <FilterPill label={f} /> <div className='tag-comma'>,</div> </div> ) })}
                         </div>
 
@@ -90,9 +98,14 @@ class Filters extends Component {
                         </div>
                     </div>
 
+                    <div ref={editBoardButtonRef} id="edit-board-button" className='flex'>
+                        <img src={editBoardIcon}/>
+                        <label>Edit Board</label>
+                    </div>
+
                 </div>
 
-                <div className='main-section-separator'/>
+                <div className='main-section-separator' style={{ marginTop: "0" }}/>
 
                 {/* <div ref={this.state.collapseFiltersBtnRef} id="collapse-filters-btn">
                     <img src={collapseArrow}/>

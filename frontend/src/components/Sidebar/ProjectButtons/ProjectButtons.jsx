@@ -4,6 +4,7 @@ import "./ProjectButtons.css";
 import CreateProjectModalContent from './CreateProjectModalContent';
 import Modal from './../../Modal';
 import JoinProjectModalContent from './JoinProjectModalContent';
+import { Link } from 'react-router-dom';
 
 class ProjectButtons extends Component {
     state = {
@@ -23,7 +24,9 @@ class ProjectButtons extends Component {
                 </div>
                 <button id={createProjectId} className='button width-100-percent'>Create New Project</button>
                 <button id={joinProjectId} className='button width-100-percent'>Join Project</button>
-                <button id={viewProjectsId} className='button width-100-percent'>View My Projects</button>
+                <Link to={"/viewProjects"} style={{ all: "unset", width: "100%" }}>
+                    <button id={viewProjectsId} className='button width-100-percent'>View My Projects</button>
+                </Link>
 
                 <Modal modalContent={<CreateProjectModalContent />} openBtnId={createProjectId} /> 
                 <Modal modalContent={<JoinProjectModalContent />} openBtnId={joinProjectId} /> 

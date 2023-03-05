@@ -30,10 +30,21 @@ export default class App extends Component{
                         <Sidebar />
                         <div className='flex column width-100-percent'>
                             {/* <TabList /> */}
-                            <Content renderComp={<ViewProjects />} />
+                            <Content />
                         </div>
                     </React.Fragment>,
                 errorElement: <NotFound />
+            },
+            {
+                path: "/viewProjects",
+                element: 
+                    <React.Fragment>
+                        <Sidebar />
+                        <div className='flex column width-100-percent'>
+                            {/* <TabList /> */}
+                            <Content renderComp={<ViewProjects />} />
+                        </div>
+                    </React.Fragment>
             },
             {
                 path: "/projects/:projectId",

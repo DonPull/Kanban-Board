@@ -1,0 +1,27 @@
+#edit-board-button{
+    gap: 1rem;
+    padding: 1rem;
+    align-items: center;
+    align-self: center;
+    margin-left: auto;
+    margin-right: 2rem;
+    border-radius: 2rem;
+    border: 2px solid var(--theme-color-bg-element);
+    box-shadow: 0 0 5px var(--theme-color-bg-dropoff);
+    transition: 200ms;
+    cursor: pointer;
+}
+#edit-board-button label{
+    color: var(--theme-color-accent-1);
+    font-size: 18px;
+    font-weight: 500;
+    cursor: pointer;
+}
+#edit-board-button img{
+    width: 3rem;
+    height: 3rem;
+    filter: var(--theme-color-accent-1-filter);
+}
+#edit-board-button:hover{
+    box-shadow: 0 0 6px var(--theme-color-accent-1);
+}
