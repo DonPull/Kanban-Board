@@ -5,7 +5,7 @@
 namespace KanbanBoardAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class test : Migration
+    public partial class Relationships : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

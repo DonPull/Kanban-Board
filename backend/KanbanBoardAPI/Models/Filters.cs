@@ -2,7 +2,9 @@
 {
     public class Filters
     {
+        public int Id { get; set; }
         public string FilterName { get; set; }
-        public ICollection<Board> Boards { get; set; }
+        public int BoardId { get; set; }
+        public virtual Board? Board { get; set; }
     }
 }

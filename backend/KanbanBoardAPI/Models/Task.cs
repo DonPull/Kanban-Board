@@ -9,12 +9,12 @@ namespace KanbanBoardAPI.Models
         public int Id { get; set; }
         public int ProjectId { get; set; }
         [ForeignKey("ProjectId")]
-        public virtual Project Project { get; set; }
+        public virtual Project? Project { get; set; }
         public int BoardId { get; set; }
         [ForeignKey("BoardId")]
-        public virtual Board Board { get; set; }
+        public virtual Board? Board { get; set; }
         public int ColumnId { get; set; }
-        public virtual Column Column { get ; set; }
+        public virtual Column? Column { get ; set; }
         public string Title { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
         public string Type { get; set; } = string.Empty;

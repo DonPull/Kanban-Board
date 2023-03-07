@@ -69,7 +69,10 @@ namespace KanbanBoardAPI.Data
                 .HasForeignKey(e => e.ProjectId)
                 .OnDelete(DeleteBehavior.NoAction);
 
-            modelBuilder.Entity<Board>().OwnsOne(x => x.Filter);
+            //modelBuilder.Entity<Filters>().OwnsOne(e => e.Board);
+            
+
+            //modelBuilder.Entity<Filters>().OwnsOne(x => x.Board);
 
             /* modelBuilder.Entity<Board>()
                  .HasOne(e => e.Filter)

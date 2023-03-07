@@ -8,11 +8,9 @@ namespace KanbanBoardAPI.Models
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
         public int ProjectId { get; set; }
-        public virtual Project Project { get; set; }
-        public virtual ICollection<Column> Columns { get; set; }
-        public virtual ICollection<Task> Tasks { get; set; }
-        public string FilterName { get; set; }
-        [ForeignKey("FilterName")]
-        public Filters Filter { get; set; }
+        public virtual Project? Project { get; set; }
+        public virtual ICollection<Column>? Columns { get; set; }
+        public virtual ICollection<Task>? Tasks { get; set; }
+        public virtual ICollection<Filters>? Filters { get; set; }
     }
 }

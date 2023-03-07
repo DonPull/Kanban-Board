@@ -44,7 +44,7 @@ class CreateProjectModalContent extends Component {
         let [createProjectBtn, currentModal, titleInput, searchInput, titleUnderline, searchUnderline] = [createProjectBtnRef.current, currentModalRef.current, titleInputRef.current, searchInputRef.current, titleUnderlineRef.current, searchUnderlineRef.current];
         
         createProjectBtn.onclick = async (event) => {
-            let result = await axios.post(apiEndpoint + "/Project/create", { "Name": "Project Name", "OwnerId": "3", "ProjectParticipants": [ {"Username": "User1", "Email": "test@gm.com"}, {"Username": "User2", "Email": "test123@gm.com"} ]});
+            let result = await axios.post(apiEndpoint + "/Project/create", { "name": "Project Name12345", "userId": "1"/*, "ProjectParticipants": [ {"Username": "User1", "Email": "test@gm.com"}, {"Username": "User2", "Email": "test123@gm.com"} ]*/});
         }
 
         // this is the remaining title characters counter logic.

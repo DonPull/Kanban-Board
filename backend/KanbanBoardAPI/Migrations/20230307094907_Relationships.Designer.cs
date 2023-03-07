@@ -4,6 +4,7 @@ using KanbanBoardAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KanbanBoardAPI.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230307094907_Relationships")]
+    partial class Relationships
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,6 +32,10 @@ namespace KanbanBoardAPI.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("FilterName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -69,28 +76,6 @@ namespace KanbanBoardAPI.Migrations
                     b.HasIndex("BoardId");
 
                     b.ToTable("Columns");
-                });
-
-            modelBuilder.Entity("KanbanBoardAPI.Models.Filters", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("BoardId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("FilterName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BoardId");
-
-                    b.ToTable("Filters");
                 });
 
             modelBuilder.Entity("KanbanBoardAPI.Models.Project", b =>
@@ -296,6 +281,25 @@ namespace KanbanBoardAPI.Migrations
                         .WithMany("Boards")
                         .HasForeignKey("ProjectId1");
 
+                    b.OwnsOne("KanbanBoardAPI.Models.Filters", "Filter", b1 =>
+                        {
+                            b1.Property<int>("BoardId")
+                                .HasColumnType("int");
+
+                            b1.Property<string>("FilterName")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.HasKey("BoardId");
+
+                            b1.ToTable("Filters");
+
+                            b1.WithOwner()
+                                .HasForeignKey("BoardId");
+                        });
+
+                    b.Navigation("Filter");
+
                     b.Navigation("Project");
                 });
 
@@ -303,17 +307,6 @@ namespace KanbanBoardAPI.Migrations
                 {
                     b.HasOne("KanbanBoardAPI.Models.Board", "Board")
                         .WithMany("Columns")
-                        .HasForeignKey("BoardId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Board");
-                });
-
-            modelBuilder.Entity("KanbanBoardAPI.Models.Filters", b =>
-                {
-                    b.HasOne("KanbanBoardAPI.Models.Board", "Board")
-                        .WithMany("Filters")
                         .HasForeignKey("BoardId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -420,8 +413,6 @@ namespace KanbanBoardAPI.Migrations
             modelBuilder.Entity("KanbanBoardAPI.Models.Board", b =>
                 {
                     b.Navigation("Columns");
-
-                    b.Navigation("Filters");
 
                     b.Navigation("Tasks");
                 });
