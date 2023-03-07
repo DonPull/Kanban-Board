@@ -4,12 +4,21 @@ import './authentication.css';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import apiEndpoint from '../..';
+import Toast from './../Toast';
+import jwt_decode from "jwt-decode";
+import { cookies, getUser, setUser } from '../App';
 
 class Login extends Component {
     state = {
         loginFormRef: React.createRef(),
         emailInputRef: React.createRef(),
-        passwordInputRef: React.createRef()
+        passwordInputRef: React.createRef(),
+        toastObj: {
+            show: false,
+            message: null,
+            duration: 3000,
+            type: "error"
+        }
     }
 
     componentDidMount(){
@@ -25,50 +34,96 @@ class Login extends Component {
             }
         });
 
-         // sign in button on click event listener
+        // sign in button on click event listener
         document.getElementById("sign-in").onclick = async (event) => {
             let { emailInputRef, passwordInputRef } = this.state;
             let [emailInput, passwordInput] = [emailInputRef.current, passwordInputRef.current];
 
-            loginForm.querySelectorAll("input").forEach(element => {
-                console.log(element.value);
-            });
+            //console.log("emailInput.value: ", emailInput.value);
 
-            let result = await axios.post(apiEndpoint + "/Auth/login", { "Email": emailInput.value, "Password": passwordInput.value }).catch((error) => {
-                if (error.response) {
-                    console.log(error.response.data);
-                    console.log(error.response.status);
-                    console.log(error.response.headers);
+            if(emailInput.value.trim().length === 0 || passwordInput.value.trim().length === 0){
+                this.setState(prevState => ({ toastObj: { ...prevState.toastObj, show: true, message: "Please fill out all required fields" } }));
+                if(!loginForm.classList.contains("shake-animation")){
+                    //console.log("shake animation triggered");
+                    loginForm.classList.add("shake-animation");
                 }
-            });
+            }else{
+                let result = await axios.post(apiEndpoint + "/Auth/login", { "Email": emailInput.value, "Password": passwordInput.value })
+                .then(response => {
+                    //get token from response
+                    //const token = response.data;
+                    //set JWT token to local
+                    //localStorage.setItem("token", token);
+                    //set token to axios common header
+                    //setAuthToken(token);
+                    //redirect user to home page
+                    //window.location.href = '/'
+
+                    //get token from response
+                    const token = response.data;
+
+                    let decoded = jwt_decode(token);
+
+                    //TODO: Fix everything here becasue the exports from the App component do not work at all
+                    setUser(decoded);
+
+                    console.log(getUser());
+
+                    cookies.set("jwt_token", token, {
+                        expires: new Date(decoded.exp * 1000),
+                    });
+
+                    //redirect user to home page
+                    window.location.href = '/';
+                })
+                .catch((error) => {
+                    if (error.response) {
+                        // console.log(error.response.data);
+                        // console.log(error.response.status);
+                        // console.log(error.response);
+                        this.setState(prevState => ({ toastObj: { ...prevState.toastObj, show: true, type: "error", message: error.response.data } }));
+                    }
+                });
+
+                // console.log("My console logs below.");
+                // console.log(result);
+                // console.log(result.data);
+            }
+
+            // loginForm.querySelectorAll("input").forEach(element => {
+            //     console.log(element.value);
+            // });
         }
     }
 
     render() {
-        let { emailInputRef, passwordInputRef } = this.state;
+        let { loginFormRef, toastObj, emailInputRef, passwordInputRef } = this.state;
 
         return (
-            <div className="form-background flex column align-center height-100-percent width-100-percent bg-color-main">
-                <div ref={this.state.loginFormRef} className="form-container filter flex column no-hover align-center bg-color-main-element">
-                    <h1>Sign in</h1>
-                    <div className='authentication-field-sections flex column align-center'>
-                        <div className="authentication-field-section">
-                            <label ref={emailInputRef} className="authentication-label">Email</label>
-                            <input type="text" className="authentication-field input"></input>
+            <React.Fragment>
+                {toastObj.show && <Toast closeToastCallbackFunction={() => { this.setState(prevState => ({ toastObj: { ...prevState.toastObj, show: false } })) }} toastMessage={toastObj.message} notificationDurationInMs={toastObj.duration} notificationType={toastObj.type} />}
+                <div className="form-background flex column align-center height-100-percent width-100-percent bg-color-main">
+                    <div ref={loginFormRef} onAnimationEnd={() => { loginFormRef.current.classList.remove("shake-animation"); }} className="form-container filter flex column no-hover align-center bg-color-main-element">
+                        <h1>Sign in</h1>
+                        <div className='authentication-field-sections flex column align-center'>
+                            <div className="authentication-field-section">
+                                <label className="authentication-label">Email</label>
+                                <input ref={emailInputRef} type="text" className="authentication-field input"></input>
+                            </div>
+                            <div className="authentication-field-section">
+                                <label className="authentication-label">Password</label>
+                                <input ref={passwordInputRef} type="password" className="authentication-field input"></input>
+                            </div>
                         </div>
-                        <div className="authentication-field-section">
-                            <label className="authentication-label">Password</label>
-                            <input ref={passwordInputRef} type="password" className="authentication-field input"></input>
-                        </div>
+                        <button id='sign-in' className="button">Sign in</button>
                     </div>
-                    <button id='sign-in' className="button">Sign in</button>
-                </div>
 
-                <div className='typing-animation-container flex column align-center'>
-                    <label className="typing-animation-label"><Link to={"/reset-password"}>{"Forgot your password? {"}<span>Click here</span>{"}"}</Link></label>
-                    <label className="typing-animation-label"><Link to={"/register"}>{"New around here? {"}<span>Let's register</span>{"}"}</Link></label>
+                    <div className='typing-animation-container flex column align-center'>
+                        <label className="typing-animation-label"><Link to={"/reset-password"}>{"Forgot your password? {"}<span>Click here</span>{"}"}</Link></label>
+                        <label className="typing-animation-label"><Link to={"/register"}>{"New around here? {"}<span>Let's register</span>{"}"}</Link></label>
+                    </div>
                 </div>
-            </div>
+            </React.Fragment>
         );
     }
 }

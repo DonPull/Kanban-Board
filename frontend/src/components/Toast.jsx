@@ -76,6 +76,9 @@ class Toast extends Component {
                 toast.style.top = "2rem";
             }else if(possition.includes("bottom")){
                 toast.style.top = "calc(100% - 8.5rem)";
+            }else{
+                // if it doesn't include either, default to top
+                toast.style.top = "2rem";
             }
         }
         function toastClose(toast, possition){
@@ -83,6 +86,9 @@ class Toast extends Component {
                 toast.style.top = "-6.5rem";
             }else if(possition.includes("bottom")){
                 toast.style.top = "100%";
+            }else{
+                // if it doesn't include either, default to top
+                toast.style.top = "-6.5rem";
             }
         }
         // here we set a 10ms timeout before popping up the toast because otherwise the css property 'transition' doesn't work and spans the element in place instead of smootly animating it (this happens only when you try to anime an element with 'transition' right after the element is rendered, which is the case here).

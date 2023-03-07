@@ -6,19 +6,43 @@ import Sidebar from './Sidebar/Sidebar';
 import Content from './Content/Content';
 import TabList from './Tabs/TabList';
 import { render } from '@testing-library/react';
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
 import Login from './Authentication/Login';
 import Register from './Authentication/Register';
 import NotFound from './NotFound';
 import Filters from './Content/Filters/Filters';
 import KanbanBoard from './Content/KanbanBoard/KanbanBoard';
 import ViewProjects from './Content/ViewProjects/ViewProjects';
+import Cookies from 'universal-cookie';
+
+const cookies = new Cookies();
+let getUser;
+let setUser;
+
+export {
+    cookies,
+    getUser,
+    setUser
+};
 
 export default class App extends Component{
+    state = {
+        // this user gets set on login
+        user: null
+    }
+
     componentDidMount(){
         if(document.body.scrollWidth > window.innerWidth){
             document.body.style.paddingBottom = "0.8rem";
         }
+    }
+
+    getUser = () => {
+        return this.state.user;
+    }
+    setUser = (user) => {
+        console.log("we setting the user to: ", user);
+        this.setState({ user });
     }
     
     render(){
@@ -33,7 +57,8 @@ export default class App extends Component{
                             <Content />
                         </div>
                     </React.Fragment>,
-                errorElement: <NotFound />
+                // errorElement: <NotFound />
+                errorElement: <Navigate to='/'/>
             },
             {
                 path: "/viewProjects",

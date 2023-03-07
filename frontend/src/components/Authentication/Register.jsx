@@ -18,7 +18,6 @@ class Register extends Component {
         toastObj: {
             show: false,
             message: null,
-            possition: "top",
             duration: 3000,
             type: "error"
         }
@@ -39,7 +38,7 @@ class Register extends Component {
 
         // sign in button on click event listener
         actionBtn.onclick = async (event) => {
-            let result = this.isRegisterDataValid(emailInput.value, passwordInput.value, confirmPasswordInput.value);
+            let result = this.isRegisterDataValid(emailInput.value, usernameInput.value, passwordInput.value, confirmPasswordInput.value);
             
             this.setState(prevState => ({ toastObj: { ...prevState.toastObj, message: result.message } }));
             if(result.dataIsValid !== true){
@@ -59,7 +58,7 @@ class Register extends Component {
                     }
                 });
                 console.log("My console logs below.");
-                console.log(result.statusCode);
+                console.log(result.status);
                 console.log(result.data);
 
                 // if the data entered by the user is valid send it to the server and if the account email is not already registered then show the success toast notification
@@ -68,7 +67,22 @@ class Register extends Component {
         }
     }
 
-    isRegisterDataValid = (email, password, confirmPassword) => {
+    isRegisterDataValid = (email, fullName, password, confirmPassword) => {
+        function stringIsEmpty(strArr){
+            let thereIsAnEmptyString = false;
+            strArr.forEach(str => {
+                if(str.trim().length === 0){
+                    thereIsAnEmptyString = true;
+                }
+            });
+            return thereIsAnEmptyString;
+        }
+
+        let someFieldsAreEmpty = stringIsEmpty([email, fullName, password, confirmPassword]);
+
+        if(someFieldsAreEmpty){
+            return { dataIsValid: false, message: "Please fill out all required fields"}; 
+        }
         if(!EmailValidator.validate(email)){
             return { dataIsValid: false, message: "Email is not valid"};
         }
@@ -84,7 +98,7 @@ class Register extends Component {
 
         return (
             <React.Fragment>
-                {toastObj.show && <Toast closeToastCallbackFunction={() => { this.setState(prevState => ({ toastObj: { ...prevState.toastObj, show: false } })) }} toastMessage={toastObj.message} possition={toastObj.possition} notificationDurationInMs={toastObj.duration} notificationType={toastObj.type} />}
+                {toastObj.show && <Toast closeToastCallbackFunction={() => { this.setState(prevState => ({ toastObj: { ...prevState.toastObj, show: false } })) }} toastMessage={toastObj.message} notificationDurationInMs={toastObj.duration} notificationType={toastObj.type} />}
                 <div className="form-background flex column align-center height-100-percent width-100-percent bg-color-main">
                     <div ref={registerFormRef} onAnimationEnd={() => { registerFormRef.current.classList.remove("shake-animation"); }} className="form-container filter flex column no-hover align-center bg-color-main-element" style={{ top: "18%" }}>
                         <h1>Sign up</h1>
@@ -94,7 +108,7 @@ class Register extends Component {
                                 <input ref={emailInputRef} type="text" className="authentication-field input"></input>
                             </div>
                             <div className="authentication-field-section">
-                                <label className="authentication-label">Username</label>
+                                <label className="authentication-label">Full Name</label>
                                 <input ref={usernameInputRef} type="text" className="authentication-field input"></input>
                             </div>
                             <div className="authentication-field-section">

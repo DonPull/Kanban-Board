@@ -52,13 +52,20 @@ namespace KanbanBoardAPI.Controllers
         [HttpPost("login")]
         public async Task<ActionResult<string>> Login(UserDto request)
         {
-            var existingUser = _context.Users.ToList().Find(e => e.FullName == request.FullName);
+            //var existingUser = _context.Users.ToList().Find(e => e.FullName == request.FullName);
+            /*
             if (existingUser == null)
             {
                 return BadRequest("User not found.");
             }
+            */
 
             var user = _context.Users.ToList().Find(e => e.Email == request.Email);
+
+            if (user == null)
+            {
+                return BadRequest("User not found.");
+            }
 
             if (!VerifyPasswordHash(request.Password, user.PasswordHash, user.PasswordSalt))
             {
