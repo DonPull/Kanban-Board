@@ -38,65 +38,34 @@ class Login extends Component {
             let { emailInputRef, passwordInputRef } = this.state;
             let [emailInput, passwordInput] = [emailInputRef.current, passwordInputRef.current];
 
-            //console.log("emailInput.value: ", emailInput.value);
-
             if(emailInput.value.trim().length === 0 || passwordInput.value.trim().length === 0){
                 this.setState(prevState => ({ toastObj: { ...prevState.toastObj, show: true, message: "Please fill out all required fields" } }));
                 if(!loginForm.classList.contains("shake-animation")){
-                    //console.log("shake animation triggered");
                     loginForm.classList.add("shake-animation");
                 }
             }else{
                 let result = await axios.post(apiEndpoint + "/Auth/login", { "Email": emailInput.value, "Password": passwordInput.value })
-                .then(response => {
-                    //get token from response
-                    //const token = response.data;
-                    //set JWT token to local
-                    //localStorage.setItem("token", token);
-                    //set token to axios common header
-                    //setAuthToken(token);
-                    //redirect user to home page
-                    //window.location.href = '/'
+                    .then(response => {
+                        //get token from response
+                        const token = response.data;
 
-                    console.log("we in .then");
-                    console.log(this.props.getUser);
+                        let decoded = jwt_decode(token);
 
-                    //get token from response
-                    const token = response.data;
+                        this.props.cookies.set("jwt_token", token, {
+                            expires: new Date(decoded.exp * 1000),
+                        });
 
-                    let decoded = jwt_decode(token);
-
-                    //TODO: Fix everything here becasue the exports from the App component do not work at all
-                    this.props.setUser(decoded);
-
-                    console.log(this.props.getUser());
-
-                    this.props.cookies.set("jwt_token", token, {
-                        expires: new Date(decoded.exp * 1000),
+                        //redirect user to home page
+                        window.location.href = '/';
+                    })
+                    .catch((error) => {
+                        this.setState(prevState => ({ toastObj: { ...prevState.toastObj, show: true, type: "error", message: error.response === undefined ? error.message : error.response.data } }));
+                        if(!loginForm.classList.contains("shake-animation")){
+                            //console.log("shake animation triggered");
+                            loginForm.classList.add("shake-animation");
+                        }
                     });
-
-                    //redirect user to home page
-                    window.location.href = '/';
-                })
-                .catch((error) => {
-                    // if (error.response) {
-                    //     // console.log(error.response.data);
-                    //     // console.log(error.response.status);
-                    //     // console.log(error.response);
-                    //     console.log("login error");
-                    //     this.setState(prevState => ({ toastObj: { ...prevState.toastObj, show: true, type: "error", message: error.response.data } }));
-                    // }
-                    this.setState(prevState => ({ toastObj: { ...prevState.toastObj, show: true, type: "error", message: error.response === undefined ? error.message : error.response.data } }));
-                });
-
-                // console.log("My console logs below.");
-                // console.log(result);
-                // console.log(result.data);
             }
-
-            // loginForm.querySelectorAll("input").forEach(element => {
-            //     console.log(element.value);
-            // });
         }
     }
 

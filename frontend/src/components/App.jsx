@@ -42,7 +42,7 @@ export default class App extends Component{
         const router = createBrowserRouter([
             {
                 path: "/",
-                element: 
+                element: this.state.cookies.get("jwt_token") === undefined ? <Navigate to='/login'/> :
                     <React.Fragment>
                         <Sidebar />
                         <div className='flex column width-100-percent'>
@@ -55,7 +55,7 @@ export default class App extends Component{
             },
             {
                 path: "/viewProjects",
-                element: 
+                element: this.state.cookies.get("jwt_token") === undefined ? <Navigate to='/login'/> :
                     <React.Fragment>
                         <Sidebar />
                         <div className='flex column width-100-percent'>
@@ -66,7 +66,7 @@ export default class App extends Component{
             },
             {
                 path: "/projects/:projectId",
-                element: 
+                element: this.state.cookies.get("jwt_token") === undefined ? <Navigate to='/login'/> :
                     <React.Fragment>
                         <Sidebar />
                         <div className='flex column width-100-percent'>
@@ -77,7 +77,7 @@ export default class App extends Component{
             },
             {
                 path: "/projects/:projectId/boards/:boardId",
-                element: 
+                element: this.state.cookies.get("jwt_token") === undefined ? <Navigate to='/login'/> :
                     <React.Fragment>
                         <Sidebar />
                         <div className='flex column width-100-percent'>
@@ -93,7 +93,7 @@ export default class App extends Component{
             },
             {
                 path: "/login",
-                element: <Login getUser={this.getUser} setUser={(user) => {this.setUser(user)}} cookies={this.state.cookies} />
+                element: this.state.cookies.get("jwt_token") === undefined ? <Login cookies={this.state.cookies} /> : <Navigate to='/'/>
             },
             {
                 path: "/register",
