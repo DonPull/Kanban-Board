@@ -6,7 +6,6 @@ import axios from 'axios';
 import apiEndpoint from '../..';
 import Toast from './../Toast';
 import jwt_decode from "jwt-decode";
-import { cookies, getUser, setUser } from '../App';
 
 class Login extends Component {
     state = {
@@ -59,17 +58,20 @@ class Login extends Component {
                     //redirect user to home page
                     //window.location.href = '/'
 
+                    console.log("we in .then");
+                    console.log(this.props.getUser);
+
                     //get token from response
                     const token = response.data;
 
                     let decoded = jwt_decode(token);
 
                     //TODO: Fix everything here becasue the exports from the App component do not work at all
-                    setUser(decoded);
+                    this.props.setUser(decoded);
 
-                    console.log(getUser());
+                    console.log(this.props.getUser());
 
-                    cookies.set("jwt_token", token, {
+                    this.props.cookies.set("jwt_token", token, {
                         expires: new Date(decoded.exp * 1000),
                     });
 
@@ -77,12 +79,14 @@ class Login extends Component {
                     window.location.href = '/';
                 })
                 .catch((error) => {
-                    if (error.response) {
-                        // console.log(error.response.data);
-                        // console.log(error.response.status);
-                        // console.log(error.response);
-                        this.setState(prevState => ({ toastObj: { ...prevState.toastObj, show: true, type: "error", message: error.response.data } }));
-                    }
+                    // if (error.response) {
+                    //     // console.log(error.response.data);
+                    //     // console.log(error.response.status);
+                    //     // console.log(error.response);
+                    //     console.log("login error");
+                    //     this.setState(prevState => ({ toastObj: { ...prevState.toastObj, show: true, type: "error", message: error.response.data } }));
+                    // }
+                    this.setState(prevState => ({ toastObj: { ...prevState.toastObj, show: true, type: "error", message: error.response === undefined ? error.message : error.response.data } }));
                 });
 
                 // console.log("My console logs below.");

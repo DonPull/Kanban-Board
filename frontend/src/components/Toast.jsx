@@ -12,6 +12,7 @@ class Toast extends Component {
         toastRef: React.createRef(),
         closeToastRef: React.createRef(),
         closeToastCallbackFunction: this.props.closeToastCallbackFunction,
+        //toastMessage: (this.props.toastMessage === null || this.props.toastMessage === undefined) ? "An unknown error occurred. Please try again later!" : this.props.toastMessage,
         toastMessage: this.props.toastMessage || "An unknown error occurred. Please try again later!",
         possition: this.props.possition || "top",
         notificationType: this.props.notificationType || "error",

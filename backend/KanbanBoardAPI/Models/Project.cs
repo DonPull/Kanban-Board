@@ -7,7 +7,7 @@ namespace KanbanBoardAPI.Models
     {
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
-        
+        public string JoinCode { get; set; } = string.Empty;
         public int UserId { get; set; }
         public virtual User? User { get; set; }
         public virtual ICollection<Task>? Tasks { get; set; }

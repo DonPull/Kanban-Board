@@ -168,6 +168,10 @@ namespace KanbanBoardAPI.Controllers
                 return computedHash.SequenceEqual(passwordHash);
             }
         }
+        private string CreateRandomToken()
+        {
+            return Convert.ToHexString(RandomNumberGenerator.GetBytes(64));
+        }
 
     }
 }

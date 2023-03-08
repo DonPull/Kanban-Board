@@ -15,20 +15,13 @@ import KanbanBoard from './Content/KanbanBoard/KanbanBoard';
 import ViewProjects from './Content/ViewProjects/ViewProjects';
 import Cookies from 'universal-cookie';
 
-const cookies = new Cookies();
-let getUser;
-let setUser;
-
-export {
-    cookies,
-    getUser,
-    setUser
-};
-
 export default class App extends Component{
     state = {
         // this user gets set on login
-        user: null
+        user: null,
+        cookies: new Cookies(),
+        getUser: this.getUser,
+        setUser: this.setUser
     }
 
     componentDidMount(){
@@ -100,7 +93,7 @@ export default class App extends Component{
             },
             {
                 path: "/login",
-                element: <Login />
+                element: <Login getUser={this.getUser} setUser={(user) => {this.setUser(user)}} cookies={this.state.cookies} />
             },
             {
                 path: "/register",
