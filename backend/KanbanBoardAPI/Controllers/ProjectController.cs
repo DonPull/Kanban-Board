@@ -2,6 +2,8 @@
 using KanbanBoardAPI.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace KanbanBoardAPI.Controllers
 {
@@ -33,7 +35,7 @@ namespace KanbanBoardAPI.Controllers
             var projectId = projectsList.Find(p => p.Name == request.Name).Id;
 
             ProjectParticipant projectParticipant = new ProjectParticipant();
-            projectParticipant.UserId = request.UserId;
+            projectParticipant.UserId = request.UserId; // fix this... here we add the owner as a participant but we should instead add all participants in a for loop
             projectParticipant.ProjectId = projectId;
 
             _context.Add(projectParticipant);
@@ -62,6 +64,28 @@ namespace KanbanBoardAPI.Controllers
             await _context.SaveChangesAsync();
 
             return Ok(project.Id);
+        }
+
+        [HttpPost("getProjects")]
+        public async Task<ActionResult<List<Project>>> GetProjects(string userEmail)
+        {
+            var users = await _context.Users.ToListAsync();
+            var userId = users.Find(u => u.Email == userEmail).Id;
+
+            List<Project> userProjects = new List<Project>();
+            var projectsList = await _context.Projects.ToListAsync();
+            var projectParticipantsList = await _context.ProjectParticipants.ToListAsync();
+
+            userProjects = projectsList.FindAll(p => p.UserId == userId);
+            var joinedProjectsList = projectParticipantsList.FindAll(p => p.UserId == userId);
+            var joinedProjectsIds = joinedProjectsList.Select(p => p.ProjectId).ToList();
+
+            foreach(int projectId in joinedProjectsIds)
+            {
+                userProjects.Add(projectsList.Find(p => p.Id == projectId));
+            }
+
+            return Ok(userProjects);
         }
 
         private string ProjectCodeGenerator() 
