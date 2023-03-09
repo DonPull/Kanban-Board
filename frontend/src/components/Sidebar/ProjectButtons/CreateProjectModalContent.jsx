@@ -7,9 +7,10 @@ import testPfpIcon from '../../../assets/test_profile_pic_1.jpg'
 import testPfp2Icon from '../../../assets/test_profile_pic_2.jpg'
 import removeAccountIcon from '../../../assets/+_and_x_icon_v4.png';
 import addAccountIcon from '../../../assets/go_to_arrow.png';
-import apiEndpoint from '../../../index.js';
+import apiEndpoint, { claimsStr } from '../../../index.js';
 import axios from 'axios';
 import AccountAsListItem from '../../AccountAsListItem';
+import Cookies from 'universal-cookie';
 
 class CreateProjectModalContent extends Component {
     state = {
@@ -44,11 +45,16 @@ class CreateProjectModalContent extends Component {
         let [createProjectBtn, currentModal, titleInput, searchInput, titleUnderline, searchUnderline] = [createProjectBtnRef.current, currentModalRef.current, titleInputRef.current, searchInputRef.current, titleUnderlineRef.current, searchUnderlineRef.current];
         
         createProjectBtn.onclick = async (event) => {
-            let result = await axios.post(apiEndpoint + "/Project/create", { "name": "Project Name12345", "userId": "1"/*, "ProjectParticipants": [ {"Username": "User1", "Email": "test@gm.com"}, {"Username": "User2", "Email": "test123@gm.com"} ]*/});
+            let cookies = new Cookies();
+            let userEmail = jwt_decode(cookies.get("jwt_token"))[claimsStr + "emailaddress"];
+
+            let result = await axios.post(apiEndpoint + "/Project/create", { "Name": titleInput.input, "UserEmail": userEmail/*, "ProjectParticipants": [ {"Username": "User1", "Email": "test@gm.com"}, {"Username": "User2", "Email": "test123@gm.com"} ]*/});
         }
 
         // this is the remaining title characters counter logic.
         titleInput.oninput = (event) => {
+            //TODO: Axios request on every charater typed and the backedn returns the best match accout for the current search
+
             if(event.inputType === "insertText"){
                 this.setState({ remainingTitleCharacters: this.state.remainingTitleCharacters - 1 });
             }else if(event.inputType.includes("delete")){

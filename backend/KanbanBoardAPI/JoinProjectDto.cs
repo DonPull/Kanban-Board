@@ -2,7 +2,7 @@
 {
     public class JoinProjectDto
     {
-        public int UserId { get; set; }
+        public string UserEmail { get; set; }
         public string JoinProjectString { get; set; }
     }
 }

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Identity;
 
 namespace KanbanBoardAPI.Controllers
 {
@@ -19,11 +20,12 @@ namespace KanbanBoardAPI.Controllers
         }
 
         [HttpPost("create")]
-        public async Task<ActionResult<Project>> CreateProject(Project request)
+        public async Task<ActionResult<Project>> CreateProject(Dictionary<string, string> request)
         {
+            var user = _context.Users.ToList().Find(u => u.Email == request["UserEmail"]);
             Project project = new Project();
-            project.Name = request.Name;
-            project.UserId = request.UserId;
+            project.Name = request["Name"];
+            project.UserId = user.Id;
             //project.ProjectParticipants = request.ProjectParticipants
 
             project.JoinCode = ProjectCodeGenerator();
@@ -32,10 +34,10 @@ namespace KanbanBoardAPI.Controllers
             await _context.SaveChangesAsync();
 
             var projectsList = await _context.Projects.ToListAsync();
-            var projectId = projectsList.Find(p => p.Name == request.Name).Id;
+            var projectId = projectsList.Find(p => p.Name == request["Name"]).Id;
 
             ProjectParticipant projectParticipant = new ProjectParticipant();
-            projectParticipant.UserId = request.UserId; // fix this... here we add the owner as a participant but we should instead add all participants in a for loop
+            projectParticipant.UserId = user.Id; // fix this... here we add the owner as a participant but we should instead add all participants in a for loop
             projectParticipant.ProjectId = projectId;
 
             _context.Add(projectParticipant);
@@ -56,14 +58,21 @@ namespace KanbanBoardAPI.Controllers
                 return BadRequest("Invalid join code.");
             }
 
+            var user = _context.Users.ToList().Find(u => u.Email == request.UserEmail);
+
+            if (user == null)
+            {
+                return BadRequest("Unexpected error occurred.");
+            }
+
             var projectParticipant = new ProjectParticipant();
-            projectParticipant.UserId = request.UserId;
+            projectParticipant.UserId = user.Id;
             projectParticipant.ProjectId = project.Id;
 
             _context.Add(projectParticipant);
             await _context.SaveChangesAsync();
 
-            return Ok(project.Id);
+            return Ok(project.Name);
         }
 
         [HttpPost("getProjects")]

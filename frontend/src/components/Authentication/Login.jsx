@@ -55,6 +55,8 @@ class Login extends Component {
                             expires: new Date(decoded.exp * 1000),
                         });
 
+                        //TODO: ON LOGIN/REGISTER SUCCESS DELETE THE INPUT.VALUE OF EVERY INPUT!
+
                         //redirect user to home page
                         window.location.href = '/';
                     })

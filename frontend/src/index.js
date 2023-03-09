@@ -5,8 +5,13 @@ import App from './components/App';
 import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
 const apiEndpoint = "https://localhost:7261/api";
+const claimsStr = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/";
+
 export default apiEndpoint;
+export { claimsStr }
+
 root.render(
   // <React.StrictMode>
   //   <App />
