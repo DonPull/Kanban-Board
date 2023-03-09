@@ -49,20 +49,27 @@ class Register extends Component {
                     registerForm.classList.add("shake-animation");
                 }
             }else{
-                let result = await axios.post(apiEndpoint + "/Auth/register", { "FullName": usernameInput.value, "Email": emailInput.value, "Password": passwordInput.value }).catch((error) => {
-                    if (error.response) {
-                      console.log(error.response.data);
-                      console.log(error.response.status);
-                      console.log(error.response.headers);
-                      this.setState(prevState => ({ toastObj: { ...prevState.toastObj, show: true, type: "error", message: error.response.data } }));
-                    }
-                });
-                console.log("My console logs below.");
-                console.log(result.status);
-                console.log(result.data);
+                axios.post(apiEndpoint + "/Auth/register", { "FullName": usernameInput.value, "Email": emailInput.value, "Password": passwordInput.value })
+                    .then((result) => {
+                        // if the data entered by the user is valid send it to the server and if the account email is not already registered then show the success toast notification
+                        this.setState(prevState => ({ toastObj: { ...prevState.toastObj, show: true, type: "success", duration: 5000 } }));
 
-                // if the data entered by the user is valid send it to the server and if the account email is not already registered then show the success toast notification
-                this.setState(prevState => ({ toastObj: { ...prevState.toastObj, show: true, type: "success" } }));
+                        // null input fields (because there was some wierd bug that I couldn't recreate but just in case)
+                        emailInput.value = "";
+                        usernameInput.value = "";
+                        passwordInput.value = "";
+                        confirmPasswordInput.value = "";
+                    })
+                    .catch((error) => {
+                        if (error.response) {
+                            this.setState(prevState => ({ toastObj: { ...prevState.toastObj, show: true, type: "error", message: error.response.data } }));
+                            
+                            if(!registerForm.classList.contains("shake-animation")){
+                                //console.log("shake animation triggered");
+                                registerForm.classList.add("shake-animation");
+                            }
+                        }
+                    });
             }
         }
     }

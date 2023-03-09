@@ -4,6 +4,10 @@
     min-width: 30rem;
 }
 
+#sidebar *{
+    user-select: none;
+}
+
 #logo{
     display: flex;
     justify-content: center;

@@ -55,7 +55,9 @@ class Login extends Component {
                             expires: new Date(decoded.exp * 1000),
                         });
 
-                        //TODO: ON LOGIN/REGISTER SUCCESS DELETE THE INPUT.VALUE OF EVERY INPUT!
+                        // null input fields (because there was some wierd bug that I couldn't recreate but just in case)
+                        emailInput.value = "";
+                        passwordInput.value = "";
 
                         //redirect user to home page
                         window.location.href = '/';

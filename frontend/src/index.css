@@ -55,6 +55,10 @@ body {
   background-color: var(--theme-color-bg-element);
 }
 
+button, img{
+  user-select: none;
+}
+
 ::-webkit-scrollbar {
   height: 0.8rem;
   width: 0.8rem;

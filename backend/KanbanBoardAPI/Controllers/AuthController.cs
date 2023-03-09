@@ -46,7 +46,7 @@ namespace KanbanBoardAPI.Controllers
             _context.Add(user);
             var result = await _context.SaveChangesAsync();
 
-            return Ok(await _context.Users.ToListAsync());
+            return Ok("Please check your email to confirm your account.");
         }
 
         [HttpPost("login")]
