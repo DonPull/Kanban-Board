@@ -24,7 +24,7 @@ class CreateProjectModalContent extends Component {
         createProjectBtnRef: React.createRef(),
         titleMaxLength: 60,
         remainingTitleCharacters: 60,
-        listOfSearchedAccounts: [{"FullName": "Hristian Tachev", "Email": "hristian.tachev@gmail.com"}, {"FullName": "Mincho Milev", "Email": "min40.milev@gmail.com"}, {"FullName": "Pencho Kalaijiev", "Email": "kalai40.pen@gmail.com"}],
+        listOfSearchedAccounts: [],
         listOfSelectedAccounts: []
     }
 
@@ -49,13 +49,11 @@ class CreateProjectModalContent extends Component {
             let cookies = new Cookies();
             let userEmail = jwt_decode(cookies.get("jwt_token"))[claimsStr + "emailaddress"];
 
-            let result = await axios.post(apiEndpoint + "/Project/create", { "Name": titleInput.input, "UserEmail": userEmail/*, "ProjectParticipants": [ {"Username": "User1", "Email": "test@gm.com"}, {"Username": "User2", "Email": "test123@gm.com"} ]*/});
+            let result = await axios.post(apiEndpoint + "/Project/create", { "Name": titleInput.value, "UserEmail": userEmail, "ProjectParticipantsEmails": this.state.listOfSelectedAccounts.map(account => account["Email"]).join(",") });
         }
 
         // this is the remaining title characters counter logic.
         titleInput.oninput = (event) => {
-            //TODO: Axios request on every charater typed and the backedn returns the best match accout for the current search
-
             if(event.inputType === "insertText"){
                 this.setState({ remainingTitleCharacters: this.state.remainingTitleCharacters - 1 });
             }else if(event.inputType.includes("delete")){
@@ -63,6 +61,17 @@ class CreateProjectModalContent extends Component {
             }
         };
 
+        searchInput.oninput = (event) => {
+            axios.post(apiEndpoint + "/Project/getAccountsBySearch?searchQuery=" + searchInput.value)
+                .then(response => {
+                    this.setState({ listOfSearchedAccounts: [] }, () => {
+                        this.setState({ listOfSearchedAccounts: response.data });
+                    });
+                })
+                .catch(error => {
+                    this.setState({ listOfSearchedAccounts: [] });
+                });
+        }
 
         currentModal.onclick = (event) => {
             if(event.target === titleInput){
@@ -135,8 +144,8 @@ class CreateProjectModalContent extends Component {
                             </div>
 
                             {listOfSearchedAccounts.map(accountObj => {
-                                return <AccountAsListItem onClickCallback={() => {this.onAccountClickCallback(accountObj)}} accountName={accountObj["FullName"]} accountEmail={accountObj["Email"]} accountActionIcon={addAccountIcon} />
-                            })}
+                                return <AccountAsListItem onClickCallback={() => {this.onAccountClickCallback(accountObj)}} accountName={accountObj["FullName"]} accountEmail={accountObj["Email"]} accountActionIcon={addAccountIcon} />}
+                            )}
 
                         </div>
                     </div>

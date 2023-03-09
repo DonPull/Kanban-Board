@@ -38,7 +38,7 @@ class Sidebar extends Component {
                 </Link>
 
                 <ProjectButtons />
-                <ProjectTree />
+                {/* <ProjectTree /> */}
                 <SidebarFooter />
 
             </aside>

@@ -33,16 +33,23 @@ namespace KanbanBoardAPI.Controllers
             _context.Add(project);
             await _context.SaveChangesAsync();
 
+            var userEmails = request["ProjectParticipantsEmails"].Split(",");
+
             var projectsList = await _context.Projects.ToListAsync();
             var projectId = projectsList.Find(p => p.Name == request["Name"]).Id;
 
-            ProjectParticipant projectParticipant = new ProjectParticipant();
-            projectParticipant.UserId = user.Id; // fix this... here we add the owner as a participant but we should instead add all participants in a for loop
-            projectParticipant.ProjectId = projectId;
+            foreach (string userEmail in userEmails)
+            {
+                var userId = _context.Users.ToList().Find(u => u.Email == userEmail).Id;
 
-            _context.Add(projectParticipant);
+                ProjectParticipant projectParticipant = new ProjectParticipant();
+                projectParticipant.UserId = userId;
+                projectParticipant.ProjectId = projectId;
+                
+                _context.Add(projectParticipant);
+            }
+
             await _context.SaveChangesAsync();
-
              
             return Ok(project);
         }
@@ -76,12 +83,13 @@ namespace KanbanBoardAPI.Controllers
         }
 
         [HttpPost("getProjects")]
-        public async Task<ActionResult<List<Project>>> GetProjects(string userEmail)
+        public async Task<ActionResult<Dictionary<string, List<Project>>>> GetProjects(string userEmail)
         {
             var users = await _context.Users.ToListAsync();
             var userId = users.Find(u => u.Email == userEmail).Id;
 
             List<Project> userProjects = new List<Project>();
+            List<Project> userJoinedProjects = new List<Project>();
             var projectsList = await _context.Projects.ToListAsync();
             var projectParticipantsList = await _context.ProjectParticipants.ToListAsync();
 
@@ -91,10 +99,32 @@ namespace KanbanBoardAPI.Controllers
 
             foreach(int projectId in joinedProjectsIds)
             {
-                userProjects.Add(projectsList.Find(p => p.Id == projectId));
+                userJoinedProjects.Add(projectsList.Find(p => p.Id == projectId));
             }
 
-            return Ok(userProjects);
+            var projects = new Dictionary<string, List<Project>>();
+            projects.Add("OwnedProjects", userProjects);
+            projects.Add("JoinedProjects", userJoinedProjects);
+
+            return Ok(projects);
+        }
+
+        [HttpPost("getAccountsBySearch")]
+        public List<Dictionary<string, string>> GetAccountsBySearch(string searchQuery)
+        {
+            var userList = _context.Users.ToList().FindAll(u => { return (u.FullName.Replace(" ", string.Empty).ToLower().Contains(searchQuery.Replace(" ", string.Empty).ToLower())); }).ToList();
+            var userInfoList = new List<Dictionary<string, string>>();
+
+            foreach(User user in userList)
+            {
+                var userInfoDict = new Dictionary<string, string>();
+                userInfoDict.Add("FullName", user.FullName);
+                userInfoDict.Add("Email", user.Email);
+
+                userInfoList.Add(userInfoDict);
+            }
+
+            return userInfoList;
         }
 
         private string ProjectCodeGenerator() 

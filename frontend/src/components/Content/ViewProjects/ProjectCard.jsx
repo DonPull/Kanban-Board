@@ -6,7 +6,8 @@ import participantIcon2 from '../../../assets/test_profile_pic_2.jpg';
 
 class ProjectCard extends Component {
     state = {
-        projectTitle: this.props.projectTitle || "Title of the project",
+        //projectTitle: this.props.projectTitle || "Title of the project",
+        projectTitle: this.props.projectData["Name"],
         projectCreateDate: "02/11/2022",
         projectLastOpenDate: "05/11/2022",
         projectCompletedPercentage: "17%",
@@ -16,7 +17,7 @@ class ProjectCard extends Component {
         projectParticipantsLastIconRef: React.createRef(),
         numberOfUnrenderedAccounts: 0
     }
-
+    
     componentDidMount(){
         this.spaceOutProjectParticipantsIcons();
         

@@ -74,7 +74,6 @@ class Modal extends Component {
 
         //the option to close a modal with a click should be always available
         modal.onclick = (event) => {
-            console.log(event);
             if (event.target === modal) {
                 this.state.resetModalContentFunction();
                 this.closeModalFromBtn(modal, modalContent, modalBackground, closeOnHoverBtn);
