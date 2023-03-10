@@ -25,6 +25,8 @@ class ViewProjects extends Component {
         let userEmail = jwt_decode(cookies.get("jwt_token"))[claimsStr + "emailaddress"];
         axios.post(apiEndpoint + "/Project/getProjects?userEmail=" + userEmail)
             .then(response => {
+                console.log("response: ", response);
+                console.log("response.data: ", response.data);
                 this.setState({ ownedProjectsList: response.data["OwnedProjects"], joinedProjectsList: response.data["JoinedProjects"] });
             })
             .catch(error => {

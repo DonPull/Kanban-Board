@@ -90,8 +90,8 @@ namespace KanbanBoardAPI.Controllers
 
             List<Project> userProjects = new List<Project>();
             List<Project> userJoinedProjects = new List<Project>();
-            Dictionary<string, string> userProjectsDict = new ();
-            Dictionary<string, string> userJoinedProjectsDict = new ();
+            
+
             List<Dictionary<string, string>> userProjectsDictList = new();
             List<Dictionary<string, string>> userJoinedProjectsDictList = new();
 
@@ -109,15 +109,23 @@ namespace KanbanBoardAPI.Controllers
 
             foreach(var p in userProjects)
             {
+                Dictionary<string, string> userProjectsDict = new();
                 userProjectsDict.Add("Name", p.Name);
-                //userProjectsDictList.Add();
 
-                //TODO: Fix everything here
+                userProjectsDictList.Add(userProjectsDict);
+            }
+            foreach (var p in userJoinedProjects)
+            {
+                Dictionary<string, string> userJoinedProjectsDict = new();
+                userJoinedProjectsDict.Add("Name", p.Name);
+
+                userJoinedProjectsDictList.Add(userJoinedProjectsDict);
             }
 
-            var projects = new Dictionary<string, List<Project>>();
-            projects.Add("OwnedProjects", userProjects);
-            projects.Add("JoinedProjects", userJoinedProjects);
+
+            Dictionary<string, List<Dictionary<string, string>>> projects = new Dictionary<string, List<Dictionary<string, string>>>();
+            projects.Add("OwnedProjects", userProjectsDictList);
+            projects.Add("JoinedProjects", userJoinedProjectsDictList);
 
             return Ok(projects);
         }

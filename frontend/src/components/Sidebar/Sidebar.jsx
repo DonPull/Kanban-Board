@@ -2,7 +2,6 @@ import ReactDOM from 'react-dom';
 import React, { Component } from 'react';
 import "./Sidebar.css";
 import logoImg from "../../assets/logo.jpg";
-
 import ProjectButtons from './ProjectButtons/ProjectButtons';
 import ProjectTree from './ProjectTree/ProjectTree';
 import SidebarFooter from './SidebarFooter/SidebarFooter';
