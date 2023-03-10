@@ -6,8 +6,25 @@ import profileImg from "../../../assets/test_profile_pic.jpg";
 import goToArrowImg from "../../../assets/go_to_arrow.png";
 import "./SidebarFooter.css";
 import { Link } from 'react-router-dom';
+import Cookies from 'universal-cookie';
 
 class SidebarFooter extends Component {
+    state = {
+        accountBtnRef: React.createRef()
+    }
+
+    componentDidMount() {
+        let { accountBtnRef } = this.state;
+        let accountBtn = accountBtnRef.current;
+
+        accountBtn.onclick = (event) => {
+            let cookies = new Cookies();
+            cookies.remove('jwt_token', { path: '/' });
+            //redirect user to home page
+            window.location.href = '/login';
+        }
+    }
+
     render() { 
         return (
             <React.Fragment>
@@ -28,8 +45,8 @@ class SidebarFooter extends Component {
                     </div>
 
                     <div id="profile-btn-container" className='align-center'>
-                        <button style={{ margin: "1.2rem 0", padding: "0.5rem 0.7rem 0.5rem 2rem", justifyContent: "unset" }} className='button flex justify-space-between align-center width-100-percent'>
-                            <p>My Profile</p>
+                        <button ref={this.state.accountBtnRef} style={{ margin: "1.2rem 0", padding: "0.5rem 0.7rem 0.5rem 2rem", justifyContent: "unset" }} className='button flex justify-space-between align-center width-100-percent'>
+                            <p>Logout</p>
                             <div id="profile-animation-container" className='flex width-100-percent relative'>
                                 <div id="profile-picture-animation">
                                     <img src={profileImg} />

@@ -51,7 +51,7 @@ namespace KanbanBoardAPI.Controllers
 
             await _context.SaveChangesAsync();
              
-            return Ok(project);
+            return Ok(project.Name);
         }
 
         [HttpPost("join")]
@@ -90,6 +90,11 @@ namespace KanbanBoardAPI.Controllers
 
             List<Project> userProjects = new List<Project>();
             List<Project> userJoinedProjects = new List<Project>();
+            Dictionary<string, string> userProjectsDict = new ();
+            Dictionary<string, string> userJoinedProjectsDict = new ();
+            List<Dictionary<string, string>> userProjectsDictList = new();
+            List<Dictionary<string, string>> userJoinedProjectsDictList = new();
+
             var projectsList = await _context.Projects.ToListAsync();
             var projectParticipantsList = await _context.ProjectParticipants.ToListAsync();
 
@@ -100,6 +105,14 @@ namespace KanbanBoardAPI.Controllers
             foreach(int projectId in joinedProjectsIds)
             {
                 userJoinedProjects.Add(projectsList.Find(p => p.Id == projectId));
+            }
+
+            foreach(var p in userProjects)
+            {
+                userProjectsDict.Add("Name", p.Name);
+                //userProjectsDictList.Add();
+
+                //TODO: Fix everything here
             }
 
             var projects = new Dictionary<string, List<Project>>();

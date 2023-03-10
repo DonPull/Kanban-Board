@@ -59,6 +59,9 @@ class Register extends Component {
                         usernameInput.value = "";
                         passwordInput.value = "";
                         confirmPasswordInput.value = "";
+
+                        //redirect user to home page
+                        window.location.href = '/login';
                     })
                     .catch((error) => {
                         if (error.response) {

@@ -12,6 +12,7 @@ import axios from 'axios';
 import AccountAsListItem from '../../AccountAsListItem';
 import Cookies from 'universal-cookie';
 import jwt_decode from "jwt-decode";
+import Toast from '../../Toast';
 
 class CreateProjectModalContent extends Component {
     state = {
@@ -25,7 +26,13 @@ class CreateProjectModalContent extends Component {
         titleMaxLength: 60,
         remainingTitleCharacters: 60,
         listOfSearchedAccounts: [],
-        listOfSelectedAccounts: []
+        listOfSelectedAccounts: [],
+        toastObj: {
+            show: false,
+            message: null,
+            duration: 3000,
+            type: "error"
+        }
     }
 
     clearInput = () => {
@@ -42,14 +49,20 @@ class CreateProjectModalContent extends Component {
         this.props.getCloseBtn(this.state.closeBtn.current);
         this.props.modalOnCloseCallback(this.clearInput);
         
-        let { createProjectBtnRef, currentModalRef, titleInputRef, searchInputRef, titleUnderlineRef, searchUnderlineRef } = this.state;
+        let { toastObj, createProjectBtnRef, currentModalRef, titleInputRef, searchInputRef, titleUnderlineRef, searchUnderlineRef } = this.state;
         let [createProjectBtn, currentModal, titleInput, searchInput, titleUnderline, searchUnderline] = [createProjectBtnRef.current, currentModalRef.current, titleInputRef.current, searchInputRef.current, titleUnderlineRef.current, searchUnderlineRef.current];
         
         createProjectBtn.onclick = async (event) => {
             let cookies = new Cookies();
             let userEmail = jwt_decode(cookies.get("jwt_token"))[claimsStr + "emailaddress"];
 
-            let result = await axios.post(apiEndpoint + "/Project/create", { "Name": titleInput.value, "UserEmail": userEmail, "ProjectParticipantsEmails": this.state.listOfSelectedAccounts.map(account => account["Email"]).join(",") });
+            await axios.post(apiEndpoint + "/Project/create", { "Name": titleInput.value, "UserEmail": userEmail, "ProjectParticipantsEmails": this.state.listOfSelectedAccounts.map(account => account["Email"]).join(",") })
+                .then(response => {
+                    this.setState(prevState => ({ toastObj: { ...prevState.toastObj, show: true, type: "success", message: `Created project: "${response.data}"` } }));
+                })
+                .catch(error => {
+                    this.setState(prevState => ({ toastObj: { ...prevState.toastObj, show: true, type: "error", message: "Couldn't create a project. Try again later." } }));
+                });
         }
 
         // this is the remaining title characters counter logic.
@@ -110,62 +123,65 @@ class CreateProjectModalContent extends Component {
     }
 
     render() { 
-        let { listOfSearchedAccounts, listOfSelectedAccounts, createProjectBtnRef, currentModalRef, titleInputRef, searchInputRef, titleUnderlineRef, searchUnderlineRef, titleMaxLength, remainingTitleCharacters } = this.state;
+        let { toastObj, listOfSearchedAccounts, listOfSelectedAccounts, createProjectBtnRef, currentModalRef, titleInputRef, searchInputRef, titleUnderlineRef, searchUnderlineRef, titleMaxLength, remainingTitleCharacters } = this.state;
 
         return (
-            <div ref={currentModalRef} className='create-project-modal-content-container flex column justify-center align-center'>
-                {/* <UnderConstruction closeBtn={this.state.closeBtn} /> */}
-                <div className='name-the-project-container flex'>
-                    <label>Project Name:</label>
-                    <div className='name-the-project-input-container flex column'>
-                        <div className='flex'>
-                            <input ref={titleInputRef} maxlength={titleMaxLength} />
-                            <div className='character-counter'>
-                                <label>{remainingTitleCharacters}/{titleMaxLength}</label>
-                            </div>
-                        </div>
-                        <div className='input-animated-underline'><div ref={titleUnderlineRef} className='input-animated-underline-inside' /></div>
-                    </div>
-                </div>
-                
-                <div className='user-choosing-showcases-container flex'>
-
-                    <div className='flex column'>
-                        <label className='user-showcase-label'>Choose Participants</label>
-                        <div className='user-showcase-container flex column'>
-                            <div className='user-search-container flex column'>
-                                <div className='flex'>
-                                    <div className='user-search-img-container flex'>
-                                        <img src={searchIcon} />
-                                    </div>
-                                    <input ref={searchInputRef} placeholder='Search' />
+            <React.Fragment>
+                {toastObj.show && <Toast closeToastCallbackFunction={() => { this.setState(prevState => ({ toastObj: { ...prevState.toastObj, show: false } })) }} toastMessage={toastObj.message} notificationDurationInMs={toastObj.duration} notificationType={toastObj.type} />}
+                <div ref={currentModalRef} className='create-project-modal-content-container flex column justify-center align-center'>
+                    {/* <UnderConstruction closeBtn={this.state.closeBtn} /> */}
+                    <div className='name-the-project-container flex'>
+                        <label>Project Name:</label>
+                        <div className='name-the-project-input-container flex column'>
+                            <div className='flex'>
+                                <input ref={titleInputRef} maxlength={titleMaxLength} />
+                                <div className='character-counter'>
+                                    <label>{remainingTitleCharacters}/{titleMaxLength}</label>
                                 </div>
-                                <div className='input-animated-underline'><div ref={searchUnderlineRef} className='input-animated-underline-inside' /></div>
                             </div>
-
-                            {listOfSearchedAccounts.map(accountObj => {
-                                return <AccountAsListItem onClickCallback={() => {this.onAccountClickCallback(accountObj)}} accountName={accountObj["FullName"]} accountEmail={accountObj["Email"]} accountActionIcon={addAccountIcon} />}
-                            )}
-
+                            <div className='input-animated-underline'><div ref={titleUnderlineRef} className='input-animated-underline-inside' /></div>
                         </div>
                     </div>
+                    
+                    <div className='user-choosing-showcases-container flex'>
 
-                    <div className='flex column'>
-                        <label className='user-showcase-label'>Selected People</label>
-                        <div className='user-showcase-container flex column'>
-                            
-                            {listOfSelectedAccounts.map(accountObj => {
-                                return <AccountAsListItem onClickCallback={() => {this.onAccountClickCallback(accountObj)}} accountName={accountObj["FullName"]} accountEmail={accountObj["Email"]} accountActionIcon={removeAccountIcon} rotateActionIcon={true} />
-                            })}
+                        <div className='flex column'>
+                            <label className='user-showcase-label'>Choose Participants</label>
+                            <div className='user-showcase-container flex column'>
+                                <div className='user-search-container flex column'>
+                                    <div className='flex'>
+                                        <div className='user-search-img-container flex'>
+                                            <img src={searchIcon} />
+                                        </div>
+                                        <input ref={searchInputRef} placeholder='Search' />
+                                    </div>
+                                    <div className='input-animated-underline'><div ref={searchUnderlineRef} className='input-animated-underline-inside' /></div>
+                                </div>
 
+                                {listOfSearchedAccounts.map(accountObj => {
+                                    return <AccountAsListItem onClickCallback={() => {this.onAccountClickCallback(accountObj)}} accountName={accountObj["FullName"]} accountEmail={accountObj["Email"]} accountActionIcon={addAccountIcon} />}
+                                )}
+
+                            </div>
                         </div>
+
+                        <div className='flex column'>
+                            <label className='user-showcase-label'>Selected People</label>
+                            <div className='user-showcase-container flex column'>
+                                
+                                {listOfSelectedAccounts.map(accountObj => {
+                                    return <AccountAsListItem onClickCallback={() => {this.onAccountClickCallback(accountObj)}} accountName={accountObj["FullName"]} accountEmail={accountObj["Email"]} accountActionIcon={removeAccountIcon} rotateActionIcon={true} />
+                                })}
+
+                            </div>
+                        </div>
+
                     </div>
+
+                    <button ref={createProjectBtnRef} style={{ marginTop: "3rem", width: "max-content", backgroundColor: "transparent" }} className='button'>Create Project</button>
 
                 </div>
-
-                <button ref={createProjectBtnRef} style={{ marginTop: "3rem", width: "max-content", backgroundColor: "transparent" }} className='button'>Create Project</button>
-
-            </div>
+            </React.Fragment>
         );
     }
 }
