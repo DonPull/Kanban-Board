@@ -44,24 +44,23 @@ namespace KanbanBoardAPI.Controllers
             return Ok(_context.UsersDto.ToListAsync());
         }
 
-        [HttpPut("updateProfilePicture/{userEmail}")]
-        public async Task<ActionResult<string>> UpdateProfilePicture(string userEmail, [FromBody]string ProfilePictureBase64)
+        [HttpPut("updateProfilePicture")]
+        public async Task<ActionResult<string>> UpdateProfilePicture(Dictionary<string, string> request)
         {
-            var user = _context.Users.FirstOrDefault(u => u.Email == userEmail);
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == request["Email"]);
             
             if(user == null)
             {
                 return BadRequest("User does not exist!");
             }
 
-            //User existingUser = new User() { Id = user.Id, ProfilePicture = ProfilePictureBase64 };
-            user.ProfilePicture = ProfilePictureBase64;
-            _context.SaveChanges();
+            user.ProfilePicture = request["ProfilePictureBase64"];
+            _context.Attach(user);
+            _context.Entry(user).Property(x => x.ProfilePicture).IsModified = true;
 
-            //_context.Users.Attach(existingUser).Property(x => x.ProfilePicture).IsModified = true;
-            //_context.SaveChangesAsync();
-            
-            return Ok(_context.Users.ToList().Find(u => u.Email == userEmail).ProfilePicture);
+            var result = await _context.SaveChangesAsync();
+
+            return Ok(request["ProfilePictureBase64"]);
         }
 
         [HttpPost("getUserInfo")]
@@ -80,6 +79,15 @@ namespace KanbanBoardAPI.Controllers
             userInfoDict["profilePicture"] = user.ProfilePicture;
 
             return Ok(userInfoDict);
+        }
+
+        [HttpPost("getUsersProfilePictures")]
+        public async Task<ActionResult<Dictionary<string, string>>> GetUserInfo(List<string> userEmails)
+        {
+            List<string> userProfilePictures = new List<string>();
+            _context.Users.ToList().ForEach(u => { if (userEmails.Contains(u.Email)) { userProfilePictures.Add(u.ProfilePicture); } });
+
+            return Ok(userProfilePictures);
         }
 
     }

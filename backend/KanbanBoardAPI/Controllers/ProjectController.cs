@@ -112,12 +112,64 @@ namespace KanbanBoardAPI.Controllers
                 Dictionary<string, string> userProjectsDict = new();
                 userProjectsDict.Add("Name", p.Name);
 
+                List<string> userEmails = new List<string>();
+                var userIdsOfParticipants = projectParticipantsList.FindAll(pp => pp.ProjectId == p.Id).Select(user => user.UserId).ToList();
+                users.ForEach(u => {
+                    if (userIdsOfParticipants.Contains(u.Id))
+                    {
+                        userEmails.Add(u.Email);
+                    }
+                });
+                userProjectsDict.Add("ProjectParticipantsEmails", String.Join(",", userEmails));
+
+                /*if (p.ProjectParticipants != null)
+                {
+                    List<int> userIds = p.ProjectParticipants.ToList().Select(u => u.UserId).ToList();
+                    List<string> userEmails = new List<string>();
+
+                    _context.Users.ToList().ForEach(u =>
+                    {
+                        if (userIds.Contains(u.Id))
+                        {
+                            userEmails.Add(u.Email);
+                        }
+                    });
+
+                    userProjectsDict.Add("ProjectParticipantsEmails", String.Join(",", userEmails));
+                }*/
+
                 userProjectsDictList.Add(userProjectsDict);
             }
             foreach (var p in userJoinedProjects)
             {
                 Dictionary<string, string> userJoinedProjectsDict = new();
                 userJoinedProjectsDict.Add("Name", p.Name);
+
+                List<string> userEmails = new List<string>();
+                var userIdsOfParticipants = projectParticipantsList.FindAll(pp => pp.ProjectId == p.Id).Select(user => user.UserId).ToList();
+                users.ForEach(u => {
+                    if (userIdsOfParticipants.Contains(u.Id))
+                    {
+                        userEmails.Add(u.Email);
+                    }
+                });
+                userJoinedProjectsDict.Add("ProjectParticipantsEmails", String.Join(",", userEmails));
+
+                /*if (p.ProjectParticipants != null)
+                {
+                    List<int> userIds = p.ProjectParticipants.ToList().Select(u => u.UserId).ToList();
+                    List<string> userEmails = new List<string>();
+
+                    _context.Users.ToList().ForEach(u =>
+                    {
+                        if (userIds.Contains(u.Id))
+                        {
+                            userEmails.Add(u.Email);
+                        }
+                    });
+
+                    userJoinedProjectsDict.Add("ProjectParticipantsEmails", String.Join(",", userEmails));
+                }*/
 
                 userJoinedProjectsDictList.Add(userJoinedProjectsDict);
             }

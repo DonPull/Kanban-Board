@@ -14,27 +14,29 @@ import Filters from './Content/Filters/Filters';
 import KanbanBoard from './Content/KanbanBoard/KanbanBoard';
 import ViewProjects from './Content/ViewProjects/ViewProjects';
 import Cookies from 'universal-cookie';
+import Home from './Home';
 
 export default class App extends Component{
     state = {
         // this user gets set on login
-        user: null,
-        cookies: new Cookies(),
-        getUser: this.getUser,
-        setUser: this.setUser
+        user: this.props.user,
+        cookies: new Cookies()
     }
 
     componentDidMount(){
+        let { user } = this.state;
+        // here we check if the user is null because if we don't have the jwt cookie then we set the user to null (it makes sense because if we are not logged in the user object is going to be null)
+        if(user !== null){
+            user["updateUserCallback"] = (user) => {this.updateUserCallback(user)};
+            user["updateUserCallback"](user);
+        }
+
         if(document.body.scrollWidth > window.innerWidth){
             document.body.style.paddingBottom = "0.8rem";
         }
     }
 
-    getUser = () => {
-        return this.state.user;
-    }
-    setUser = (user) => {
-        console.log("we setting the user to: ", user);
+    updateUserCallback = (user) => {
         this.setState({ user });
     }
     
@@ -44,10 +46,10 @@ export default class App extends Component{
                 path: "/",
                 element: this.state.cookies.get("jwt_token") === undefined ? <Navigate to='/login'/> :
                     <React.Fragment>
-                        <Sidebar />
+                        <Sidebar user={this.state.user} />
                         <div className='flex column width-100-percent'>
                             {/* <TabList /> */}
-                            <Content />
+                            <Content renderComp={<Home />} />
                         </div>
                     </React.Fragment>,
                 // errorElement: <NotFound />
@@ -57,7 +59,7 @@ export default class App extends Component{
                 path: "/viewProjects",
                 element: this.state.cookies.get("jwt_token") === undefined ? <Navigate to='/login'/> :
                     <React.Fragment>
-                        <Sidebar />
+                        <Sidebar user={this.state.user} />
                         <div className='flex column width-100-percent'>
                             {/* <TabList /> */}
                             <Content renderComp={<ViewProjects />} />
@@ -68,7 +70,7 @@ export default class App extends Component{
                 path: "/projects/:projectId",
                 element: this.state.cookies.get("jwt_token") === undefined ? <Navigate to='/login'/> :
                     <React.Fragment>
-                        <Sidebar />
+                        <Sidebar user={this.state.user} />
                         <div className='flex column width-100-percent'>
                             {/* <TabList /> */}
                             <Content renderComp={<label>This is the project element</label>} />
@@ -79,7 +81,7 @@ export default class App extends Component{
                 path: "/projects/:projectId/boards/:boardId",
                 element: this.state.cookies.get("jwt_token") === undefined ? <Navigate to='/login'/> :
                     <React.Fragment>
-                        <Sidebar />
+                        <Sidebar user={this.state.user} />
                         <div className='flex column width-100-percent'>
                             {/* <TabList /> */}
                             <Content renderComp={

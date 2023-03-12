@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import participantIcon from '../../../assets/test_profile_pic.jpg';
 import participantIcon1 from '../../../assets/test_profile_pic_1.jpg';
 import participantIcon2 from '../../../assets/test_profile_pic_2.jpg';
+import apiEndpoint from './../../../index';
+import axios from 'axios';
 
 class ProjectCard extends Component {
     state = {
@@ -11,15 +13,23 @@ class ProjectCard extends Component {
         projectCreateDate: "02/11/2022",
         projectLastOpenDate: "05/11/2022",
         projectCompletedPercentage: "82%",
-        projectParticipants: [participantIcon, participantIcon2, participantIcon1, participantIcon2, participantIcon1, participantIcon, participantIcon2, participantIcon1, participantIcon2, participantIcon1, participantIcon, participantIcon1, participantIcon2, participantIcon1, participantIcon],
+        //projectParticipants: [participantIcon, participantIcon2, participantIcon1, participantIcon2, participantIcon1, participantIcon, participantIcon2, participantIcon1, participantIcon2, participantIcon1, participantIcon, participantIcon1, participantIcon2, participantIcon1, participantIcon],
+        projectParticipants: [],
         projectCardRef: React.createRef(),
         projectParticipantsIconsRef: React.createRef(),
         projectParticipantsLastIconRef: React.createRef(),
         numberOfUnrenderedAccounts: 0
     }
     
-    componentDidMount(){
-        this.spaceOutProjectParticipantsIcons();
+    async componentDidMount(){
+        await axios.post(apiEndpoint + "/User/getUsersProfilePictures", this.props.projectData["ProjectParticipantsEmails"].split(","))
+            .then(response => {
+                this.setState({ projectParticipants: response.data }, () => {
+                    this.spaceOutProjectParticipantsIcons();
+                });
+            }).catch(error => {
+                console.log(error);
+            });
         
         // Get all the Meters
         const meters = document.querySelectorAll('svg[data-value] .meter');

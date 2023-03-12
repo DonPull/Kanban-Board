@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import settingsImg from "../../../assets/settings_icon.png";
 import homeImg from "../../../assets/main_menu_home_icon.png";
-import profileImg from "../../../assets/test_profile_pic.jpg";
+import unsetPfp from "../../../assets/unset_profile_picture.png";
 import goToArrowImg from "../../../assets/go_to_arrow.png";
 import "./SidebarFooter.css";
 import { Link } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import MyProfileModalContent from './MyProfileModalContent';
 import Modal from './../../Modal';
+import { user } from '../../..';
 
 class SidebarFooter extends Component {
     state = {
@@ -27,7 +28,9 @@ class SidebarFooter extends Component {
         // }
     }
 
-    render() { 
+    render() {
+        let { user } = this.props;
+
         return (
             <React.Fragment>
                 <div className='separator' style={{ marginTop: "auto", marginBottom: "1.5rem" }} />
@@ -51,7 +54,7 @@ class SidebarFooter extends Component {
                             <p>My Profile</p>
                             <div id="profile-animation-container" className='flex width-100-percent relative'>
                                 <div id="profile-picture-animation">
-                                    <img src={profileImg} />
+                                    <img src={(user === null || user.profilePicture === "") ? unsetPfp : user.profilePicture} style={this.props.user["profilePicture"] === "" ? { filter: "var(--theme-color-accent-filter)" } : {}} />
                                 </div>
 
                                 <div id="go-to-profile-arrow-animation">
@@ -62,7 +65,7 @@ class SidebarFooter extends Component {
                     </div>
                 </div>
 
-                <Modal modalContent={<MyProfileModalContent />} openBtnId={this.state.accountBtnId} /> 
+                <Modal modalContent={<MyProfileModalContent user={this.props.user} />} openBtnId={this.state.accountBtnId} /> 
             </React.Fragment>
         );
     }

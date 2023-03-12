@@ -31,14 +31,13 @@ class Sidebar extends Component {
 
                 <Link to={"/"} style={{ all: "unset" }} >
                     <div ref={this.state.logoRef} id="logo">
-                        {/* <img src={logoImg} /> */}
                         <label>FlexBoard</label>
                     </div>
                 </Link>
 
                 <ProjectButtons />
                 {/* <ProjectTree /> */}
-                <SidebarFooter />
+                <SidebarFooter user={this.props.user} />
 
             </aside>
         );

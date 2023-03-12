@@ -1,19 +1,16 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import unsetPfp from '../../../assets/unset_profile_picture_v2.png';
+import unsetPfp from '../../../assets/unset_profile_picture.png';
 import upload from '../../../assets/upload_image.png';
 import './MyProfileModalContent.css';
 import Cookies from 'universal-cookie';
 import jwt_decode from "jwt-decode";
-import apiEndpoint, { claimsStr, user } from './../../../index';
+import apiEndpoint from './../../../index';
 import axios from 'axios';
 
 class MyProfileModalContent extends Component {
     state = {
         cookies: new Cookies(),
-        userFullName: "Hristian Tachev",
-        userEmail: "hristian.tachev@gmail.com",
-        userProfilePicture: (user === null || user.profilePicture === "") ? unsetPfp : user.profilePicture,
         profilePictureRef: React.createRef(),
         uploadProfilePictureRef: React.createRef(),
         uploadProfilePictureInputRef: React.createRef(),
@@ -25,7 +22,8 @@ class MyProfileModalContent extends Component {
     componentDidMount(){
         let { cookies, profilePictureRef, uploadProfilePictureRef, profilePictureContainerRef, logoutBtnRef, uploadProfilePictureInputRef } = this.state;
         let [profilePicture, uploadProfilePicture, profilePictureContainer, logoutBtn, uploadProfilePictureInput] = [profilePictureRef.current, uploadProfilePictureRef.current, profilePictureContainerRef.current, logoutBtnRef.current, uploadProfilePictureInputRef.current];
-        
+        let { user } = this.props;
+
         logoutBtn.onclick = () => {
             cookies.remove('jwt_token', { path: '/' });
             //redirect user to home page
@@ -73,28 +71,31 @@ class MyProfileModalContent extends Component {
                 file: file,
             };
 
-            axios.put(apiEndpoint + "/User/updateProfilePicture?userEmail=" + jwt_decode(this.state.cookies.get("jwt_token"))[claimsStr + "emailaddress"], {"ProfilePictureBase64": fileInfo.base64})
+            let { user } = this.props;
+
+            axios.put(apiEndpoint + "/User/updateProfilePicture", {"Email": user.email, "ProfilePictureBase64": fileInfo.base64})
                 .then(response => {
-                    this.setState({ userProfilePicture: response.data });
+                    user.profilePicture = fileInfo.base64;
+                    user["updateUserCallback"](user);
                 });
         }
     }
 
     render() {
-        let { profilePictureRef, uploadProfilePictureRef, profilePictureContainerRef, logoutBtnRef, uploadProfilePictureInputRef, userFullName, userEmail, userProfilePicture } = this.state;
+        let { profilePictureRef, uploadProfilePictureRef, profilePictureContainerRef, logoutBtnRef, uploadProfilePictureInputRef } = this.state;
 
         return (
             <div className='my-profile-modal-content-container flex justify-center'>
                 <div className='flex column align-center'>
                     <div ref={profilePictureContainerRef} id="my-profile-image-container" className='flex justify-center align-center'>
-                        <img ref={profilePictureRef} src={userProfilePicture} />
+                        <img ref={profilePictureRef} src={this.props.user["profilePicture"] === "" ? unsetPfp : this.props.user["profilePicture"]} />
                         <img ref={uploadProfilePictureRef} src={upload} />
                         <input ref={uploadProfilePictureInputRef} type='file' onChange={this.handleProfilePictureFileInput} accept="image/jpeg,image/png,image/jpg"/>
                     </div>
 
                     <div className='flex column align-center'>
-                        <label id="my-profile-fullname">{userFullName}</label>
-                        <label id="my-profile-email">{userEmail}</label>
+                        <label id="my-profile-fullname">{this.props.user["fullName"]}</label>
+                        <label id="my-profile-email">{this.props.user["email"]}</label>
                     </div>
 
                     <button ref={logoutBtnRef} className='button' style={{ width: "100%" }}>Logout</button>

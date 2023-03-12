@@ -20,8 +20,6 @@ let user = cookies.get("jwt_token") === undefined ? null :
       return null;
     });
 
-console.log(user);
-
 export default apiEndpoint;
 export { claimsStr, user, cookies };
 
@@ -29,7 +27,7 @@ root.render(
   // <React.StrictMode>
   //   <App />
   // </React.StrictMode>
-  <App />
+  <App user={user}/>
 );
 
 // If you want to start measuring performance in your app, pass a function
