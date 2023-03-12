@@ -61,7 +61,7 @@ class Register extends Component {
                         confirmPasswordInput.value = "";
 
                         //redirect user to home page
-                        window.location.href = '/login';
+                        //window.location.href = '/login';
                     })
                     .catch((error) => {
                         if (error.response) {

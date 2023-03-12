@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using KanbanBoardAPI.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Web.Http.Cors;
 
@@ -43,7 +44,43 @@ namespace KanbanBoardAPI.Controllers
             return Ok(_context.UsersDto.ToListAsync());
         }
 
+        [HttpPut("updateProfilePicture/{userEmail}")]
+        public async Task<ActionResult<string>> UpdateProfilePicture(string userEmail, [FromBody]string ProfilePictureBase64)
+        {
+            var user = _context.Users.FirstOrDefault(u => u.Email == userEmail);
+            
+            if(user == null)
+            {
+                return BadRequest("User does not exist!");
+            }
 
+            //User existingUser = new User() { Id = user.Id, ProfilePicture = ProfilePictureBase64 };
+            user.ProfilePicture = ProfilePictureBase64;
+            _context.SaveChanges();
+
+            //_context.Users.Attach(existingUser).Property(x => x.ProfilePicture).IsModified = true;
+            //_context.SaveChangesAsync();
+            
+            return Ok(_context.Users.ToList().Find(u => u.Email == userEmail).ProfilePicture);
+        }
+
+        [HttpPost("getUserInfo")]
+        public async Task<ActionResult<Dictionary<string, string>>> GetUserInfo(string userEmail)
+        {
+            var user = _context.Users.ToList().Find(u => u.Email == userEmail);
+
+            if(user == null)
+            {
+                return BadRequest("User does not exist!");
+            }
+
+            var userInfoDict = new Dictionary<string, string>();
+            userInfoDict["fullName"] = user.FullName;
+            userInfoDict["email"] = user.Email;
+            userInfoDict["profilePicture"] = user.ProfilePicture;
+
+            return Ok(userInfoDict);
+        }
 
     }
 }

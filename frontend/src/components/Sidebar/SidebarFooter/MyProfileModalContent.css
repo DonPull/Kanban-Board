@@ -1,0 +1,35 @@
+.my-profile-modal-content-container{
+    align-items: flex-start;
+}
+
+#my-profile-image-container img{
+    width: 15rem;
+    height: 15rem;
+    border-radius: 50%;
+    transition: 200ms;
+    cursor: pointer;
+}
+#my-profile-image-container img:last-of-type{
+    width: 8rem;
+    height: 8rem;
+    border-radius: 0;
+    opacity: 0;
+    filter: var(--theme-color-accent-filter);
+    position: absolute;
+}
+#my-profile-image-container input[type="file"]{
+    display: none;
+}
+
+#my-profile-fullname{
+    color: var(--theme-color-accent-1);
+    font-weight: 700;
+    font-size: 22px;
+    margin-top: 0.5rem;
+}
+#my-profile-email{
+    color: var(--theme-color-accent-1);
+    font-weight: 400;
+    font-size: 14px;
+    margin-bottom: 2rem;
+}

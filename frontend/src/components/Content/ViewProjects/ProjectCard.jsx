@@ -10,7 +10,7 @@ class ProjectCard extends Component {
         projectTitle: this.props.projectData["Name"],
         projectCreateDate: "02/11/2022",
         projectLastOpenDate: "05/11/2022",
-        projectCompletedPercentage: "17%",
+        projectCompletedPercentage: "82%",
         projectParticipants: [participantIcon, participantIcon2, participantIcon1, participantIcon2, participantIcon1, participantIcon, participantIcon2, participantIcon1, participantIcon2, participantIcon1, participantIcon, participantIcon1, participantIcon2, participantIcon1, participantIcon],
         projectCardRef: React.createRef(),
         projectParticipantsIconsRef: React.createRef(),
