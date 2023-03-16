@@ -67,6 +67,7 @@
     width: calc(0% + 40px);
 }
 #profile-picture-animation img{
+    width: 4rem;
     height: 4rem;
     border: 0.2rem solid var(--theme-color-accent);
     border-radius: 50%;

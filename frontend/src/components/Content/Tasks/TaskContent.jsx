@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import "./TaskContent.css";
 import closeBtnIcon from "../../../assets/+_and_x_icon.svg";
-import testCreatorIcon from "../../../assets/test_profile_pic_1.jpg";
-import testAssigneeIcon from "../../../assets/test_profile_pic_2.jpg";
+// import testCreatorIcon from "../../../assets/test_profile_pic_1.jpg";
+// import testAssigneeIcon from "../../../assets/test_profile_pic_2.jpg";
+import testCreatorIcon from "../../../assets/unset_profile_picture.png";
+import testAssigneeIcon from "../../../assets/unset_profile_picture.png";
 
 class TaskContent extends Component {
     state = { 

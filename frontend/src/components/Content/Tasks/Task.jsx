@@ -3,13 +3,13 @@ import ReactDOM from 'react-dom';
 import "./Task.css";
 import FilterPill from '../Filters/FilterPill';
 import taskIcon from '../../../assets/task_icon.png';
-import workpackIcon from '../../../assets/workpack.svg';
 import lowPriority from '../../../assets/low_priority.png';
 import mediumPriority from '../../../assets/medium_priority.png';
 import highPriority from '../../../assets/high_priority.png';
 import criticalPriority from '../../../assets/critical_priority.png';
-import testCreatorProfilePic from '../../../assets/test_profile_pic_1.jpg';
-import testAssigneeProfilePic from '../../../assets/test_profile_pic_2.jpg';
+//import testCreatorProfilePic from '../../../assets/test_profile_pic_1.jpg';
+//import testAssigneeProfilePic from '../../../assets/test_profile_pic_2.jpg';
+import testAssigneeProfilePic from '../../../assets/unset_profile_picture.png';
 
 class Task extends Component {
     state = {

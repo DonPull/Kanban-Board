@@ -3,8 +3,6 @@ import ReactDOM from 'react-dom';
 import UnderConstruction from './../../UnderConstruction';
 import searchIcon from '../../../assets/search.png';
 import './CreateProjectModalContent.css';
-import testPfpIcon from '../../../assets/test_profile_pic_1.jpg'
-import testPfp2Icon from '../../../assets/test_profile_pic_2.jpg'
 import removeAccountIcon from '../../../assets/+_and_x_icon_v4.png';
 import addAccountIcon from '../../../assets/go_to_arrow.png';
 import apiEndpoint, { claimsStr } from '../../../index.js';
@@ -78,7 +76,7 @@ class CreateProjectModalContent extends Component {
             axios.post(apiEndpoint + "/Project/getAccountsBySearch?searchQuery=" + searchInput.value)
                 .then(response => {
                     this.setState({ listOfSearchedAccounts: [] }, () => {
-                        this.setState({ listOfSearchedAccounts: response.data });
+                        this.setState({ listOfSearchedAccounts: response.data }, () => { console.log(this.state.listOfSearchedAccounts); });
                     });
                 })
                 .catch(error => {
@@ -159,7 +157,8 @@ class CreateProjectModalContent extends Component {
                                 </div>
 
                                 {listOfSearchedAccounts.map(accountObj => {
-                                    return <AccountAsListItem onClickCallback={() => {this.onAccountClickCallback(accountObj)}} accountName={accountObj["FullName"]} accountEmail={accountObj["Email"]} accountActionIcon={addAccountIcon} />}
+                                    console.log(accountObj["ProfilePicture"]);
+                                    return <AccountAsListItem onClickCallback={() => {this.onAccountClickCallback(accountObj)}} accountName={accountObj["FullName"]} accountEmail={accountObj["Email"]} accountPfp={accountObj["ProfilePicture"]} accountActionIcon={addAccountIcon} />}
                                 )}
 
                             </div>

@@ -72,14 +72,19 @@
 .project-card{
     display: grid;                                                     /*           REMOVE LATER                */
     padding: 1rem;
+    transition: 200ms;
     background-color: var(--theme-color-bg-element);
     /* border: 2px solid var(--theme-color-bg-1); */
-    box-shadow: 0 0 3px var(--theme-color-accent-3);
+    box-shadow: 0 0 4px var(--theme-color-bg-dropoff);
     border-radius: 2rem;
     cursor: pointer;
 }
 .project-card *{
     cursor: pointer;
+}
+
+.project-card:hover{
+    box-shadow: 0 0 4px var(--theme-color-accent);
 }
 
 .project-card-title{

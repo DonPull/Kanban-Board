@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import participantIcon from '../../../assets/test_profile_pic.jpg';
-import participantIcon1 from '../../../assets/test_profile_pic_1.jpg';
-import participantIcon2 from '../../../assets/test_profile_pic_2.jpg';
 import apiEndpoint from './../../../index';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 class ProjectCard extends Component {
     state = {
         //projectTitle: this.props.projectTitle || "Title of the project",
+        projectId: this.props.projectData["Id"],
         projectTitle: this.props.projectData["Name"],
         projectCreateDate: "02/11/2022",
         projectLastOpenDate: "05/11/2022",
@@ -76,39 +75,41 @@ class ProjectCard extends Component {
     }
 
     render() { 
-        let { projectCardRef, projectParticipantsLastIconRef, projectParticipantsIconsRef, numberOfUnrenderedAccounts, projectTitle, projectCreateDate, projectLastOpenDate, projectCompletedPercentage, projectParticipants } = this.state;
+        let { projectId, projectCardRef, projectParticipantsLastIconRef, projectParticipantsIconsRef, numberOfUnrenderedAccounts, projectTitle, projectCreateDate, projectLastOpenDate, projectCompletedPercentage, projectParticipants } = this.state;
 
         return (
-            <div ref={projectCardRef} className='project-card flex column'>
-                <label title={projectTitle} className='project-card-title'>{projectTitle}</label>
-                
-                {/* <div className='separator' style={{ margin: "0.5rem auto", width: "96%" }}/> */}
-                
-                <div className='project-card-dates-container flex'>
-                    <div className='flex column'>
-                        <label>Created: <span>{projectCreateDate}</span></label>
-                        <label>Last open: <span>{projectLastOpenDate}</span></label>
+            <Link to={"/projects/" + projectId}>
+                <div ref={projectCardRef} className='project-card flex column'>
+                    <label title={projectTitle} className='project-card-title'>{projectTitle}</label>
+                    
+                    {/* <div className='separator' style={{ margin: "0.5rem auto", width: "96%" }}/> */}
+                    
+                    <div className='project-card-dates-container flex'>
+                        <div className='flex column'>
+                            <label>Created: <span>{projectCreateDate}</span></label>
+                            <label>Last open: <span>{projectLastOpenDate}</span></label>
+                        </div>
+                        <div title={`Project is ${projectCompletedPercentage} complete.`}>
+                            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" data-value={projectCompletedPercentage}>
+                                <circle r="45" cx="50" cy="50" />
+                                <path class="meter" d="M5,50a45,45 0 1,0 90,0a45,45 0 1,0 -90,0" stroke-linecap="round" stroke-linejoin="round" stroke-dashoffset="282.78302001953125" stroke-dasharray="282.78302001953125" />
+                                <text x="50" y="50" text-anchor="middle" dominant-baseline="central" font-size="28"></text>
+                            </svg>
+                        </div>
                     </div>
-                    <div title={`Project is ${projectCompletedPercentage} complete.`}>
-                        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" data-value={projectCompletedPercentage}>
-                            <circle r="45" cx="50" cy="50" />
-                            <path class="meter" d="M5,50a45,45 0 1,0 90,0a45,45 0 1,0 -90,0" stroke-linecap="round" stroke-linejoin="round" stroke-dashoffset="282.78302001953125" stroke-dasharray="282.78302001953125" />
-                            <text x="50" y="50" text-anchor="middle" dominant-baseline="central" font-size="28"></text>
-                        </svg>
+                    
+                    {/* <label>Project complete: {projectCompletedPercentage}</label> */}
+                    
+                    <div ref={projectParticipantsIconsRef} className='project-participants-icons-container flex'>
+                        {projectParticipants.map(img => {
+                            return <img src={img}/>
+                        })}
+                        <div ref={projectParticipantsLastIconRef} className="project-participants-last-icon">
+                            <label>{"+" + numberOfUnrenderedAccounts}</label>
+                        </div>
                     </div>
                 </div>
-                
-                {/* <label>Project complete: {projectCompletedPercentage}</label> */}
-                
-                <div ref={projectParticipantsIconsRef} className='project-participants-icons-container flex'>
-                    {projectParticipants.map(img => {
-                        return <img src={img}/>
-                    })}
-                    <div ref={projectParticipantsLastIconRef} className="project-participants-last-icon">
-                        <label>{"+" + numberOfUnrenderedAccounts}</label>
-                    </div>
-                </div>
-            </div>
+            </Link>
         );
     }
 }

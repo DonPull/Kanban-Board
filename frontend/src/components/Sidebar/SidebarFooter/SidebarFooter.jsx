@@ -54,7 +54,7 @@ class SidebarFooter extends Component {
                             <p>My Profile</p>
                             <div id="profile-animation-container" className='flex width-100-percent relative'>
                                 <div id="profile-picture-animation">
-                                    <img src={(user === null || user.profilePicture === "") ? unsetPfp : user.profilePicture} style={this.props.user["profilePicture"] === "" ? { filter: "var(--theme-color-accent-filter)" } : {}} />
+                                    <img src={(user === null || user.profilePicture === "") ? unsetPfp : user["profilePicture"]} style={this.props.user["profilePicture"] === "" ? { filter: "var(--theme-color-accent-filter)" } : {}} />
                                 </div>
 
                                 <div id="go-to-profile-arrow-animation">

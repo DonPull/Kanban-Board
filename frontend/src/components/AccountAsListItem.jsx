@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import testPfpIcon from '../assets/test_profile_pic_1.jpg';
+import unsetPfp from '../assets/unset_profile_picture.png';
 
 class AccountAsListItem extends Component {
     state = {
         accountRef: React.createRef(),
         accountName: this.props.accountName,
         accountEmail: this.props.accountEmail,
+        accountPfp: this.props.accountPfp || unsetPfp,
         accountActionIcon: this.props.accountActionIcon,
         rotateActionIcon: this.props.rotateActionIcon
     }
@@ -16,12 +17,12 @@ class AccountAsListItem extends Component {
     }
 
     render() {
-        let { accountRef, accountName, accountEmail, accountActionIcon, rotateActionIcon } = this.state;
+        let { accountRef, accountName, accountEmail, accountPfp, accountActionIcon, rotateActionIcon } = this.state;
 
         return (
             <div ref={accountRef} className='user-showcase-account-container flex'>
                 <div className='flex align-center'>
-                    <img src={testPfpIcon} />
+                    <img src={accountPfp} />
                 </div>
                 <div>
                 <div className='flex column' style={{ margin: "0 1rem", maxWidth: "200px" }}>

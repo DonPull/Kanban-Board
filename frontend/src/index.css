@@ -59,6 +59,10 @@ button, img{
   user-select: none;
 }
 
+a{
+  all: unset;
+}
+
 ::-webkit-scrollbar {
   height: 0.8rem;
   width: 0.8rem;

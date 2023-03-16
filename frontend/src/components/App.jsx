@@ -15,6 +15,7 @@ import KanbanBoard from './Content/KanbanBoard/KanbanBoard';
 import ViewProjects from './Content/ViewProjects/ViewProjects';
 import Cookies from 'universal-cookie';
 import Home from './Home';
+import ViewBoards from './Content/ViewBoards/ViewBoards';
 
 export default class App extends Component{
     state = {
@@ -73,7 +74,7 @@ export default class App extends Component{
                         <Sidebar user={this.state.user} />
                         <div className='flex column width-100-percent'>
                             {/* <TabList /> */}
-                            <Content renderComp={<label>This is the project element</label>} />
+                            <Content renderComp={<ViewBoards />} />
                         </div>
                     </React.Fragment>
             },

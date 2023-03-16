@@ -110,6 +110,7 @@ namespace KanbanBoardAPI.Controllers
             foreach(var p in userProjects)
             {
                 Dictionary<string, string> userProjectsDict = new();
+                userProjectsDict.Add("Id", p.Id.ToString());
                 userProjectsDict.Add("Name", p.Name);
 
                 List<string> userEmails = new List<string>();
@@ -143,6 +144,7 @@ namespace KanbanBoardAPI.Controllers
             foreach (var p in userJoinedProjects)
             {
                 Dictionary<string, string> userJoinedProjectsDict = new();
+                userJoinedProjectsDict.Add("Id", p.Id.ToString());
                 userJoinedProjectsDict.Add("Name", p.Name);
 
                 List<string> userEmails = new List<string>();
@@ -193,6 +195,7 @@ namespace KanbanBoardAPI.Controllers
                 var userInfoDict = new Dictionary<string, string>();
                 userInfoDict.Add("FullName", user.FullName);
                 userInfoDict.Add("Email", user.Email);
+                userInfoDict.Add("ProfilePicture", user.ProfilePicture);
 
                 userInfoList.Add(userInfoDict);
             }
