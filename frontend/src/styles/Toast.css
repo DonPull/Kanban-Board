@@ -4,6 +4,7 @@
     position: absolute;
     top: -6.5rem;
     transition: 500ms;
+    z-index: 100;
 }
 
 .toast-notification img{

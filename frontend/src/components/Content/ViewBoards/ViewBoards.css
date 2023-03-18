@@ -19,7 +19,7 @@
 
 #board-cards-container-background{
     text-transform: uppercase;
-    font-size: 10rem;
+    font-size: 12rem;
     font-weight: 700;
     color: var(--theme-color-bg-dropoff-2);
     opacity: 0.5;

@@ -5,16 +5,27 @@ import CreateProjectModalContent from './CreateProjectModalContent';
 import Modal from './../../Modal';
 import JoinProjectModalContent from './JoinProjectModalContent';
 import { Link } from 'react-router-dom';
+import Toast from './../../Toast';
 
 class ProjectButtons extends Component {
     state = {
         createProjectId: "create-project-btn",
         joinProjectId: "join-project-btn",
-        viewProjectsId: "view-projects-btn"
+        viewProjectsId: "view-projects-btn",
+        toastObj: {
+            show: false,
+            message: null,
+            duration: 3000,
+            type: "error"
+        }
+    }
+
+    modifyToastObjCallback = (tObj) => {
+        this.setState(prevState => ({ toastObj: { ...prevState.toastObj, ...tObj } }));
     }
 
     render() { 
-        const { createProjectId, joinProjectId, viewProjectsId } = this.state;
+        const { toastObj, createProjectId, joinProjectId, viewProjectsId } = this.state;
 
         return (
             <div id="navbar-project-btn-container" className='flex column align-center navbar-content-container'>
@@ -28,8 +39,9 @@ class ProjectButtons extends Component {
                     <button id={viewProjectsId} className='button width-100-percent'>View My Projects</button>
                 </Link>
 
-                <Modal modalContent={<CreateProjectModalContent />} openBtnId={createProjectId} /> 
-                <Modal modalContent={<JoinProjectModalContent />} openBtnId={joinProjectId} /> 
+                {toastObj.show && <Toast closeToastCallbackFunction={() => { this.setState(prevState => ({ toastObj: { ...prevState.toastObj, show: false } })) }} toastMessage={toastObj.message} notificationDurationInMs={toastObj.duration} notificationType={toastObj.type} />}
+                <Modal modalContent={<CreateProjectModalContent modifyToastObjCallback={this.modifyToastObjCallback} />} openBtnId={createProjectId} />
+                <Modal modalContent={<JoinProjectModalContent modifyToastObjCallback={this.modifyToastObjCallback} />} openBtnId={joinProjectId} />
             </div>
         );
     }

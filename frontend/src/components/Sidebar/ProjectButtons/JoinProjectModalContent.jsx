@@ -32,11 +32,13 @@ class JoinProjectModalContent extends Component {
 
             let result = await axios.post(apiEndpoint + "/Project/join", { "JoinProjectString": codeInputField.value, "UserEmail": decoded[claimsStr + "emailaddress"] })
                 .catch(error => {
-                    this.setState(prevState => ({ toastObj: { ...prevState.toastObj, show: true, type: "error", message: "Invalid join code" } }));
+                    let newToastProperties = { show: true, type: "error", message: "Invalid join code" };
+                    this.props.modifyToastObjCallback(newToastProperties);
                 });
             console.log(result);
             if(result !== null && result !== undefined){
-                this.setState(prevState => ({ toastObj: { ...prevState.toastObj, show: true, type: "success", message: `Joined project: "${result.data}"` } }));
+                let newToastProperties = { show: true, type: "success", message: `Joined project: "${result.data}"` };
+                this.props.modifyToastObjCallback(newToastProperties);
             }
         }
     }
@@ -46,11 +48,8 @@ class JoinProjectModalContent extends Component {
     }
     
     render() {
-        let { toastObj } = this.state;
-
         return (
             <React.Fragment>
-                {toastObj.show && <Toast closeToastCallbackFunction={() => { this.setState(prevState => ({ toastObj: { ...prevState.toastObj, show: false } })) }} toastMessage={toastObj.message} notificationDurationInMs={toastObj.duration} notificationType={toastObj.type} />}
                 <div style={{ gap: "1rem" }} className='flex column align-center'>
                     <div className='flex join-project-input-pill'>
                         <label>Join Code</label>

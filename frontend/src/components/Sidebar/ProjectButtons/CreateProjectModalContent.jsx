@@ -24,13 +24,7 @@ class CreateProjectModalContent extends Component {
         titleMaxLength: 60,
         remainingTitleCharacters: 60,
         listOfSearchedAccounts: [],
-        listOfSelectedAccounts: [],
-        toastObj: {
-            show: false,
-            message: null,
-            duration: 3000,
-            type: "error"
-        }
+        listOfSelectedAccounts: []
     }
 
     clearInput = () => {
@@ -47,7 +41,7 @@ class CreateProjectModalContent extends Component {
         this.props.getCloseBtn(this.state.closeBtn.current);
         this.props.modalOnCloseCallback(this.clearInput);
         
-        let { toastObj, createProjectBtnRef, currentModalRef, titleInputRef, searchInputRef, titleUnderlineRef, searchUnderlineRef } = this.state;
+        let { createProjectBtnRef, currentModalRef, titleInputRef, searchInputRef, titleUnderlineRef, searchUnderlineRef } = this.state;
         let [createProjectBtn, currentModal, titleInput, searchInput, titleUnderline, searchUnderline] = [createProjectBtnRef.current, currentModalRef.current, titleInputRef.current, searchInputRef.current, titleUnderlineRef.current, searchUnderlineRef.current];
         
         createProjectBtn.onclick = async (event) => {
@@ -56,10 +50,12 @@ class CreateProjectModalContent extends Component {
 
             await axios.post(apiEndpoint + "/Project/create", { "Name": titleInput.value, "UserEmail": userEmail, "ProjectParticipantsEmails": this.state.listOfSelectedAccounts.map(account => account["Email"]).join(",") })
                 .then(response => {
-                    this.setState(prevState => ({ toastObj: { ...prevState.toastObj, show: true, type: "success", message: `Created project: "${response.data}"` } }));
+                    let newToastProperties = { show: true, type: "success", message: `Created project: "${response.data}"` };
+                    this.props.modifyToastObjCallback(newToastProperties);
                 })
                 .catch(error => {
-                    this.setState(prevState => ({ toastObj: { ...prevState.toastObj, show: true, type: "error", message: error.response.data !== null && error.response.data !== undefined ? error.response.data : "Couldn't create a project. Try again later." } }));
+                    let newToastProperties = { show: true, type: "error", message: error.response.data !== null && error.response.data !== undefined ? error.response.data : "Couldn't create a project. Try again later." };
+                    this.props.modifyToastObjCallback(newToastProperties);
                 });
         }
 
@@ -125,11 +121,10 @@ class CreateProjectModalContent extends Component {
     }
 
     render() { 
-        let { toastObj, listOfSearchedAccounts, listOfSelectedAccounts, createProjectBtnRef, currentModalRef, titleInputRef, searchInputRef, titleUnderlineRef, searchUnderlineRef, titleMaxLength, remainingTitleCharacters } = this.state;
+        let { listOfSearchedAccounts, listOfSelectedAccounts, createProjectBtnRef, currentModalRef, titleInputRef, searchInputRef, titleUnderlineRef, searchUnderlineRef, titleMaxLength, remainingTitleCharacters } = this.state;
 
         return (
             <React.Fragment>
-                {toastObj.show && <Toast closeToastCallbackFunction={() => { this.setState(prevState => ({ toastObj: { ...prevState.toastObj, show: false } })) }} toastMessage={toastObj.message} notificationDurationInMs={toastObj.duration} notificationType={toastObj.type} />}
                 <div ref={currentModalRef} className='create-project-modal-content-container flex column justify-center align-center'>
                     {/* <UnderConstruction closeBtn={this.state.closeBtn} /> */}
                     <div className='name-the-project-container flex'>
