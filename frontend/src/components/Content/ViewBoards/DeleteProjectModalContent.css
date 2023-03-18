@@ -1,0 +1,15 @@
+.standard-labels-container{
+    gap: 1.2rem;
+}
+.standard-labels-container label{
+    font-size: 2rem;
+    font-weight: 500;
+    color: var(--theme-color-accent-1);
+}
+
+.disabled-button-coutdown-label{
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: var(--theme-color-accent-3);
+    margin-top: 0.4rem;
+}

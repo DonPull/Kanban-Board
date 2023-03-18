@@ -68,6 +68,23 @@ namespace KanbanBoardAPI.Controllers
             return Ok(project.Name);
         }
 
+        [HttpGet("{projectId}")]
+        public async Task<ActionResult> GetProjectById(int projectId)
+        {
+            var project = _context.Projects.ToList().Find(p => p.Id == projectId);
+
+            if (project == null)
+            {
+                return BadRequest($"A project with the id of '{projectId}' does not exist!");
+            }
+
+            Dictionary<string, string> projectDto = new();
+            projectDto["Name"] = project.Name;
+            projectDto["JoinCode"] = project.JoinCode;
+
+            return Ok(projectDto);
+        }
+
         [HttpPost("join")]
         public async Task<ActionResult> JoinProject(JoinProjectDto request)
         {

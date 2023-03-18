@@ -37,8 +37,8 @@ class Filters extends Component {
                 //make the text and the img in the editBoardButton big again
                 editBoardButton.style.padding = "1rem";
                 editBoardButton.querySelector("label").style.fontSize = "18px";
-                editBoardButton.querySelector("img").style.width = "3rem";
-                editBoardButton.querySelector("img").style.height = "3rem";
+                editBoardButton.querySelector("img").style.width = "2.7rem";
+                editBoardButton.querySelector("img").style.height = "2.7rem";
             }else{
                 filtersContainer.style.flexDirection = "row";
                 filtersContainer.style.justifyContent = "flex-start";

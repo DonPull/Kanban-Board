@@ -18,8 +18,8 @@
     cursor: pointer;
 }
 #edit-board-button img{
-    width: 3rem;
-    height: 3rem;
+    width: 2.7rem;
+    height: 2.7rem;
     filter: var(--theme-color-accent-1-filter);
 }
 #edit-board-button:hover{

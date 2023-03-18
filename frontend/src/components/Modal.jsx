@@ -10,11 +10,15 @@ class Modal extends Component {
         modalContentContainer: uuid(),
         openBtnId: this.props.openBtnId,
         closeOnHoverBtnRef: React.createRef(),
+        setupModalContentFunction: () => {},
         resetModalContentFunction: () => {}
     }
 
     //Handle the opening of the modal
     openModal = (modal, modalContent, modalBackground, closeOnHoverBtn) => {
+        // on modal open execute the setupModalContentFunction callback function in one is passed
+        this.state.setupModalContentFunction();
+
         modalBackground.style.opacity = "1";
         modalBackground.style.zIndex = "10";
         modal.classList.add("animation");
@@ -24,6 +28,9 @@ class Modal extends Component {
 
     // Handle the closeing of the modal (this function handles every type of closing e.g. close button; clicking outside the modal; or hovering on close modal section if available)
     closeModalFromBtn = (modal, modalContent, modalBackground, closeOnHoverBtn) => {
+        // on modal close execute the resetModalContentFunction callback function in one is passed
+        this.state.resetModalContentFunction();
+
         modalBackground.style.opacity = "0";
         modalBackground.style.zIndex = "-1";
         modal.classList.remove("animation");
@@ -65,7 +72,7 @@ class Modal extends Component {
 
         // When the user clicks/hover outside of the modal, close it
         if(closeOnHover){
-            closeOnHoverBtn.onmouseover = function(event) {
+            closeOnHoverBtn.onmouseover = (event) => {
                 if (event.target === closeOnHoverBtn) {
                     this.closeModalFromBtn(modal, modalContent, modalBackground, closeOnHoverBtn);
                 }
@@ -75,7 +82,6 @@ class Modal extends Component {
         //the option to close a modal with a click should be always available
         modal.onclick = (event) => {
             if (event.target === modal) {
-                this.state.resetModalContentFunction();
                 this.closeModalFromBtn(modal, modalContent, modalBackground, closeOnHoverBtn);
             }
         }
@@ -93,7 +99,9 @@ class Modal extends Component {
         let closeOnHoverBtn = closeOnHoverBtnRef.current;
 
         if(closeBtn != undefined){
-            closeBtn.onclick = () => { this.state.resetModalContentFunction(); this.closeModalFromBtn(modal, modalContent, modalBackground, closeOnHoverBtn); };
+            closeBtn.onclick = () => { 
+                this.closeModalFromBtn(modal, modalContent, modalBackground, closeOnHoverBtn);
+            };
         }
     }
 
@@ -121,6 +129,10 @@ class Modal extends Component {
         //}
     }
 
+    modalOnOpenCallback = (setupModalContentFunction) => {
+        this.setState({ setupModalContentFunction });
+    }
+
     modalOnCloseCallback = (resetModalContentFunction) => {
         this.setState({ resetModalContentFunction });
     }
@@ -134,7 +146,7 @@ class Modal extends Component {
                 <div id={modalBackgroundId} ref={modalBackgroundId} className='modal-background' />
                 <div id={modalId} ref={modalId} className="modal" onAnimationEnd={(event) => {this.handleModalOpenAndCloseAnimations(event, modalId, modalBackgroundId, modalContentContainer, closeOnHoverBtnRef)}} >
                     <div id={modalContentContainer} ref={modalContentContainer} className="modal-content">
-                        {React.cloneElement(modalContent, {getCloseBtn: this.getCloseBtn, modalOnCloseCallback: this.modalOnCloseCallback})}
+                        {React.cloneElement(modalContent, {getCloseBtn: this.getCloseBtn, modalOnOpenCallback: this.modalOnOpenCallback, modalOnCloseCallback: this.modalOnCloseCallback})}
                     </div>
 
                     {closeOnHover ? <div ref={closeOnHoverBtnRef} className='close-modal-on-hover flex justify-center align-center'><label>Hover to close</label></div> : ""}
