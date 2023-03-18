@@ -40,6 +40,13 @@
     outline: none;
 }
 
+.no-user-select{
+    user-select: none !important;
+}
+.no-user-select-children *{
+    user-select: none !important;
+}
+
 .content-pill{
     display: flex;
     align-items: center;
@@ -52,6 +59,12 @@
 }
 .content-pill label{
     margin-bottom: 0.2rem;
+}
+
+.span-badge{
+    background-color: var(--theme-color-bg-dropoff-2);
+    border-radius: 1rem;
+    padding: 0 0.8rem 0.2rem 0.8rem;
 }
 
 .separator{

@@ -9,6 +9,7 @@
   --theme-color-accent-2: rgb(204 202 255);
   --theme-color-accent-3: rgb(221 220 255);
   --theme-color-bg-dropoff: #000000a3;
+  --theme-color-bg-dropoff-2: #00000052;
   --theme-color-accent-filter: invert(48%) sepia(88%) saturate(903%) hue-rotate(211deg) brightness(99%) contrast(92%);
   --theme-color-accent-1-filter: invert(63%) sepia(50%) saturate(574%) hue-rotate(202deg) brightness(108%) contrast(91%);
   --theme-color-bg-element-filter: invert(14%) sepia(24%) saturate(0%) hue-rotate(263deg) brightness(90%) contrast(82%);

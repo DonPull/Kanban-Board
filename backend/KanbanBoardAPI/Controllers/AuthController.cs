@@ -69,7 +69,7 @@ namespace KanbanBoardAPI.Controllers
 
             if (!VerifyPasswordHash(request.Password, user.PasswordHash, user.PasswordSalt))
             {
-                return BadRequest("Wrong password.");
+                return BadRequest("Wrong email or password.");
             }
 
             string token = CreateToken(user);

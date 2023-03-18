@@ -23,10 +23,18 @@ namespace KanbanBoardAPI.Controllers
         public async Task<ActionResult<Project>> CreateProject(Dictionary<string, string> request)
         {
             var user = _context.Users.ToList().Find(u => u.Email == request["UserEmail"]);
+
+            if(user == null)
+            {
+                return BadRequest("Something went wrong. Please try again later!");
+            }else if(request["Name"].Trim() == "")
+            {
+                return BadRequest("Project name cannot be empty. Please give your new project a name.");
+            }
+
             Project project = new Project();
             project.Name = request["Name"];
             project.UserId = user.Id;
-            //project.ProjectParticipants = request.ProjectParticipants
 
             project.JoinCode = ProjectCodeGenerator();
 
@@ -40,7 +48,13 @@ namespace KanbanBoardAPI.Controllers
 
             foreach (string userEmail in userEmails)
             {
-                var userId = _context.Users.ToList().Find(u => u.Email == userEmail).Id;
+                var participant = _context.Users.ToList().Find(u => u.Email == userEmail);
+                if(participant == null) //this enables a project to be created without any starting participants (they can join later with the project join code)
+                {
+                    continue;
+                }
+
+                var userId = participant.Id;
 
                 ProjectParticipant projectParticipant = new ProjectParticipant();
                 projectParticipant.UserId = userId;

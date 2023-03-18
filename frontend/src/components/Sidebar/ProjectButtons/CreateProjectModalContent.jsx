@@ -59,7 +59,7 @@ class CreateProjectModalContent extends Component {
                     this.setState(prevState => ({ toastObj: { ...prevState.toastObj, show: true, type: "success", message: `Created project: "${response.data}"` } }));
                 })
                 .catch(error => {
-                    this.setState(prevState => ({ toastObj: { ...prevState.toastObj, show: true, type: "error", message: "Couldn't create a project. Try again later." } }));
+                    this.setState(prevState => ({ toastObj: { ...prevState.toastObj, show: true, type: "error", message: error.response.data !== null && error.response.data !== undefined ? error.response.data : "Couldn't create a project. Try again later." } }));
                 });
         }
 
@@ -76,7 +76,7 @@ class CreateProjectModalContent extends Component {
             axios.post(apiEndpoint + "/Project/getAccountsBySearch?searchQuery=" + searchInput.value)
                 .then(response => {
                     this.setState({ listOfSearchedAccounts: [] }, () => {
-                        this.setState({ listOfSearchedAccounts: response.data }, () => { console.log(this.state.listOfSearchedAccounts); });
+                        this.setState({ listOfSearchedAccounts: response.data });
                     });
                 })
                 .catch(error => {
@@ -105,6 +105,8 @@ class CreateProjectModalContent extends Component {
         let searchedAccounts = listOfSearchedAccounts;
         let selectedAccounts = listOfSelectedAccounts;
 
+        console.log(searchedAccounts);
+
         // the logic here moves an account (when it's clicked) to the opposite column. From "Choose participants" to "Selected People" and the other way around as well.
         let clickedAccount = searchedAccounts.find(e => {return (e.FullName === accountObj.FullName && e.Email === accountObj.Email)});
         if(clickedAccount === undefined){
@@ -113,7 +115,9 @@ class CreateProjectModalContent extends Component {
             searchedAccounts.push(deletedAccount);
         }else{
             let deletedAccount = searchedAccounts.splice(searchedAccounts.indexOf(clickedAccount), 1)[0];
+            //console.log(deletedAccount);
             selectedAccounts.push(deletedAccount);
+            console.log(selectedAccounts);
         }
 
         // here we first null the lists and after they are nulled in the callback function of setState we update the lists (for some reason this is nessacary otherwise we get dublicate rendering of some accounts and in general it just does not work) in order to render the correct accounts in the correct place.
@@ -157,7 +161,6 @@ class CreateProjectModalContent extends Component {
                                 </div>
 
                                 {listOfSearchedAccounts.map(accountObj => {
-                                    console.log(accountObj["ProfilePicture"]);
                                     return <AccountAsListItem onClickCallback={() => {this.onAccountClickCallback(accountObj)}} accountName={accountObj["FullName"]} accountEmail={accountObj["Email"]} accountPfp={accountObj["ProfilePicture"]} accountActionIcon={addAccountIcon} />}
                                 )}
 
@@ -169,7 +172,7 @@ class CreateProjectModalContent extends Component {
                             <div className='user-showcase-container flex column'>
                                 
                                 {listOfSelectedAccounts.map(accountObj => {
-                                    return <AccountAsListItem onClickCallback={() => {this.onAccountClickCallback(accountObj)}} accountName={accountObj["FullName"]} accountEmail={accountObj["Email"]} accountActionIcon={removeAccountIcon} rotateActionIcon={true} />
+                                    return <AccountAsListItem onClickCallback={() => {this.onAccountClickCallback(accountObj)}} accountName={accountObj["FullName"]} accountEmail={accountObj["Email"]} accountPfp={accountObj["ProfilePicture"]} accountActionIcon={removeAccountIcon} rotateActionIcon={true} />
                                 })}
 
                             </div>

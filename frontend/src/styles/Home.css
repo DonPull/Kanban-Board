@@ -11,6 +11,10 @@
     transition: 450ms;
 }
 
+#home-container *{
+    user-select: none;
+}
+
 #home-logo-container{
     transition: 350ms;
     margin-bottom: 4rem;

@@ -1,0 +1,80 @@
+#project-settings-container{
+    gap: 2rem;
+    width: 100%;
+}
+
+#project-settings-label{
+    font-size: 25px;
+    font-weight: 700;
+    color: var(--theme-color-accent-1);
+    padding: 1.5rem;
+    width: fit-content;
+    background-color: #00000052;
+}
+
+#board-cards-container{
+    position: relative;
+    padding: 3rem;
+}
+
+#board-cards-container-background{
+    text-transform: uppercase;
+    font-size: 10rem;
+    font-weight: 700;
+    color: var(--theme-color-bg-dropoff-2);
+    opacity: 0.5;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    top: 46%;
+    z-index: 0;
+}
+
+#create-new-board-btn{
+    position: absolute;
+    transform: translateX(-50%);
+    left: 50%;
+    bottom: 3rem;
+    border-radius: 1rem;
+    z-index: 5;
+}
+
+.board-card{
+    display: grid;
+    position: relative;
+    width: max-content;
+    padding: 1rem;
+    transition: 200ms;
+    background-color: var(--theme-color-bg-element);
+    /* border: 2px solid var(--theme-color-bg-1); */
+    box-shadow: 0 0 4px var(--theme-color-bg-dropoff);
+    border-radius: 2rem;
+    z-index: 1;
+    cursor: pointer;
+}
+.board-card *{
+    cursor: pointer;
+}
+
+.board-card:hover{
+    box-shadow: 0 0 6px var(--theme-color-accent);
+}
+
+.board-card-title{
+    color: var(--theme-color-accent-3);
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin: 0 0.6rem 0.5rem 0.6rem;
+    user-select: text !important;
+}
+
+.board-card-info-container{
+    padding: 0.6rem 1rem;
+    background-color: var(--theme-color-bg);
+    border-radius: 1.5rem;
+    color: var(--theme-color-accent-2);
+    font-size: 1.7rem;
+    font-weight: 500;
+    justify-content: space-between;
+    margin-bottom: 3.8rem;
+}

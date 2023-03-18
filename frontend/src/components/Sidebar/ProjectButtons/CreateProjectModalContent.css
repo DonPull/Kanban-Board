@@ -57,7 +57,7 @@
     align-items: center;
     min-width: 31.5rem;
     min-height: 26rem;
-    border: 2px solid var(--theme-color-bg-1);
+    border: 2px solid var(--theme-color-bg-element);
     border-radius: 2rem;
     padding: 1.2rem;
     background-color: var(--theme-color-bg);
@@ -65,7 +65,7 @@
 }
 
 .user-search-container{
-    width: 80%;
+    width: 90%;
     margin-bottom: 1.5rem;
 }
 .user-search-img-container{
@@ -107,7 +107,8 @@
     width: -webkit-fill-available;
     width: -moz-available;
     background-color: var(--theme-color-bg);
-    border: 1px solid var(--theme-color-accent);
+    border: 2px solid var(--theme-color-accent);
+    /* border: 2px solid var(--theme-color-bg-element); */
     border-radius: 1.4rem;
     padding: 0.5rem 0.7rem;
     margin-bottom: 1rem;

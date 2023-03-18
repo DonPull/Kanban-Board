@@ -84,7 +84,7 @@
 }
 
 .project-card:hover{
-    box-shadow: 0 0 4px var(--theme-color-accent);
+    box-shadow: 0 0 6px var(--theme-color-accent);
 }
 
 .project-card-title{
