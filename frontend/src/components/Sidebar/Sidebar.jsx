@@ -35,7 +35,7 @@ class Sidebar extends Component {
                     </div>
                 </Link>
 
-                <ProjectButtons />
+                <ProjectButtons user={this.props.user} />
                 {/* <ProjectTree /> */}
                 <SidebarFooter user={this.props.user} />
 

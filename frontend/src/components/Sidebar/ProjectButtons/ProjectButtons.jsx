@@ -40,7 +40,7 @@ class ProjectButtons extends Component {
                 </Link>
 
                 {toastObj.show && <Toast closeToastCallbackFunction={() => { this.setState(prevState => ({ toastObj: { ...prevState.toastObj, show: false } })) }} toastMessage={toastObj.message} notificationDurationInMs={toastObj.duration} notificationType={toastObj.type} />}
-                <Modal modalContent={<CreateProjectModalContent modifyToastObjCallback={this.modifyToastObjCallback} />} openBtnId={createProjectId} />
+                <Modal modalContent={<CreateProjectModalContent modifyToastObjCallback={this.modifyToastObjCallback} user={this.props.user} />} openBtnId={createProjectId} />
                 <Modal modalContent={<JoinProjectModalContent modifyToastObjCallback={this.modifyToastObjCallback} />} openBtnId={joinProjectId} />
             </div>
         );

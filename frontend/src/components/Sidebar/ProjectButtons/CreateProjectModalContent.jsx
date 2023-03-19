@@ -72,7 +72,31 @@ class CreateProjectModalContent extends Component {
             axios.post(apiEndpoint + "/Project/getAccountsBySearch?searchQuery=" + searchInput.value)
                 .then(response => {
                     this.setState({ listOfSearchedAccounts: [] }, () => {
-                        this.setState({ listOfSearchedAccounts: response.data });
+                        let listOfReceivedAccounts = response.data;
+                        let finalListOfSearchAccounts = [];
+
+                        // for each received account check if it's already in the list of search accounts. if it's not add it to finalListOfSearchAccounts (this is done so that if the user selects a certain accout but then searches for it again, the accout won't show up again which will prevent the user from adding the same account multiple times to the same project.)
+                        listOfReceivedAccounts.forEach(a => {
+                            let receivedAccountId = a["Id"];
+                            let currentAccoutIsAlreadySelected = false;
+
+                            this.state.listOfSelectedAccounts.forEach(e => {
+                                if(e["Id"] === receivedAccountId){
+                                    currentAccoutIsAlreadySelected = true;
+                                }
+                            });
+
+                            if(!currentAccoutIsAlreadySelected){
+                                // before adding the accout to finalListOfSearchAccounts check if that accout is the account of the user that is creating the project (the current user)
+                                console.log("this.props.user: ", this.props.user);
+                                console.log("receivedAccountId: ", receivedAccountId);
+                                if(this.props.user.id !== receivedAccountId){
+                                    finalListOfSearchAccounts.push(a);
+                                }
+                            }
+                        });
+
+                        this.setState({ listOfSearchedAccounts: finalListOfSearchAccounts });
                     });
                 })
                 .catch(error => {

@@ -74,6 +74,7 @@ namespace KanbanBoardAPI.Controllers
             }
 
             var userInfoDict = new Dictionary<string, string>();
+            userInfoDict["id"] = user.Id.ToString();
             userInfoDict["fullName"] = user.FullName;
             userInfoDict["email"] = user.Email;
             userInfoDict["profilePicture"] = user.ProfilePicture;
