@@ -34,17 +34,17 @@ namespace KanbanBoardAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ProjectId")
+                    b.Property<int?>("ProjectId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ProjectId1")
+                    b.Property<int>("ProjectRefId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ProjectId");
 
-                    b.HasIndex("ProjectId1");
+                    b.HasIndex("ProjectRefId");
 
                     b.ToTable("Boards");
                 });
@@ -142,13 +142,13 @@ namespace KanbanBoardAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("BoardId")
+                    b.Property<int>("BoardRefId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ColumnId")
+                    b.Property<int?>("ColumnId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ColumnId1")
+                    b.Property<int>("ColumnRefId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedDate")
@@ -161,14 +161,14 @@ namespace KanbanBoardAPI.Migrations
                     b.Property<DateTime>("Estimate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("OwnerId")
+                    b.Property<int?>("OwnerRefId")
                         .HasColumnType("int");
 
                     b.Property<string>("Priority")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ProjectId")
+                    b.Property<int>("ProjectRefId")
                         .HasColumnType("int");
 
                     b.Property<string>("Status")
@@ -191,15 +191,15 @@ namespace KanbanBoardAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BoardId");
+                    b.HasIndex("BoardRefId");
 
                     b.HasIndex("ColumnId");
 
-                    b.HasIndex("ColumnId1");
+                    b.HasIndex("ColumnRefId");
 
-                    b.HasIndex("OwnerId");
+                    b.HasIndex("OwnerRefId");
 
-                    b.HasIndex("ProjectId");
+                    b.HasIndex("ProjectRefId");
 
                     b.ToTable("Tasks");
                 });
@@ -251,9 +251,6 @@ namespace KanbanBoardAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("TaskId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("TokenCreated")
                         .HasColumnType("datetime2");
 
@@ -261,8 +258,6 @@ namespace KanbanBoardAPI.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("TaskId");
 
                     b.ToTable("Users");
                 });
@@ -294,15 +289,15 @@ namespace KanbanBoardAPI.Migrations
 
             modelBuilder.Entity("KanbanBoardAPI.Models.Board", b =>
                 {
-                    b.HasOne("KanbanBoardAPI.Models.Project", "Project")
-                        .WithMany()
-                        .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
                     b.HasOne("KanbanBoardAPI.Models.Project", null)
                         .WithMany("Boards")
-                        .HasForeignKey("ProjectId1");
+                        .HasForeignKey("ProjectId");
+
+                    b.HasOne("KanbanBoardAPI.Models.Project", "Project")
+                        .WithMany()
+                        .HasForeignKey("ProjectRefId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.Navigation("Project");
                 });
@@ -345,13 +340,13 @@ namespace KanbanBoardAPI.Migrations
                     b.HasOne("KanbanBoardAPI.Models.Project", "Project")
                         .WithMany("ProjectParticipants")
                         .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("KanbanBoardAPI.Models.User", "User")
                         .WithMany("ProjectParticipants")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Project");
@@ -363,28 +358,28 @@ namespace KanbanBoardAPI.Migrations
                 {
                     b.HasOne("KanbanBoardAPI.Models.Board", "Board")
                         .WithMany("Tasks")
-                        .HasForeignKey("BoardId")
+                        .HasForeignKey("BoardRefId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("KanbanBoardAPI.Models.Column", "Column")
-                        .WithMany()
-                        .HasForeignKey("ColumnId")
-                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("KanbanBoardAPI.Models.Column", null)
                         .WithMany("Tasks")
-                        .HasForeignKey("ColumnId1");
+                        .HasForeignKey("ColumnId");
+
+                    b.HasOne("KanbanBoardAPI.Models.Column", "Column")
+                        .WithMany()
+                        .HasForeignKey("ColumnRefId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.HasOne("KanbanBoardAPI.Models.User", "Owner")
                         .WithMany()
-                        .HasForeignKey("OwnerId")
+                        .HasForeignKey("OwnerRefId")
                         .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("KanbanBoardAPI.Models.Project", "Project")
                         .WithMany("Tasks")
-                        .HasForeignKey("ProjectId")
+                        .HasForeignKey("ProjectRefId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -402,27 +397,18 @@ namespace KanbanBoardAPI.Migrations
                     b.HasOne("KanbanBoardAPI.Models.Task", "Task")
                         .WithMany("TaskAssignees")
                         .HasForeignKey("TaskId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("KanbanBoardAPI.Models.User", "User")
                         .WithMany("TaskAssignees")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Task");
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("KanbanBoardAPI.Models.User", b =>
-                {
-                    b.HasOne("KanbanBoardAPI.Models.Task", "Task")
-                        .WithMany()
-                        .HasForeignKey("TaskId");
-
-                    b.Navigation("Task");
                 });
 
             modelBuilder.Entity("KanbanBoardAPI.Models.Board", b =>

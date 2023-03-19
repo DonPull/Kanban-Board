@@ -29,48 +29,55 @@ namespace KanbanBoardAPI.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) 
         {
-            
+
 
             modelBuilder.Entity<ProjectParticipant>()
-                .HasKey(u => new { u.UserId, u.ProjectId });
+    .           HasKey(u => new { u.UserId, u.ProjectId });
             modelBuilder.Entity<ProjectParticipant>()
                 .HasOne(u => u.User)
                 .WithMany(p => p.ProjectParticipants)
                 .HasForeignKey(p => p.UserId)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<ProjectParticipant>()
                 .HasOne(p => p.Project)
                 .WithMany(p => p.ProjectParticipants)
                 .HasForeignKey(p => p.ProjectId)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<TaskAssignees>()
-             .HasKey(u => new { u.UserId, u.TaskId });
+                .HasKey(u => new { u.UserId, u.TaskId });
             modelBuilder.Entity<TaskAssignees>()
                 .HasOne(u => u.User)
                 .WithMany(p => p.TaskAssignees)
                 .HasForeignKey(p => p.UserId)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<TaskAssignees>()
                 .HasOne(p => p.Task)
                 .WithMany(p => p.TaskAssignees)
                 .HasForeignKey(p => p.TaskId)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Task>()
                 .HasOne(e => e.Owner)
                 .WithMany()
-                .HasForeignKey(e => e.OwnerId)
+                .HasForeignKey(e => e.OwnerRefId)
                 .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<Board>()
                 .HasOne(e => e.Project)
                 .WithMany()
-                .HasForeignKey(e => e.ProjectId)
+                .HasForeignKey(e => e.ProjectRefId)
                 .OnDelete(DeleteBehavior.NoAction);
 
+            modelBuilder.Entity<Task>()
+              .HasOne(e => e.Column)
+              .WithMany()
+              .HasForeignKey(e => e.ColumnRefId)
+              .OnDelete(DeleteBehavior.NoAction);
+
+
             //modelBuilder.Entity<Filters>().OwnsOne(e => e.Board);
-            
+
 
             //modelBuilder.Entity<Filters>().OwnsOne(x => x.Board);
 
@@ -103,11 +110,7 @@ namespace KanbanBoardAPI.Data
                 .HasForeignKey(e => e.BoardId)
                 .OnDelete(DeleteBehavior.NoAction);
             */
-            modelBuilder.Entity<Task>()
-                .HasOne(e => e.Column)
-                .WithMany()
-                .HasForeignKey(e => e.ColumnId)
-                .OnDelete(DeleteBehavior.NoAction);
+
         }
     }
 }

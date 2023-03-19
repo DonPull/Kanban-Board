@@ -20,7 +20,7 @@ namespace KanbanBoardAPI.Controllers
         {
             Board board = new Board();
             board.Name = request.Name;
-            board.ProjectId = request.ProjectId;
+            board.ProjectRefId = request.ProjectRefId;
 
             _context.Add(board);
             var result = await _context.SaveChangesAsync();

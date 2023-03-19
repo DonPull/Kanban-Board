@@ -79,10 +79,30 @@ namespace KanbanBoardAPI.Controllers
             }
 
             Dictionary<string, string> projectDto = new();
+            projectDto["Id"] = project.Id.ToString();
             projectDto["Name"] = project.Name;
             projectDto["JoinCode"] = project.JoinCode;
 
             return Ok(projectDto);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteProject(int id)
+        {
+            var projectToDelete = await _context.Projects
+                .Include(p => p.Tasks)
+                .Include(p => p.Boards)
+                .Include(p => p.ProjectParticipants)
+                .FirstOrDefaultAsync(p => p.Id == id);
+            if (projectToDelete == null)
+            {
+                return NotFound();
+            }
+
+            _context.Projects.Remove(projectToDelete);
+            await _context.SaveChangesAsync();
+
+            return Ok(projectToDelete);
         }
 
         [HttpPost("join")]
@@ -224,6 +244,7 @@ namespace KanbanBoardAPI.Controllers
             foreach(User user in userList)
             {
                 var userInfoDict = new Dictionary<string, string>();
+                userInfoDict.Add("Id", user.Id.ToString());
                 userInfoDict.Add("FullName", user.FullName);
                 userInfoDict.Add("Email", user.Email);
                 userInfoDict.Add("ProfilePicture", user.ProfilePicture);

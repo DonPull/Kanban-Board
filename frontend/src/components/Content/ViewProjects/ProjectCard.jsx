@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import apiEndpoint from './../../../index';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import unsetPfp from "../../../assets/unset_profile_picture.png";
 
 class ProjectCard extends Component {
     state = {
@@ -102,7 +103,7 @@ class ProjectCard extends Component {
                     
                     <div ref={projectParticipantsIconsRef} className='project-participants-icons-container flex'>
                         {projectParticipants.map(img => {
-                            return <img src={img}/>
+                            return <img src={img ==! null ? img : unsetPfp}/>
                         })}
                         <div ref={projectParticipantsLastIconRef} className="project-participants-last-icon">
                             <label>{"+" + numberOfUnrenderedAccounts}</label>

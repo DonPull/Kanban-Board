@@ -16,7 +16,7 @@ namespace KanbanBoardAPI.Controllers
             _context = context;
         }
 
-        [HttpPost("create")]
+        /*[HttpPost("create")]
 
         public async Task<ActionResult<Task>> CreateTask(Task request) 
         {
@@ -38,6 +38,6 @@ namespace KanbanBoardAPI.Controllers
             _context.Add(task);
             var result = await _context.SaveChangesAsync();
             return Ok(result);
-        }
+        }*/
     }
 }

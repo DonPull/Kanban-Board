@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './DeleteProjectModalContent.css';
+import axios from 'axios';
+import apiEndpoint from './../../../index';
 
 function DeleteProjectModalContent(props) {
     const [initialCountdown, setInitialCountdown] = useState(5);
@@ -32,7 +34,14 @@ function DeleteProjectModalContent(props) {
     useEffect(() => {
         deleteProjectBtnRef.current.onclick = () => {
             if(deleteProjectButtonIsDisabled){ return; }
-            console.log("you clicked the now available delete project button");
+            
+            axios.delete(apiEndpoint + "/Project/" + props.projectObj["Id"]).then(response => {
+                console.log("Project deleted successfully");
+                console.log(response.data);
+            }).catch(error => {
+                console.log("Filed to delete project.");
+                console.log(error);
+            });
         };
     }, [deleteProjectButtonIsDisabled]);
 

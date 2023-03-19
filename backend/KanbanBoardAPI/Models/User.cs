@@ -16,7 +16,7 @@ namespace KanbanBoardAPI.Models
         public virtual ICollection<Project>? OwnedProjects { get; set; }
         public virtual ICollection<ProjectParticipant>? ProjectParticipants { get; set; }
         //public int TaskId { get; set; }
-        public virtual Task? Task { get; set; }
+        //public virtual Task? Task { get; set; }
         public virtual ICollection<TaskAssignees>? TaskAssignees { get; set; }
         //public byte[] ImageData { get; set; }
 

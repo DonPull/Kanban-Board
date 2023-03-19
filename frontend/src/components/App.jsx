@@ -42,10 +42,12 @@ export default class App extends Component{
     }
     
     render(){
+        let { user } = this.state;
+
         const router = createBrowserRouter([
             {
                 path: "/",
-                element: this.state.cookies.get("jwt_token") === undefined ? <Navigate to='/login'/> :
+                element: user === null ? <Navigate to='/login'/> :
                     <React.Fragment>
                         <Sidebar user={this.state.user} />
                         <div className='flex column width-100-percent'>
@@ -58,7 +60,7 @@ export default class App extends Component{
             },
             {
                 path: "/viewProjects",
-                element: this.state.cookies.get("jwt_token") === undefined ? <Navigate to='/login'/> :
+                element: user === null ? <Navigate to='/login'/> :
                     <React.Fragment>
                         <Sidebar user={this.state.user} />
                         <div className='flex column width-100-percent'>
@@ -69,7 +71,7 @@ export default class App extends Component{
             },
             {
                 path: "/projects/:projectId",
-                element: this.state.cookies.get("jwt_token") === undefined ? <Navigate to='/login'/> :
+                element: user === null ? <Navigate to='/login'/> :
                     <React.Fragment>
                         <Sidebar user={this.state.user} />
                         <div className='flex column width-100-percent'>
@@ -80,7 +82,7 @@ export default class App extends Component{
             },
             {
                 path: "/projects/:projectId/boards/:boardId",
-                element: this.state.cookies.get("jwt_token") === undefined ? <Navigate to='/login'/> :
+                element: user === null ? <Navigate to='/login'/> :
                     <React.Fragment>
                         <Sidebar user={this.state.user} />
                         <div className='flex column width-100-percent'>
@@ -96,7 +98,7 @@ export default class App extends Component{
             },
             {
                 path: "/login",
-                element: this.state.cookies.get("jwt_token") === undefined ? <Login cookies={this.state.cookies} /> : <Navigate to='/'/>
+                element: user === null ? <Login cookies={this.state.cookies} /> : <Navigate to='/'/>
             },
             {
                 path: "/register",
