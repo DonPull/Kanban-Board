@@ -115,8 +115,8 @@ class Filters extends Component {
                         </div>
                     </div>
 
-                    <div ref={editBoardButtonRef} id="edit-board-button" className='flex'>
-                        <img src={editBoardIcon}/>
+                    <div ref={editBoardButtonRef} id="edit-board-button" className='content-section-button'>
+                        <img src={editBoardIcon} />
                         <label>Edit Board</label>
                     </div>
 

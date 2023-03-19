@@ -45,18 +45,14 @@ class CreateProjectModalContent extends Component {
         let [createProjectBtn, currentModal, titleInput, searchInput, titleUnderline, searchUnderline] = [createProjectBtnRef.current, currentModalRef.current, titleInputRef.current, searchInputRef.current, titleUnderlineRef.current, searchUnderlineRef.current];
         
         createProjectBtn.onclick = async (event) => {
-            let cookies = new Cookies();
-            let userEmail = jwt_decode(cookies.get("jwt_token"))[claimsStr + "emailaddress"];
-
-            await axios.post(apiEndpoint + "/Project/create", { "Name": titleInput.value, "UserEmail": userEmail, "ProjectParticipantsEmails": this.state.listOfSelectedAccounts.map(account => account["Email"]).join(",") })
-                .then(response => {
-                    let newToastProperties = { show: true, type: "success", message: `Created project: "${response.data}"` };
-                    this.props.modifyToastObjCallback(newToastProperties);
-                })
-                .catch(error => {
-                    let newToastProperties = { show: true, type: "error", message: error.response.data !== null && error.response.data !== undefined ? error.response.data : "Couldn't create a project. Try again later." };
-                    this.props.modifyToastObjCallback(newToastProperties);
-                });
+            await axios.post(apiEndpoint + "/Project/create", { "Name": titleInput.value, "UserEmail": this.props.user.email, "ProjectParticipantsEmails": this.state.listOfSelectedAccounts.map(account => account["Email"]).join(",") }).then(response => {
+                this.clearInput();
+                let newToastProperties = { show: true, type: "success", message: `Created project: "${response.data}"` };
+                this.props.modifyToastObjCallback(newToastProperties);
+            }).catch(error => {
+                let newToastProperties = { show: true, type: "error", message: error.response.data !== null && error.response.data !== undefined ? error.response.data : "Couldn't create a project. Try again later." };
+                this.props.modifyToastObjCallback(newToastProperties);
+            });
         }
 
         // this is the remaining title characters counter logic.
@@ -88,8 +84,6 @@ class CreateProjectModalContent extends Component {
 
                             if(!currentAccoutIsAlreadySelected){
                                 // before adding the accout to finalListOfSearchAccounts check if that accout is the account of the user that is creating the project (the current user)
-                                console.log("this.props.user: ", this.props.user);
-                                console.log("receivedAccountId: ", receivedAccountId);
                                 if(this.props.user.id !== receivedAccountId){
                                     finalListOfSearchAccounts.push(a);
                                 }

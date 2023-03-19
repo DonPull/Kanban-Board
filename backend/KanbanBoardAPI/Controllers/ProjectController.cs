@@ -80,8 +80,10 @@ namespace KanbanBoardAPI.Controllers
 
             Dictionary<string, string> projectDto = new();
             projectDto["Id"] = project.Id.ToString();
+            projectDto["OwnerId"] = project.UserId.ToString();
             projectDto["Name"] = project.Name;
             projectDto["JoinCode"] = project.JoinCode;
+
 
             return Ok(projectDto);
         }
@@ -136,7 +138,8 @@ namespace KanbanBoardAPI.Controllers
         [HttpPost("getProjects")]
         public async Task<ActionResult<Dictionary<string, List<Project>>>> GetProjects(string userEmail)
         {
-            var users = await _context.Users.ToListAsync();
+            //var users = await _context.Users.ToListAsync();
+            var users = _context.Users.ToList();
             var userId = users.Find(u => u.Email == userEmail).Id;
 
             List<Project> userProjects = new List<Project>();
@@ -146,8 +149,10 @@ namespace KanbanBoardAPI.Controllers
             List<Dictionary<string, string>> userProjectsDictList = new();
             List<Dictionary<string, string>> userJoinedProjectsDictList = new();
 
-            var projectsList = await _context.Projects.ToListAsync();
-            var projectParticipantsList = await _context.ProjectParticipants.ToListAsync();
+            /*var projectsList = await _context.Projects.ToListAsync();
+            var projectParticipantsList = await _context.ProjectParticipants.ToListAsync();*/
+            var projectsList = _context.Projects.ToList();
+            var projectParticipantsList = _context.ProjectParticipants.ToList();
 
             userProjects = projectsList.FindAll(p => p.UserId == userId);
             var joinedProjectsList = projectParticipantsList.FindAll(p => p.UserId == userId);
@@ -174,22 +179,6 @@ namespace KanbanBoardAPI.Controllers
                 });
                 userProjectsDict.Add("ProjectParticipantsEmails", String.Join(",", userEmails));
 
-                /*if (p.ProjectParticipants != null)
-                {
-                    List<int> userIds = p.ProjectParticipants.ToList().Select(u => u.UserId).ToList();
-                    List<string> userEmails = new List<string>();
-
-                    _context.Users.ToList().ForEach(u =>
-                    {
-                        if (userIds.Contains(u.Id))
-                        {
-                            userEmails.Add(u.Email);
-                        }
-                    });
-
-                    userProjectsDict.Add("ProjectParticipantsEmails", String.Join(",", userEmails));
-                }*/
-
                 userProjectsDictList.Add(userProjectsDict);
             }
             foreach (var p in userJoinedProjects)
@@ -208,27 +197,10 @@ namespace KanbanBoardAPI.Controllers
                 });
                 userJoinedProjectsDict.Add("ProjectParticipantsEmails", String.Join(",", userEmails));
 
-                /*if (p.ProjectParticipants != null)
-                {
-                    List<int> userIds = p.ProjectParticipants.ToList().Select(u => u.UserId).ToList();
-                    List<string> userEmails = new List<string>();
-
-                    _context.Users.ToList().ForEach(u =>
-                    {
-                        if (userIds.Contains(u.Id))
-                        {
-                            userEmails.Add(u.Email);
-                        }
-                    });
-
-                    userJoinedProjectsDict.Add("ProjectParticipantsEmails", String.Join(",", userEmails));
-                }*/
-
                 userJoinedProjectsDictList.Add(userJoinedProjectsDict);
             }
 
-
-            Dictionary<string, List<Dictionary<string, string>>> projects = new Dictionary<string, List<Dictionary<string, string>>>();
+            Dictionary<string, List<Dictionary<string, string>>> projects = new ();
             projects.Add("OwnedProjects", userProjectsDictList);
             projects.Add("JoinedProjects", userJoinedProjectsDictList);
 

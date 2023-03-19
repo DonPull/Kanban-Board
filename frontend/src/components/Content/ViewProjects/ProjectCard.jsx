@@ -103,7 +103,7 @@ class ProjectCard extends Component {
                     
                     <div ref={projectParticipantsIconsRef} className='project-participants-icons-container flex'>
                         {projectParticipants.map(img => {
-                            return <img src={img ==! null ? img : unsetPfp}/>
+                            return <img src={img !== null ? img : unsetPfp}/>
                         })}
                         <div ref={projectParticipantsLastIconRef} className="project-participants-last-icon">
                             <label>{"+" + numberOfUnrenderedAccounts}</label>

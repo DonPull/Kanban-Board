@@ -49,7 +49,7 @@ export default class App extends Component{
                 path: "/",
                 element: user === null ? <Navigate to='/login'/> :
                     <React.Fragment>
-                        <Sidebar user={this.state.user} />
+                        <Sidebar user={user} />
                         <div className='flex column width-100-percent'>
                             {/* <TabList /> */}
                             <Content renderComp={<Home />} />
@@ -62,10 +62,10 @@ export default class App extends Component{
                 path: "/viewProjects",
                 element: user === null ? <Navigate to='/login'/> :
                     <React.Fragment>
-                        <Sidebar user={this.state.user} />
+                        <Sidebar user={user} />
                         <div className='flex column width-100-percent'>
                             {/* <TabList /> */}
-                            <Content renderComp={<ViewProjects />} />
+                            <Content renderComp={<ViewProjects user={user} />} />
                         </div>
                     </React.Fragment>
             },
@@ -73,10 +73,10 @@ export default class App extends Component{
                 path: "/projects/:projectId",
                 element: user === null ? <Navigate to='/login'/> :
                     <React.Fragment>
-                        <Sidebar user={this.state.user} />
+                        <Sidebar user={user} />
                         <div className='flex column width-100-percent'>
                             {/* <TabList /> */}
-                            <Content renderComp={<ViewBoards />} />
+                            <Content renderComp={<ViewBoards user={user} />} />
                         </div>
                     </React.Fragment>
             },
@@ -84,7 +84,7 @@ export default class App extends Component{
                 path: "/projects/:projectId/boards/:boardId",
                 element: user === null ? <Navigate to='/login'/> :
                     <React.Fragment>
-                        <Sidebar user={this.state.user} />
+                        <Sidebar user={user} />
                         <div className='flex column width-100-percent'>
                             {/* <TabList /> */}
                             <Content renderComp={

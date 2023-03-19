@@ -12,33 +12,20 @@
     background-color: #00000052;
 }
 
-#delete-project-button{
-    gap: 0.8rem;
-    padding: 1rem;
-    align-items: center;
-    align-self: center;
-    margin-left: auto;
-    margin-right: 2rem;
-    border-radius: 2rem;
-    border: 2px solid var(--theme-color-bg-element);
-    box-shadow: 0 0 5px var(--theme-color-bg-dropoff);
-    transition: 200ms;
-    cursor: pointer;
+#delete-project-button.content-section-button label{
+    /* color: #ff8e8c; */
+    color: #ff5382;
 }
-#delete-project-button label{
-    color: #ff8e8c;
-    font-size: 18px;
-    font-weight: 500;
-    padding-bottom: 0.2rem;
-    cursor: pointer;
+#delete-project-button.content-section-button img{
+    /* filter: invert(75%) sepia(91%) saturate(1174%) hue-rotate(301deg) brightness(97%) contrast(106%); */
+    filter: invert(43%) sepia(82%) saturate(1437%) hue-rotate(314deg) brightness(102%) contrast(101%);
 }
-#delete-project-button img{
-    width: 2.7rem;
-    height: 2.7rem;
-    filter: invert(75%) sepia(91%) saturate(1174%) hue-rotate(301deg) brightness(97%) contrast(106%);
-}
-#delete-project-button:hover{
-    box-shadow: 0 0 5px #ff8e8c;
+#delete-project-button.content-section-button:hover{
+    /* border-color: #ff8e8c; */
+    /* box-shadow: 0 0 5px #ff8e8c; */
+    border-color: #ff5382;
+    box-shadow: none;
+    /* box-shadow: 0 0 5px #ff5382; */
 }
 
 #board-cards-container{

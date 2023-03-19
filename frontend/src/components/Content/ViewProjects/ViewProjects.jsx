@@ -19,19 +19,17 @@ class ViewProjects extends Component {
         joinedProjectsList: []
     }
 
-    componentDidMount(){
+    renderAllProjects = async () => {
         // get all projects to render them
-        let cookies = new Cookies();
-        let userEmail = jwt_decode(cookies.get("jwt_token"))[claimsStr + "emailaddress"];
-        axios.post(apiEndpoint + "/Project/getProjects?userEmail=" + userEmail)
-            .then(response => {
-                console.log("response: ", response);
-                console.log("response.data: ", response.data);
-                this.setState({ ownedProjectsList: response.data["OwnedProjects"], joinedProjectsList: response.data["JoinedProjects"] });
-            })
-            .catch(error => {
-                console.log("Unexpected error occurred. Failed to load projects.");
-            });
+        await axios.post(apiEndpoint + "/Project/getProjects?userEmail=" + this.props.user.email).then(response => {
+            this.setState({ ownedProjectsList: response.data["OwnedProjects"], joinedProjectsList: response.data["JoinedProjects"] });
+        }).catch(error => {
+            console.log("Unexpected error occurred. Failed to load projects.");
+        });
+    }
+
+    componentDidMount(){
+        this.renderAllProjects();
 
         //let { myProjectsIsToggled, otherProjectsIsToggled } = this.state;
         let viewProjectsContainer = this.state.viewProjectsContainerRef.current;
