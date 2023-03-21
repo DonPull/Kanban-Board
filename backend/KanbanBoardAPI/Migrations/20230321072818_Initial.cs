@@ -74,19 +74,12 @@ namespace KanbanBoardAPI.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    BoardOwnerId = table.Column<int>(type: "int", nullable: false),
-                    ProjectOriginId = table.Column<int>(type: "int", nullable: false),
-                    ProjectId = table.Column<int>(type: "int", nullable: true),
-                    UserId = table.Column<int>(type: "int", nullable: true)
+                    OwnerId = table.Column<int>(type: "int", nullable: false),
+                    ProjectOriginId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Boards", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Boards_Projects_ProjectId",
-                        column: x => x.ProjectId,
-                        principalTable: "Projects",
-                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Boards_Projects_ProjectOriginId",
                         column: x => x.ProjectOriginId,
@@ -95,15 +88,10 @@ namespace KanbanBoardAPI.Migrations
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Boards_Users_BoardOwnerId",
-                        column: x => x.BoardOwnerId,
+                        column: x => x.OwnerId,
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Boards_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -277,24 +265,14 @@ namespace KanbanBoardAPI.Migrations
                 column: "BoardId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Boards_BoardOwnerId",
+                name: "IX_Boards_OwnerId",
                 table: "Boards",
-                column: "BoardOwnerId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Boards_ProjectId",
-                table: "Boards",
-                column: "ProjectId");
+                column: "OwnerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Boards_ProjectOriginId",
                 table: "Boards",
                 column: "ProjectOriginId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Boards_UserId",
-                table: "Boards",
-                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Columns_BoardId",

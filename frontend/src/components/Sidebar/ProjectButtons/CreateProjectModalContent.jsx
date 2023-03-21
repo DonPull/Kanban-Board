@@ -31,12 +31,21 @@ class CreateProjectModalContent extends Component {
     }
 
     clearInput = () => {
-        let { createBoard, listOfSearchedAccounts, currentModalRef, titleUnderlineRef, searchUnderlineRef } = this.state;
+        let { createBoard, listOfSearchedAccounts, listOfSelectedAccounts, currentModalRef, titleUnderlineRef, searchUnderlineRef } = this.state;
         let [currentModal, titleUnderline, searchUnderline] = [currentModalRef.current, titleUnderlineRef.current, searchUnderlineRef.current];
         
         currentModal.querySelectorAll("input").forEach(input => { input.value = ''; });
         titleUnderline.style.width = "0%";
         searchUnderline.style.width = "0%";
+
+        if(createBoard){
+            listOfSelectedAccounts.forEach(e => {
+                listOfSearchedAccounts.push(e);
+            })
+        }else{
+            listOfSearchedAccounts = [];
+        }
+
         this.setState({ remainingTitleCharacters: 60, listOfSearchedAccounts: createBoard ? listOfSearchedAccounts : [], listOfSelectedAccounts: [] });
     };
 
@@ -55,15 +64,12 @@ class CreateProjectModalContent extends Component {
 
             createProjectOrBoardEndpoint = "/Board/create";
             projectOrBoardString = "board";
-
-            createProjectBtn.onclick = async (event) => {
-                console.log("creted board");
-            }
         }
 
         createProjectBtn.onclick = async (event) => {
             let createProjectOrBoardObject = { "Name": titleInput.value, "UserEmail": this.props.user.email };
             if(createBoard){
+                createProjectOrBoardObject["ProjectId"] = this.state.projectObj["Id"];
                 createProjectOrBoardObject["BoardParticipantsEmails"] = this.state.listOfSelectedAccounts.map(account => account["Email"]).join(",");
             }else{
                 createProjectOrBoardObject["ProjectParticipantsEmails"] = this.state.listOfSelectedAccounts.map(account => account["Email"]).join(",");
@@ -159,7 +165,7 @@ class CreateProjectModalContent extends Component {
         let searchedAccounts = listOfSearchedAccounts;
         let selectedAccounts = listOfSelectedAccounts;
 
-        console.log(searchedAccounts);
+        //console.log(searchedAccounts);
 
         // the logic here moves an account (when it's clicked) to the opposite column. From "Choose participants" to "Selected People" and the other way around as well.
         let clickedAccount = searchedAccounts.find(e => {return (e.FullName === accountObj.FullName && e.Email === accountObj.Email)});
@@ -171,7 +177,7 @@ class CreateProjectModalContent extends Component {
             let deletedAccount = searchedAccounts.splice(searchedAccounts.indexOf(clickedAccount), 1)[0];
             //console.log(deletedAccount);
             selectedAccounts.push(deletedAccount);
-            console.log(selectedAccounts);
+            //console.log(selectedAccounts);
         }
 
         // here we first null the lists and after they are nulled in the callback function of setState we update the lists (for some reason this is nessacary otherwise we get dublicate rendering of some accounts and in general it just does not work) in order to render the correct accounts in the correct place.

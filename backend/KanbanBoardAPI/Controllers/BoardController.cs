@@ -31,7 +31,8 @@ namespace KanbanBoardAPI.Controllers
 
             Board board = new Board();
             board.Name = request["Name"];
-            board.BoardOwnerId = user.Id;
+            board.OwnerId = user.Id;
+            board.ProjectOriginId = Int32.Parse(request["ProjectId"]);
 
             _context.Add(board);
             await _context.SaveChangesAsync();

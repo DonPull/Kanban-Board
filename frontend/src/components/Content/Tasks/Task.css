@@ -89,6 +89,7 @@
 
 
 .task-type-info-container{
+    z-index: 1;
     position: relative;
 }
 .task-priority-info-container{

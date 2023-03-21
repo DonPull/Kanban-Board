@@ -22,14 +22,13 @@ class ProjectCard extends Component {
     }
     
     async componentDidMount(){
-        await axios.post(apiEndpoint + "/User/getUsersProfilePictures", this.props.projectData["ProjectParticipantsEmails"].split(","))
-            .then(response => {
-                this.setState({ projectParticipants: response.data }, () => {
-                    this.spaceOutProjectParticipantsIcons();
-                });
-            }).catch(error => {
-                console.log(error);
+        await axios.post(apiEndpoint + "/User/getUsersProfilePictures", this.props.projectData["ProjectParticipantsEmails"].split(",")).then(response => {
+            this.setState({ projectParticipants: response.data }, () => {
+                this.spaceOutProjectParticipantsIcons();
             });
+        }).catch(error => {
+            console.log(error);
+        });
         
         // Get all the Meters
         const meters = document.querySelectorAll('svg[data-value] .meter');
@@ -103,7 +102,7 @@ class ProjectCard extends Component {
                     
                     <div ref={projectParticipantsIconsRef} className='project-participants-icons-container flex'>
                         {projectParticipants.map(img => {
-                            return <img src={img !== null ? img : unsetPfp}/>
+                            return <img src={img !== null && img !== undefined && img !== "" ? img : unsetPfp}/>
                         })}
                         <div ref={projectParticipantsLastIconRef} className="project-participants-last-icon">
                             <label>{"+" + numberOfUnrenderedAccounts}</label>

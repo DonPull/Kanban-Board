@@ -30,6 +30,12 @@ namespace KanbanBoardAPI.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) 
         {
+            modelBuilder.Entity<Project>()
+                .HasMany(p => p.Boards)
+                .WithOne(b => b.ProjectOrigin)
+                .HasForeignKey(b => b.ProjectOriginId)
+                .OnDelete(DeleteBehavior.Cascade);
+
             modelBuilder.Entity<Board>()
                 .HasOne(me => me.ProjectOrigin)
                 .WithMany(parent => parent.Boards)
@@ -37,9 +43,9 @@ namespace KanbanBoardAPI.Data
                 .HasConstraintName("FK_Boards_Projects_ProjectOriginId");
 
             modelBuilder.Entity<Board>()
-                .HasOne(me => me.BoardOwner)
+                .HasOne(me => me.Owner)
                 .WithMany(parent => parent.OwnedBoards)
-                .HasForeignKey(me => me.BoardOwnerId)
+                .HasForeignKey(me => me.OwnerId)
                 .HasConstraintName("FK_Boards_Users_BoardOwnerId");
 
             modelBuilder.Entity<ProjectParticipant>()
@@ -97,14 +103,19 @@ namespace KanbanBoardAPI.Data
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Board>()
-                .HasOne(e => e.BoardOwner)
-                .WithMany()
-                .HasForeignKey(e => e.BoardOwnerId)
+                .Property<int>(b => b.OwnerId);
+            modelBuilder.Entity<Board>()
+                .Property<int>(b => (int)b.ProjectOriginId);
+
+            modelBuilder.Entity<Board>()
+                .HasOne(e => e.Owner)
+                .WithMany(u => u.OwnedBoards)
+                .HasForeignKey(e => e.OwnerId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Board>()
                 .HasOne(e => e.ProjectOrigin)
-                .WithMany()
+                .WithMany(p => p.Boards)
                 .HasForeignKey(e => e.ProjectOriginId)
                 .OnDelete(DeleteBehavior.Restrict);
 

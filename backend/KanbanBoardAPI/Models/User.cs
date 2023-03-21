@@ -14,7 +14,7 @@ namespace KanbanBoardAPI.Models
         public DateTime TokenCreated { get; set; }
         public DateTime TokenExpires { get; set; }
         public virtual ICollection<Project>? OwnedProjects { get; set; }
-        public virtual ICollection<Board> OwnedBoards { get; set; }
+        public virtual ICollection<Board>? OwnedBoards { get; set; }
         public virtual ICollection<ProjectParticipant>? ProjectParticipants { get; set; }
         public virtual ICollection<BoardParticipant>? BoardParticipants { get; set; }
         //public int TaskId { get; set; }

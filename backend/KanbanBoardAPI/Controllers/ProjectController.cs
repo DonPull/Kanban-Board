@@ -68,6 +68,37 @@ namespace KanbanBoardAPI.Controllers
             return Ok(project.Name);
         }
 
+        [HttpGet("getBoards/{projectId}")]
+        public async Task<ActionResult> GetBoardsByProjectId(int projectId)
+        {
+            Console.WriteLine("reaced getBoards with project id: " + projectId);
+            var boardsList = new List<Dictionary<string, string>>();
+
+            var boards = _context.Boards.ToList().FindAll(b => b.ProjectOriginId == projectId).ToList();
+            //var boardIds = boards.Select(b => b.Id).ToList();
+
+            //var userIds = _context.BoardParticipants.ToList().FindAll(bp => boardIds.Contains(bp.BoardId)).Select(bp => bp.UserId).ToList();
+            //var userEmails = _context.Users.ToList().FindAll(u => userIds.Contains(u.Id)).Select(u => u.Email).ToList();
+
+            foreach (var b in boards) 
+            {
+                var boardDict = new Dictionary<string, string>();
+                boardDict["Id"] = b.Id.ToString();
+                boardDict["Name"] = b.Name;
+                boardDict["OwnerId"] = b.OwnerId.ToString();
+                boardDict["ProjectOriginId"] = b.ProjectOriginId.ToString();
+
+                var userIds = _context.BoardParticipants.ToList().FindAll(bp => bp.BoardId == b.Id).Select(bp => bp.UserId).ToList();
+                var userEmails = _context.Users.ToList().FindAll(u => userIds.Contains(u.Id)).Select(u => u.Email).ToList();
+
+                boardDict["UserEmails"] = String.Join(",", userEmails);
+
+                boardsList.Add(boardDict);
+            }
+
+            return Ok(boardsList);
+        }
+
         [HttpGet("{projectId}")]
         public async Task<ActionResult> GetProjectById(int projectId)
         {

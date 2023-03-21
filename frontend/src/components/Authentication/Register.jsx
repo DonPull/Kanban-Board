@@ -100,7 +100,7 @@ class Register extends Component {
             return { dataIsValid: false, message: "Confirm password is different from the password"}; 
         }
 
-        return { dataIsValid: true, message: "Your registration is almost complete, please check your email to verify your account!"};
+        return { dataIsValid: true, message: "Your registration is complete!"};
     }
 
     render() {

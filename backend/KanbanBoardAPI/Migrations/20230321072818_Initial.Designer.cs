@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KanbanBoardAPI.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230320235310_Initial")]
+    [Migration("20230321072818_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -33,31 +33,21 @@ namespace KanbanBoardAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("BoardOwnerId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ProjectId")
+                    b.Property<int>("OwnerId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ProjectOriginId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("UserId")
+                    b.Property<int?>("ProjectOriginId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BoardOwnerId");
-
-                    b.HasIndex("ProjectId");
+                    b.HasIndex("OwnerId");
 
                     b.HasIndex("ProjectOriginId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Boards");
                 });
@@ -317,29 +307,20 @@ namespace KanbanBoardAPI.Migrations
 
             modelBuilder.Entity("KanbanBoardAPI.Models.Board", b =>
                 {
-                    b.HasOne("KanbanBoardAPI.Models.User", "BoardOwner")
-                        .WithMany()
-                        .HasForeignKey("BoardOwnerId")
+                    b.HasOne("KanbanBoardAPI.Models.User", "Owner")
+                        .WithMany("OwnedBoards")
+                        .HasForeignKey("OwnerId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
                         .HasConstraintName("FK_Boards_Users_BoardOwnerId");
 
-                    b.HasOne("KanbanBoardAPI.Models.Project", null)
-                        .WithMany("Boards")
-                        .HasForeignKey("ProjectId");
-
                     b.HasOne("KanbanBoardAPI.Models.Project", "ProjectOrigin")
-                        .WithMany()
+                        .WithMany("Boards")
                         .HasForeignKey("ProjectOriginId")
                         .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired()
                         .HasConstraintName("FK_Boards_Projects_ProjectOriginId");
 
-                    b.HasOne("KanbanBoardAPI.Models.User", null)
-                        .WithMany("OwnedBoards")
-                        .HasForeignKey("UserId");
-
-                    b.Navigation("BoardOwner");
+                    b.Navigation("Owner");
 
                     b.Navigation("ProjectOrigin");
                 });

@@ -22,6 +22,7 @@ function ViewBoards(props) {
     const [revealProjectJoinCodeBtnRef, setRevealProjectJoinCodeBtnRef] = useState(React.createRef());
     const [revealProjectJoinCodeText, setRevealProjectJoinCodeText] = useState("Reveal Join Code");
     const [createBoardId, setCreateBoardId] = useState("create-new-board-btn");
+    const [boardList, setBoardList] = useState([]);
     const [toastObj, setToastObj] = useState({
         show: false,
         message: null,
@@ -30,6 +31,8 @@ function ViewBoards(props) {
     });
 
     useEffect(() => {
+        renderAllBoards();
+
         axios.get(apiEndpoint + "/Project/" + projectId).then(response => {
             console.log(response.data);
             setProjectObj(response.data);
@@ -65,6 +68,17 @@ function ViewBoards(props) {
         setToastObj(prevToastObj => { return { ...prevToastObj, ...tObj } })
     }
 
+    let renderAllBoards = async () => {
+        // get all projects to render them
+        await axios.get(apiEndpoint + "/Project/getBoards/" + projectId).then(response => {
+            console.log(response.data);
+            setBoardList(response.data);
+        }).catch(error => {
+            console.log(error);
+            console.log("Unexpected error occurred. Failed to load boards.");
+        });
+    }
+
     if(!projectIsValid){
         return (
             <React.Fragment>
@@ -92,10 +106,15 @@ function ViewBoards(props) {
 
                 <div className='main-section-separator' style={{ marginTop: "0" }} />
 
-                <div id="board-cards-container" className='height-100-percent'>
-                    <label id="board-cards-container-background">BOARDS</label>
+                <div id="board-showcase-container">
+                    <label id="board-showcase-container-background">BOARDS</label>
                     <button id={createBoardId} className='button'>Create New Board</button>
-                    <BoardCard />
+                    
+                    <div id="boards-cards-container">
+                        {boardList.map(boardData =>{
+                            return <BoardCard boardData={boardData} />;
+                        })}
+                    </div>
                 </div>
 
                 {toastObj.show && <Toast closeToastCallbackFunction={() => { setToastObj(prevToastObj => { return { ...prevToastObj, show: false } }) }} toastMessage={toastObj.message} notificationDurationInMs={toastObj.duration} notificationType={toastObj.type} />}
