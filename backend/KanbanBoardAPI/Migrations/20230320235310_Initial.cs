@@ -74,8 +74,10 @@ namespace KanbanBoardAPI.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ProjectRefId = table.Column<int>(type: "int", nullable: false),
-                    ProjectId = table.Column<int>(type: "int", nullable: true)
+                    BoardOwnerId = table.Column<int>(type: "int", nullable: false),
+                    ProjectOriginId = table.Column<int>(type: "int", nullable: false),
+                    ProjectId = table.Column<int>(type: "int", nullable: true),
+                    UserId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -86,9 +88,21 @@ namespace KanbanBoardAPI.Migrations
                         principalTable: "Projects",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Boards_Projects_ProjectRefId",
-                        column: x => x.ProjectRefId,
+                        name: "FK_Boards_Projects_ProjectOriginId",
+                        column: x => x.ProjectOriginId,
                         principalTable: "Projects",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Boards_Users_BoardOwnerId",
+                        column: x => x.BoardOwnerId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Boards_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
                         principalColumn: "Id");
                 });
 
@@ -114,6 +128,30 @@ namespace KanbanBoardAPI.Migrations
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "BoardParticipants",
+                columns: table => new
+                {
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    BoardId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BoardParticipants", x => new { x.UserId, x.BoardId });
+                    table.ForeignKey(
+                        name: "FK_BoardParticipants_Boards_BoardId",
+                        column: x => x.BoardId,
+                        principalTable: "Boards",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_BoardParticipants_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -234,14 +272,29 @@ namespace KanbanBoardAPI.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_BoardParticipants_BoardId",
+                table: "BoardParticipants",
+                column: "BoardId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Boards_BoardOwnerId",
+                table: "Boards",
+                column: "BoardOwnerId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Boards_ProjectId",
                 table: "Boards",
                 column: "ProjectId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Boards_ProjectRefId",
+                name: "IX_Boards_ProjectOriginId",
                 table: "Boards",
-                column: "ProjectRefId");
+                column: "ProjectOriginId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Boards_UserId",
+                table: "Boards",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Columns_BoardId",
@@ -297,6 +350,9 @@ namespace KanbanBoardAPI.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "BoardParticipants");
+
             migrationBuilder.DropTable(
                 name: "Filters");
 

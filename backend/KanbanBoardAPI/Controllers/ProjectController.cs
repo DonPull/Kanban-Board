@@ -78,11 +78,15 @@ namespace KanbanBoardAPI.Controllers
                 return BadRequest($"A project with the id of '{projectId}' does not exist!");
             }
 
-            Dictionary<string, string> projectDto = new();
+            var projectParticipantsIds = _context.ProjectParticipants.ToList().FindAll(pp => pp.ProjectId == project.Id).Select(pp => pp.UserId).ToList();
+            var projectParticipants = _context.Users.ToList().FindAll(u => { return projectParticipantsIds.Contains(u.Id); }).Select(u => { return new Dictionary<string, string> { { "Id", u.Id.ToString() }, { "FullName", u.FullName }, { "Email", u.Email }, { "ProfilePicture", u.ProfilePicture } }; }).ToList();
+
+            Dictionary<string, object> projectDto = new();
             projectDto["Id"] = project.Id.ToString();
             projectDto["OwnerId"] = project.UserId.ToString();
             projectDto["Name"] = project.Name;
             projectDto["JoinCode"] = project.JoinCode;
+            projectDto["ProjectParticipants"] = projectParticipants;
 
 
             return Ok(projectDto);

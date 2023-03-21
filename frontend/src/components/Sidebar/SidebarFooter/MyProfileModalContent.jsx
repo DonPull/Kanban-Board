@@ -73,11 +73,12 @@ class MyProfileModalContent extends Component {
 
             let { user } = this.props;
 
-            axios.put(apiEndpoint + "/User/updateProfilePicture", {"Email": user.email, "ProfilePictureBase64": fileInfo.base64})
-                .then(response => {
-                    user.profilePicture = fileInfo.base64;
-                    user["updateUserCallback"](user);
-                });
+            axios.put(apiEndpoint + "/User/updateProfilePicture", {"Email": user.email, "ProfilePictureBase64": fileInfo.base64}).then(response => {
+                user.profilePicture = fileInfo.base64;
+                user["updateUserCallback"](user);
+                // if you upload a pfp there is still a color filter until you hover the pfp at which point the onmouseover event listener is triggered and it takes care of the color filter, however we want to remove the color filter as soon as the pfp upload returns a success 
+                this.state.profilePictureRef.current.style.filter = "brightness(1)";
+            });
         }
     }
 

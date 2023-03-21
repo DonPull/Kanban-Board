@@ -26,8 +26,8 @@ class AccountAsListItem extends Component {
                 </div>
                 <div>
                 <div className='flex column' style={{ margin: "0 1rem", maxWidth: "200px" }}>
-                    <label>{accountName}</label>
-                    <label>{accountEmail}</label>
+                    <label className='account-as-list-item-fullname'>{accountName}</label>
+                    <label className='account-as-list-item-email'>{accountEmail}</label>
                 </div>
                 </div>
                 <div className='flex align-center'>

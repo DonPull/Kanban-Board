@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './DeleteProjectModalContent.css';
 import axios from 'axios';
 import apiEndpoint from './../../../index';
+import { Link } from 'react-router-dom';
 
 function DeleteProjectModalContent(props) {
     const [initialCountdown, setInitialCountdown] = useState(5);
@@ -37,10 +38,11 @@ function DeleteProjectModalContent(props) {
             
             axios.delete(apiEndpoint + "/Project/" + props.projectObj["Id"]).then(response => {
                 console.log("Project deleted successfully");
-                console.log(response.data);
+                window.location.href = "/viewProjects";
+                //console.log(response.data);
             }).catch(error => {
                 console.log("Filed to delete project.");
-                console.log(error);
+                //console.log(error);
             });
         };
     }, [deleteProjectButtonIsDisabled]);

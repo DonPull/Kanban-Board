@@ -14,6 +14,8 @@ import Toast from '../../Toast';
 
 class CreateProjectModalContent extends Component {
     state = {
+        projectObj: this.props.projectObj,
+        createBoard: this.props.projectObj === undefined ? false : true,
         closeBtn: React.createRef(),
         currentModalRef: React.createRef(),
         titleInputRef: React.createRef(),
@@ -21,6 +23,7 @@ class CreateProjectModalContent extends Component {
         titleUnderlineRef: React.createRef(),
         searchUnderlineRef: React.createRef(),
         createProjectBtnRef: React.createRef(),
+        listOfSearchedAccountsContainerRef: React.createRef(),
         titleMaxLength: 60,
         remainingTitleCharacters: 60,
         listOfSearchedAccounts: [],
@@ -28,29 +31,50 @@ class CreateProjectModalContent extends Component {
     }
 
     clearInput = () => {
-        let { currentModalRef, titleUnderlineRef, searchUnderlineRef } = this.state;
+        let { createBoard, listOfSearchedAccounts, currentModalRef, titleUnderlineRef, searchUnderlineRef } = this.state;
         let [currentModal, titleUnderline, searchUnderline] = [currentModalRef.current, titleUnderlineRef.current, searchUnderlineRef.current];
         
         currentModal.querySelectorAll("input").forEach(input => { input.value = ''; });
         titleUnderline.style.width = "0%";
         searchUnderline.style.width = "0%";
-        this.setState({ remainingTitleCharacters: 60, listOfSearchedAccounts: [], listOfSelectedAccounts: [] });
+        this.setState({ remainingTitleCharacters: 60, listOfSearchedAccounts: createBoard ? listOfSearchedAccounts : [], listOfSelectedAccounts: [] });
     };
 
     componentDidMount(){
         this.props.getCloseBtn(this.state.closeBtn.current);
         this.props.modalOnCloseCallback(this.clearInput);
         
+        let { createBoard } = this.state;
         let { createProjectBtnRef, currentModalRef, titleInputRef, searchInputRef, titleUnderlineRef, searchUnderlineRef } = this.state;
         let [createProjectBtn, currentModal, titleInput, searchInput, titleUnderline, searchUnderline] = [createProjectBtnRef.current, currentModalRef.current, titleInputRef.current, searchInputRef.current, titleUnderlineRef.current, searchUnderlineRef.current];
         
+        let createProjectOrBoardEndpoint = "/Project/create";
+        let projectOrBoardString = "project";
+        if(createBoard){
+            this.setState({ listOfSearchedAccounts: this.props.projectObj["ProjectParticipants"] });
+
+            createProjectOrBoardEndpoint = "/Board/create";
+            projectOrBoardString = "board";
+
+            createProjectBtn.onclick = async (event) => {
+                console.log("creted board");
+            }
+        }
+
         createProjectBtn.onclick = async (event) => {
-            await axios.post(apiEndpoint + "/Project/create", { "Name": titleInput.value, "UserEmail": this.props.user.email, "ProjectParticipantsEmails": this.state.listOfSelectedAccounts.map(account => account["Email"]).join(",") }).then(response => {
+            let createProjectOrBoardObject = { "Name": titleInput.value, "UserEmail": this.props.user.email };
+            if(createBoard){
+                createProjectOrBoardObject["BoardParticipantsEmails"] = this.state.listOfSelectedAccounts.map(account => account["Email"]).join(",");
+            }else{
+                createProjectOrBoardObject["ProjectParticipantsEmails"] = this.state.listOfSelectedAccounts.map(account => account["Email"]).join(",");
+            }
+            
+            await axios.post(apiEndpoint + createProjectOrBoardEndpoint, createProjectOrBoardObject).then(response => {
                 this.clearInput();
-                let newToastProperties = { show: true, type: "success", message: `Created project: "${response.data}"` };
+                let newToastProperties = { show: true, type: "success", message: `Created ${projectOrBoardString}: "${response.data}"` };
                 this.props.modifyToastObjCallback(newToastProperties);
             }).catch(error => {
-                let newToastProperties = { show: true, type: "error", message: error.response.data !== null && error.response.data !== undefined ? error.response.data : "Couldn't create a project. Try again later." };
+                let newToastProperties = { show: true, type: "error", message: error.response.data !== null && error.response.data !== undefined ? error.response.data : `Couldn't create a ${projectOrBoardString}. Try again later.` };
                 this.props.modifyToastObjCallback(newToastProperties);
             });
         }
@@ -64,39 +88,9 @@ class CreateProjectModalContent extends Component {
             }
         };
 
-        searchInput.oninput = (event) => {
-            axios.post(apiEndpoint + "/Project/getAccountsBySearch?searchQuery=" + searchInput.value)
-                .then(response => {
-                    this.setState({ listOfSearchedAccounts: [] }, () => {
-                        let listOfReceivedAccounts = response.data;
-                        let finalListOfSearchAccounts = [];
-
-                        // for each received account check if it's already in the list of search accounts. if it's not add it to finalListOfSearchAccounts (this is done so that if the user selects a certain accout but then searches for it again, the accout won't show up again which will prevent the user from adding the same account multiple times to the same project.)
-                        listOfReceivedAccounts.forEach(a => {
-                            let receivedAccountId = a["Id"];
-                            let currentAccoutIsAlreadySelected = false;
-
-                            this.state.listOfSelectedAccounts.forEach(e => {
-                                if(e["Id"] === receivedAccountId){
-                                    currentAccoutIsAlreadySelected = true;
-                                }
-                            });
-
-                            if(!currentAccoutIsAlreadySelected){
-                                // before adding the accout to finalListOfSearchAccounts check if that accout is the account of the user that is creating the project (the current user)
-                                if(this.props.user.id !== receivedAccountId){
-                                    finalListOfSearchAccounts.push(a);
-                                }
-                            }
-                        });
-
-                        this.setState({ listOfSearchedAccounts: finalListOfSearchAccounts });
-                    });
-                })
-                .catch(error => {
-                    this.setState({ listOfSearchedAccounts: [] });
-                });
-        }
+        searchInput.oninput = () => { 
+            createBoard ? this.boardOnSearchInput(searchInput)  : this.projectOnSearchInput(searchInput);
+        };
 
         currentModal.onclick = (event) => {
             if(event.target === titleInput){
@@ -112,6 +106,52 @@ class CreateProjectModalContent extends Component {
                 searchUnderline.style.width = "0%";
             }
         };
+    }
+
+    boardOnSearchInput = (searchInput) => {
+        let regex = new RegExp(searchInput.value.replaceAll(".", "").replaceAll("-", "").replaceAll("_", "").replaceAll(" ", "").trim(), 'gi');
+        let listOfSearchedAccountsContainer = this.state.listOfSearchedAccountsContainerRef.current;
+        listOfSearchedAccountsContainer.querySelectorAll(".user-showcase-account-container").forEach(e => {
+            let currentFullName = e.querySelector(".account-as-list-item-fullname").innerText.replaceAll(".", "").replaceAll("-", "").replaceAll("_", "").replaceAll(" ", "").trim();
+            let currentEmail = e.querySelector(".account-as-list-item-email").innerText.replaceAll(".", "").replaceAll("-", "").replaceAll("_", "").replaceAll(" ", "").trim();
+
+            if(!regex.test(currentFullName) && !regex.test(currentEmail)){
+                e.style.display = "none";
+            }else{
+                e.style.display = "";
+            }
+        });
+    }
+    projectOnSearchInput = (searchInput) => {
+        axios.post(apiEndpoint + "/Project/getAccountsBySearch?searchQuery=" + searchInput.value).then(response => {
+            this.setState({ listOfSearchedAccounts: [] }, () => {
+                let listOfReceivedAccounts = response.data;
+                let finalListOfSearchAccounts = [];
+
+                // for each received account check if it's already in the list of search accounts. if it's not add it to finalListOfSearchAccounts (this is done so that if the user selects a certain accout but then searches for it again, the accout won't show up again which will prevent the user from adding the same account multiple times to the same project.)
+                listOfReceivedAccounts.forEach(a => {
+                    let receivedAccountId = a["Id"];
+                    let currentAccoutIsAlreadySelected = false;
+
+                    this.state.listOfSelectedAccounts.forEach(e => {
+                        if(e["Id"] === receivedAccountId){
+                            currentAccoutIsAlreadySelected = true;
+                        }
+                    });
+
+                    if(!currentAccoutIsAlreadySelected){
+                        // before adding the accout to finalListOfSearchAccounts check if that accout is the account of the user that is creating the project (the current user)
+                        if(this.props.user.id !== receivedAccountId){
+                            finalListOfSearchAccounts.push(a);
+                        }
+                    }
+                });
+
+                this.setState({ listOfSearchedAccounts: finalListOfSearchAccounts });
+            });
+        }).catch(error => {
+            this.setState({ listOfSearchedAccounts: [] });
+        });
     }
 
     onAccountClickCallback = (accountObj) => {
@@ -139,14 +179,14 @@ class CreateProjectModalContent extends Component {
     }
 
     render() { 
-        let { listOfSearchedAccounts, listOfSelectedAccounts, createProjectBtnRef, currentModalRef, titleInputRef, searchInputRef, titleUnderlineRef, searchUnderlineRef, titleMaxLength, remainingTitleCharacters } = this.state;
+        let { createBoard, listOfSearchedAccounts, listOfSelectedAccounts, listOfSearchedAccountsContainerRef, createProjectBtnRef, currentModalRef, titleInputRef, searchInputRef, titleUnderlineRef, searchUnderlineRef, titleMaxLength, remainingTitleCharacters } = this.state;
 
         return (
             <React.Fragment>
                 <div ref={currentModalRef} className='create-project-modal-content-container flex column justify-center align-center'>
                     {/* <UnderConstruction closeBtn={this.state.closeBtn} /> */}
                     <div className='name-the-project-container flex'>
-                        <label>Project Name:</label>
+                        <label>{ createBoard ? "Board Name:" : "Project Name:"}</label>
                         <div className='name-the-project-input-container flex column'>
                             <div className='flex'>
                                 <input ref={titleInputRef} maxlength={titleMaxLength} />
@@ -162,7 +202,7 @@ class CreateProjectModalContent extends Component {
 
                         <div className='flex column'>
                             <label className='user-showcase-label'>Choose Participants</label>
-                            <div className='user-showcase-container flex column'>
+                            <div ref={listOfSearchedAccountsContainerRef} className='user-showcase-container flex column'>
                                 <div className='user-search-container flex column'>
                                     <div className='flex'>
                                         <div className='user-search-img-container flex'>
@@ -193,7 +233,7 @@ class CreateProjectModalContent extends Component {
 
                     </div>
 
-                    <button ref={createProjectBtnRef} style={{ marginTop: "3rem", width: "max-content", backgroundColor: "transparent" }} className='button'>Create Project</button>
+                    <button ref={createProjectBtnRef} style={{ marginTop: "3rem", width: "max-content", backgroundColor: "transparent" }} className='button'>{createBoard ? "Create Board" : "Create Project"}</button>
 
                 </div>
             </React.Fragment>

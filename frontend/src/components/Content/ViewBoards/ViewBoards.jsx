@@ -9,6 +9,8 @@ import Modal from './../../Modal';
 import axios from 'axios';
 import apiEndpoint from './../../../index';
 import { Navigate } from 'react-router-dom';
+import CreateProjectModalContent from './../../Sidebar/ProjectButtons/CreateProjectModalContent';
+import Toast from './../../Toast';
 
 function ViewBoards(props) {
     const { projectId } = useParams();
@@ -19,6 +21,13 @@ function ViewBoards(props) {
     const [userIsOwner, setUserIsOwner] = useState(false);
     const [revealProjectJoinCodeBtnRef, setRevealProjectJoinCodeBtnRef] = useState(React.createRef());
     const [revealProjectJoinCodeText, setRevealProjectJoinCodeText] = useState("Reveal Join Code");
+    const [createBoardId, setCreateBoardId] = useState("create-new-board-btn");
+    const [toastObj, setToastObj] = useState({
+        show: false,
+        message: null,
+        duration: 3000,
+        type: "error"
+    });
 
     useEffect(() => {
         axios.get(apiEndpoint + "/Project/" + projectId).then(response => {
@@ -51,6 +60,11 @@ function ViewBoards(props) {
         setRevealProjectJoinCodeText("Reveal Join Code");
     }
 
+    let modifyToastObjCallback = (tObj) => {
+        //this.setState(prevState => ({ toastObj: { ...prevState.toastObj, ...tObj } }));
+        setToastObj(prevToastObj => { return { ...prevToastObj, ...tObj } })
+    }
+
     if(!projectIsValid){
         return (
             <React.Fragment>
@@ -65,7 +79,9 @@ function ViewBoards(props) {
 
                     <div ref={revealProjectJoinCodeBtnRef} className='content-section-button' style={{ marginLeft: "0" }}>
                         <img src={joinCodeButtonIcon}/>
-                        <label className='user-select'>{revealProjectJoinCodeText}</label>
+                        <div className='flex justify-center width-100-percent'>
+                            <label className='user-select'>{revealProjectJoinCodeText}</label>
+                        </div>
                     </div>
 
                     {userIsOwner ? <div id={deleteProjectBtnId} className='content-section-button'>
@@ -78,10 +94,13 @@ function ViewBoards(props) {
 
                 <div id="board-cards-container" className='height-100-percent'>
                     <label id="board-cards-container-background">BOARDS</label>
-                    <button id="create-new-board-btn" className='button'>Create New Board</button>
+                    <button id={createBoardId} className='button'>Create New Board</button>
                     <BoardCard />
                 </div>
 
+                {toastObj.show && <Toast closeToastCallbackFunction={() => { setToastObj(prevToastObj => { return { ...prevToastObj, show: false } }) }} toastMessage={toastObj.message} notificationDurationInMs={toastObj.duration} notificationType={toastObj.type} />}
+                <Modal modalContent={<CreateProjectModalContent projectObj={projectObj} modifyToastObjCallback={modifyToastObjCallback} user={props.user} />} openBtnId={createBoardId} />
+                
                 {userIsOwner ? <Modal modalContent={<DeleteProjectModalContent projectObj={projectObj} />} openBtnId={deleteProjectBtnId} /> : ""}
             </div>
         );
