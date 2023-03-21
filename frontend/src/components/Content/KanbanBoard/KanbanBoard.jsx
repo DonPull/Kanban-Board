@@ -8,6 +8,9 @@ import KanbanColumn from './KanbanColumn';
 class KanbanBoard extends Component {
     state = {
         mainActionBtnIsToggled: false,
+        mainActionBtnRef: React.createRef(),
+        createNewTaskBtnRef: React.createRef(),
+        createNewColumnBtnRef: React.createRef(),
         tasksInfo: [
             { columnName: "ToDo", tasks: [
                     {
@@ -288,35 +291,53 @@ class KanbanBoard extends Component {
         ]
     }
 
-    componentDidMount(){
+    mainActionBtnOnClick = () => {
+        let { mainActionBtnIsToggled, mainActionBtnRef } = this.state;
+        let mainActionBtn = mainActionBtnRef.current;
         let listOfActionButtons = document.querySelectorAll(".create-action-btn-container > *");
-        let mainActionBtn = listOfActionButtons[listOfActionButtons.length - 1];
-        let { mainActionBtnIsToggled } = this.state;
 
-        mainActionBtn.onclick = (event) => {
-            mainActionBtnIsToggled = !mainActionBtnIsToggled;
+        mainActionBtnIsToggled = !mainActionBtnIsToggled;
+        this.setState({ mainActionBtnIsToggled });
 
-            if(mainActionBtnIsToggled){
-                mainActionBtn.style.transform = "rotate(45deg)";
-                //mainActionBtn.style.transform = "rotate(135deg)";
-                listOfActionButtons.forEach(e => {
-                    if(e !== mainActionBtn){
-                        e.style.transform = "translateY(0)";
-                        e.style.opacity = "1";
-                        e.style.cursor = "pointer";
-                    }
-                });
-            }else{
-                mainActionBtn.style.transform = "rotate(0deg)";
-                listOfActionButtons.forEach(e => {
-                    if(e !== mainActionBtn){
-                        e.style.transform = "translateY(-3rem)";
-                        e.style.opacity = "0";
-                        e.style.cursor = "default";
-                    }
-                });
-            }
+        if(mainActionBtnIsToggled){
+            mainActionBtn.style.transform = "rotate(45deg)";
+            //mainActionBtn.style.transform = "rotate(135deg)";
+            listOfActionButtons.forEach(e => {
+                if(e !== mainActionBtn){
+                    e.style.transform = "translateY(0)";
+                    e.style.opacity = "1";
+                    e.style.cursor = "pointer";
+                }
+            });
+        }else{
+            mainActionBtn.style.transform = "rotate(0deg)";
+            listOfActionButtons.forEach(e => {
+                if(e !== mainActionBtn){
+                    e.style.transform = "translateY(-3rem)";
+                    e.style.opacity = "0";
+                    e.style.cursor = "default";
+                }
+            });
         }
+    }
+
+    createNewTaskBtnOnClick = () => {
+        console.log("trying to create new task");
+    }
+
+    createNewColumnBtnOnClick = () => {
+        console.log("trying to create new column");
+    }
+
+    componentDidMount(){
+        let { mainActionBtnIsToggled, mainActionBtnRef, createNewTaskBtnRef, createNewColumnBtnRef } = this.state;
+
+        let listOfActionButtons = document.querySelectorAll(".create-action-btn-container > *");
+        let [mainActionBtn, createNewTaskBtn, createNewColumnBtn] = [mainActionBtnRef.current, createNewTaskBtnRef.current, createNewColumnBtnRef.current];
+
+        mainActionBtn.onclick = this.mainActionBtnOnClick;
+        createNewTaskBtn.onclick = this.createNewTaskBtnOnClick;
+        createNewColumnBtn.onclick = this.createNewColumnBtnOnClick;
 
         listOfActionButtons.forEach(e => {
             if(e !== mainActionBtn){
@@ -340,7 +361,7 @@ class KanbanBoard extends Component {
     }
 
     render() {
-        let { tasksInfo } = this.state;
+        let { tasksInfo, mainActionBtnRef, createNewTaskBtnRef, createNewColumnBtnRef } = this.state;
         return (
             <div className="kanban-board flex width-100-percent">
                 {tasksInfo.map(info => { 
@@ -354,21 +375,21 @@ class KanbanBoard extends Component {
                     })
                 }
                 <div className='create-action-btn-container flex column'>
-                    <div className='new-task-action-btn action-btn' >
+                    <div ref={createNewTaskBtnRef} className='new-task-action-btn action-btn' >
                         <img src={addBtn} style={{ width: "2rem" }} />
                         <div className="action-btn-text-container">
                             <label>New Task</label>
                         </div>
                     </div>
                     
-                    <div className='new-column-action-btn action-btn' >
+                    <div ref={createNewColumnBtnRef} className='new-column-action-btn action-btn' >
                         <img src={addBtn} style={{ width: "2rem" }} />
                         <div className="action-btn-text-container">
                             <label>New Column</label>
                         </div>
                     </div>
 
-                    <div className='action-btn'>
+                    <div ref={mainActionBtnRef} className='action-btn'>
                         <img src={addBtn}/>
                     </div>
                 </div>
