@@ -9,6 +9,7 @@ import jwt_decode from "jwt-decode";
 
 class JoinProjectModalContent extends Component {
     state = {
+        createColumnBoardId: this.props.createColumnBoardId || null,
         codeInputFieldRef: React.createRef(),
         joinProjectBtnRef: React.createRef(),
         toastObj: {
@@ -20,9 +21,10 @@ class JoinProjectModalContent extends Component {
     }
 
     componentDidMount(){
+        console.log("createColumnBoardId: ", this.state.createColumnBoardId);
         this.props.modalOnCloseCallback(this.clearInput);
 
-        let { joinProjectBtnRef, codeInputFieldRef } = this.state;
+        let { createColumnBoardId, joinProjectBtnRef, codeInputFieldRef } = this.state;
         let [joinProjectBtn, codeInputField] = [joinProjectBtnRef.current, codeInputFieldRef.current];
         joinProjectBtn.onclick = async (event) => {
             let cookies = new Cookies();
@@ -30,14 +32,21 @@ class JoinProjectModalContent extends Component {
 
             let decoded = jwt_decode(token);
 
-            let result = await axios.post(apiEndpoint + "/Project/join", { "JoinProjectString": codeInputField.value, "UserEmail": decoded[claimsStr + "emailaddress"] })
-                .catch(error => {
+            let result;
+            if(createColumnBoardId === null){
+                result = await axios.post(apiEndpoint + "/Project/join", { "JoinProjectString": codeInputField.value, "UserEmail": decoded[claimsStr + "emailaddress"] }).catch(error => {
                     let newToastProperties = { show: true, type: "error", message: "Invalid join code" };
                     this.props.modifyToastObjCallback(newToastProperties);
                 });
+            }else{
+                result = await axios.post(apiEndpoint + "/Column/create", { "Name": codeInputField.value, "BoardId": createColumnBoardId }).catch(error => {
+                    let newToastProperties = { show: true, type: "error", message: "Couldn't create a new column. Please try again later!" };
+                    this.props.modifyToastObjCallback(newToastProperties);
+                });
+            }
             console.log(result);
             if(result !== null && result !== undefined){
-                let newToastProperties = { show: true, type: "success", message: `Joined project: "${result.data}"` };
+                let newToastProperties = { show: true, type: "success", message: createColumnBoardId === null ? `Joined project: "${result.data}"` : `Created column: "${result.data["name"]}"` };
                 this.props.modifyToastObjCallback(newToastProperties);
             }
         }
@@ -48,15 +57,17 @@ class JoinProjectModalContent extends Component {
     }
     
     render() {
+        let { createColumnBoardId } = this.state;
+
         return (
             <React.Fragment>
                 <div style={{ gap: "1rem" }} className='flex column align-center'>
                     <div className='flex join-project-input-pill'>
-                        <label>Join Code</label>
+                        <label>{createColumnBoardId === null ? "Join Code" : "Column Name"}</label>
                         <div style={{ margin: "0 0.5rem", height: "auto" }} className='separator-vertical' />
-                        <input ref={this.state.codeInputFieldRef} type='text' placeholder='Enter Code...' />
+                        <input ref={this.state.codeInputFieldRef} type='text' placeholder={createColumnBoardId === null ? 'Enter Code...' : 'Enter Name...'} />
                     </div>
-                    <button ref={this.state.joinProjectBtnRef} style={{ width: "max-content" }} className='button'>Join Project</button>
+                    <button ref={this.state.joinProjectBtnRef} style={{ width: "max-content", marginTop: "1rem" }} className='button'>{createColumnBoardId === null ? 'Join Project' : 'Create'}</button>
                 </div>
             </React.Fragment>
         );
