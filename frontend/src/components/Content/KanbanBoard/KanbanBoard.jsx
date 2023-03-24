@@ -15,6 +15,7 @@ import CreateNewTaskModalContent from './CreateNewTaskModalContent';
 
 function KanbanBoard () {
     const { projectId, boardId } = useParams();
+    const [boardParticipantsObj, setBoardParticipantsObj] = useState([]);
     const [mainActionBtnIsToggled, setMainActionBtnIsToggled] = useState(false);
     const [mainActionBtnRef, setMainActionBtnRef] = useState(React.createRef());
     const [createNewTaskBtnRef, setCreateNewTaskBtnRef] = useState(React.createRef());
@@ -362,6 +363,12 @@ function KanbanBoard () {
     useEffect(() => {
         //let { mainActionBtnIsToggled, mainActionBtnRef, createNewTaskBtnRef, createNewColumnBtnRef } = this.state;
 
+        axios.get(apiEndpoint + "/Board/getParticipants?boardId=" + boardId).then(response => {
+            setBoardParticipantsObj(response.data);
+        }).catch(error => {
+            console.log("Failed to get board participants.");
+        });
+
         let listOfActionButtons = document.querySelectorAll(".create-action-btn-container > *");
         let [mainActionBtn, createNewTaskBtn, createNewColumnBtn] = [mainActionBtnRef.current, createNewTaskBtnRef.current, createNewColumnBtnRef.current];
 
@@ -428,7 +435,7 @@ function KanbanBoard () {
 
                 {toastObj.show && <Toast closeToastCallbackFunction={() => { setToastObj(prevToastObj => { return { ...prevToastObj, show: false } }) }} toastMessage={toastObj.message} notificationDurationInMs={toastObj.duration} notificationType={toastObj.type} />}
                 <Modal modalContent={<JoinProjectModalContent createColumnBoardId={boardId} modifyToastObjCallback={modifyToastObjCallback} />} openBtnId={createNewColumnBtnId} />
-                <Modal modalContent={<CreateNewTaskModalContent modifyToastObjCallback={modifyToastObjCallback} />} openBtnId={createNewTaskBtnId} />
+                <Modal modalContent={<CreateNewTaskModalContent boardParticipantsObj={boardParticipantsObj} modifyToastObjCallback={modifyToastObjCallback} />} openBtnId={createNewTaskBtnId} />
             </div>
         );
     //}

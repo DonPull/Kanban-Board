@@ -10,6 +10,7 @@ import jwt_decode from 'jwt-decode';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 const apiEndpoint = "https://localhost:7261/api";
+//const apiEndpoint = "https://kanbanflexboard.herokuapp.com/api";
 const claimsStr = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/";
 let cookies = new Cookies();
 let user = cookies.get("jwt_token") === undefined ? null : 

@@ -9,11 +9,18 @@ class AccountAsListItem extends Component {
         accountEmail: this.props.accountEmail,
         accountPfp: this.props.accountPfp || unsetPfp,
         accountActionIcon: this.props.accountActionIcon,
-        rotateActionIcon: this.props.rotateActionIcon
+        rotateActionIcon: this.props.rotateActionIcon,
+        accountIsSelected: false
     }
 
     componentDidMount(){
-        this.state.accountRef.current.onclick = (event) => { this.props.onClickCallback() };
+        let clickedAccount = this.state.accountRef.current;
+        clickedAccount.onclick = (event) => {
+            let accountIsSelected = !this.state.accountIsSelected;
+            this.setState({ accountIsSelected });
+
+            this.props.onClickCallback(clickedAccount, accountIsSelected)
+        };
     }
 
     render() {

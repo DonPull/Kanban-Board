@@ -1,8 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import AccountAsListItem from '../../AccountAsListItem';
 import './CreateNewTaskModalContent.css';
+import addAccountIcon from '../../../assets/+_and_x_icon_v4.png';
 
 function CreateNewTaskModalContent(props) {
+    const [boardParticipantsObj, setBoardParticipantsObj] = useState([]);
+    
+    useEffect(() => {
+        setBoardParticipantsObj(props.boardParticipantsObj);
+        console.log("finnaly... salvation: ", props.boardParticipantsObj);
+    }, [props.boardParticipantsObj]);
+
+    let taskAssigneeAccoutOnClickCallback = (clickedAccountElement, accountIsSelected) => {
+        console.log("account clicked... accountIsSelected: ", accountIsSelected);
+        if(accountIsSelected){
+            clickedAccountElement.style.borderColor = "#B7F7C4";
+        }else{
+            clickedAccountElement.style.borderColor = "#000000";
+        }
+    }
+
     return ( 
         <div id="create-new-task-modal-content-container" className='flex column align-center'>
             <div id="create-new-task-title-container" className='flex join-project-input-pill'>
@@ -37,19 +54,32 @@ function CreateNewTaskModalContent(props) {
                 <div className='flex column'>
                     <label className='crete-new-task-label'>Task Assignees</label>
                     <div id="task-assignees-showcase-container">
+                        {boardParticipantsObj.map(e => {
+                            return <AccountAsListItem onClickCallback={(clickedAccountElement, accountIsSelected) => { taskAssigneeAccoutOnClickCallback(clickedAccountElement, accountIsSelected) }} accountName={e["FullName"]} accountEmail={e["Email"]} accountPfp={e["ProfilePicture"]} accountActionIcon={addAccountIcon} />
+                        })}
+                        {/* <AccountAsListItem boardParticipantsObj={boardParticipantsObj} />
                         <AccountAsListItem />
+                        <AccountAsListItem />
+                        <AccountAsListItem />
+                        <AccountAsListItem />
+                        <AccountAsListItem /> */}
                     </div>
                 </div>
 
-                <div id="task-time-estimates-container">
-                    <div className='flex'>
-                        <label>Estimate: </label>
-                        <input />
+                <div className='flex column align-center'>
+                    <div id="task-time-estimates-container">
+                        <div className='flex'>
+                            <label>Estimate: </label>
+                            <input />
+                        </div>
+                        <div className='separator' style={{ width: "100%", margin: "1rem auto" }} />
+                        <div className='flex'>
+                            <label>Remaining: </label>
+                            <input />
+                        </div>
                     </div>
-                    <div className='flex'>
-                        <label>Remaining: </label>
-                        <input />
-                    </div>
+
+                    <button className='button width-100-percent' style={{ marginTop: "auto" }}>Create Task</button>
                 </div>
             </div>
         </div>

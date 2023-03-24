@@ -63,5 +63,13 @@ namespace KanbanBoardAPI.Controllers
 
             return Ok(board.Name);
         }
+
+        [HttpGet("getParticipants")]
+        public async Task<ActionResult<List<string>>> GetBoardParticipants(int boardId)
+        {
+            var userIds = _context.BoardParticipants.ToList().FindAll(bp => bp.BoardId == boardId).Select(bp => bp.UserId).ToList();
+            var users = _context.Users.ToList().FindAll(u => userIds.Contains(u.Id)).Select(u => { return (new Dictionary<string, string>{ ["Id"] = u.Id.ToString(), ["FullName"] = u.FullName, ["Email"] = u.Email, ["ProfilePicture"] = u.ProfilePicture }); }).ToList();
+            return Ok(users);
+        }
     }
 }
