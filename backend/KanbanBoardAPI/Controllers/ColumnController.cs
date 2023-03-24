@@ -20,6 +20,11 @@ namespace KanbanBoardAPI.Controllers
         [HttpPost("create")]
         public async Task<ActionResult<Column>> CreateBoard(Column request)
         {
+            if(request.Name.Trim() == "")
+            {
+                return BadRequest("Please provide a name for your column!");
+            }
+
             var column = new Column();
 
             column.Name = request.Name;

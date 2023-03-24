@@ -16,20 +16,20 @@ namespace KanbanBoardAPI.Models
         public int ColumnRefId { get; set; }
         [ForeignKey("ColumnRefId")]
         public virtual Column? Column { get; set; }
-        public string Title { get; set; } = string.Empty;
-        public string Description { get; set; } = string.Empty;
-        public string Type { get; set; } = string.Empty;
-        public string Priority { get; set; } = string.Empty;
-        public string Status { get; set; } = string.Empty;
+        public string? Title { get; set; } = string.Empty;
+        public string? Description { get; set; } = string.Empty;
+        public string? Type { get; set; } = string.Empty;
+        public string? Priority { get; set; } = string.Empty;
+        public string? Status { get; set; } = string.Empty;
         public int? OwnerRefId { get; set; }
         [ForeignKey("OwnerRefId")]
         public virtual User? Owner { get; set; }
         //public ICollection<User> Assignees { get; set; }
         public virtual ICollection<TaskAssignees>? TaskAssignees { get; set; }
-        public DateTime CreatedDate { get; set; }
-        public DateTime UpdateTime { get; set; }
-        public DateTime Estimate { get; set; }
-        public DateTime TimeRemainingBeforeDone { get; set; }
+        public DateTime? CreatedDate { get; set; }
+        public DateTime? UpdateTime { get; set; }
+        public DateTime? Estimate { get; set; }
+        public DateTime? TimeRemainingBeforeDone { get; set; }
 
     }
 }

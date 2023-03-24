@@ -28,7 +28,8 @@ function KanbanBoard () {
         duration: 3000,
         type: "error"
     });
-    const [tasksInfo, setTasksInfo] = useState([
+    const [tasksInfo, setTasksInfo] = useState([]);
+        /*
         { columnName: "ToDo", tasks: [
                 {
                     projectOriginOfTask: "Project 1",
@@ -306,6 +307,7 @@ function KanbanBoard () {
             ]
         }
     ]);
+    */
 
 
     /*state = {
@@ -359,9 +361,18 @@ function KanbanBoard () {
         mainActionBtnRef.current.onclick = mainActionBtnOnClick;
     }, [mainActionBtnIsToggled]);
 
+    let rerenderBoardContent = () => {
+        axios.get(apiEndpoint + "/Board/get?boardId=" + boardId).then(response => {
+            setTasksInfo(response.data);
+        }).catch(error => {
+            console.log("Failed to get board participants.");
+        });
+    }
+
     //componentDidMount(){
     useEffect(() => {
         //let { mainActionBtnIsToggled, mainActionBtnRef, createNewTaskBtnRef, createNewColumnBtnRef } = this.state;
+        rerenderBoardContent();
 
         axios.get(apiEndpoint + "/Board/getParticipants?boardId=" + boardId).then(response => {
             setBoardParticipantsObj(response.data);
@@ -399,6 +410,10 @@ function KanbanBoard () {
         setToastObj(prevToastObj => { return { ...prevToastObj, ...tObj } })
     }
 
+    let onClickCallback = () => {
+        rerenderBoardContent();  //TODO: Does not work. on new column it does not rerender the board content.
+    }
+
     //render() {
         //let { tasksInfo, mainActionBtnRef, createNewTaskBtnRef, createNewColumnBtnRef, createNewTaskBtnId, createNewColumnBtnId } = this.state;
         return (
@@ -434,8 +449,8 @@ function KanbanBoard () {
                 </div>
 
                 {toastObj.show && <Toast closeToastCallbackFunction={() => { setToastObj(prevToastObj => { return { ...prevToastObj, show: false } }) }} toastMessage={toastObj.message} notificationDurationInMs={toastObj.duration} notificationType={toastObj.type} />}
-                <Modal modalContent={<JoinProjectModalContent createColumnBoardId={boardId} modifyToastObjCallback={modifyToastObjCallback} />} openBtnId={createNewColumnBtnId} />
-                <Modal modalContent={<CreateNewTaskModalContent boardParticipantsObj={boardParticipantsObj} modifyToastObjCallback={modifyToastObjCallback} />} openBtnId={createNewTaskBtnId} />
+                <Modal modalContent={<JoinProjectModalContent createColumnBoardId={boardId} onClickCallback={onClickCallback} modifyToastObjCallback={modifyToastObjCallback} />} openBtnId={createNewColumnBtnId} />
+                <Modal modalContent={<CreateNewTaskModalContent projectId={projectId} boardId={boardId} boardParticipantsObj={boardParticipantsObj} modifyToastObjCallback={modifyToastObjCallback} />} openBtnId={createNewTaskBtnId} />
             </div>
         );
     //}

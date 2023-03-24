@@ -191,17 +191,16 @@ namespace KanbanBoardAPI.Migrations
                     ProjectRefId = table.Column<int>(type: "int", nullable: false),
                     BoardRefId = table.Column<int>(type: "int", nullable: false),
                     ColumnRefId = table.Column<int>(type: "int", nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Priority = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Type = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Priority = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     OwnerRefId = table.Column<int>(type: "int", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Estimate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    TimeRemainingBeforeDone = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ColumnId = table.Column<int>(type: "int", nullable: true)
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdateTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Estimate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    TimeRemainingBeforeDone = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -213,15 +212,11 @@ namespace KanbanBoardAPI.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Tasks_Columns_ColumnId",
-                        column: x => x.ColumnId,
-                        principalTable: "Columns",
-                        principalColumn: "Id");
-                    table.ForeignKey(
                         name: "FK_Tasks_Columns_ColumnRefId",
                         column: x => x.ColumnRefId,
                         principalTable: "Columns",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Tasks_Projects_ProjectRefId",
                         column: x => x.ProjectRefId,
@@ -232,7 +227,8 @@ namespace KanbanBoardAPI.Migrations
                         name: "FK_Tasks_Users_OwnerRefId",
                         column: x => x.OwnerRefId,
                         principalTable: "Users",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -303,11 +299,6 @@ namespace KanbanBoardAPI.Migrations
                 name: "IX_Tasks_BoardRefId",
                 table: "Tasks",
                 column: "BoardRefId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Tasks_ColumnId",
-                table: "Tasks",
-                column: "ColumnId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Tasks_ColumnRefId",

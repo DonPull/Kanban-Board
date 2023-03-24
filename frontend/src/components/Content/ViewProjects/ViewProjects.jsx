@@ -12,6 +12,7 @@ import axios from 'axios';
 
 class ViewProjects extends Component {
     state = {
+        renderProjectsIntervalId: "",
         viewProjectsContainerRef: React.createRef(),
         myProjectsIsToggled: false,
         otherProjectsIsToggled: false,
@@ -28,8 +29,15 @@ class ViewProjects extends Component {
         });
     }
 
+    componentWillUnmount(){
+        clearInterval(this.state.renderProjectsIntervalId);
+    }
+
     componentDidMount(){
-        this.renderAllProjects();
+        let renderProjectsIntervalId = setInterval(() => {
+            this.renderAllProjects();
+        }, 1000);
+        this.setState({ renderProjectsIntervalId });
 
         //let { myProjectsIsToggled, otherProjectsIsToggled } = this.state;
         let viewProjectsContainer = this.state.viewProjectsContainerRef.current;

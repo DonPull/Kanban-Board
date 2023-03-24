@@ -35,6 +35,11 @@ namespace KanbanBoardAPI.Data
                 .WithOne(b => b.ProjectOrigin)
                 .HasForeignKey(b => b.ProjectOriginId)
                 .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<Project>()
+                .HasMany(p => p.Tasks)
+                .WithOne(t => t.Project)
+                .HasForeignKey(t => t.ProjectRefId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Board>()
                 .HasOne(me => me.ProjectOrigin)
@@ -47,6 +52,7 @@ namespace KanbanBoardAPI.Data
                 .WithMany(parent => parent.OwnedBoards)
                 .HasForeignKey(me => me.OwnerId)
                 .HasConstraintName("FK_Boards_Users_BoardOwnerId");
+                //.OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<ProjectParticipant>()
     .           HasKey(u => new { u.UserId, u.ProjectId });
@@ -76,7 +82,6 @@ namespace KanbanBoardAPI.Data
 
             modelBuilder.Entity<BoardParticipant>()
                 .HasKey(bp => new { bp.UserId, bp.BoardId });
-
             modelBuilder.Entity<BoardParticipant>()
                 .HasOne(bp => bp.User)
                 .WithMany(u => u.BoardParticipants)
@@ -120,16 +125,19 @@ namespace KanbanBoardAPI.Data
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Task>()
+                .Property<int>(t => t.ColumnRefId);
+
+            modelBuilder.Entity<Task>()
                 .HasOne(e => e.Owner)
-                .WithMany()
+                .WithMany(u => u.OwnedTasks)
                 .HasForeignKey(e => e.OwnerRefId)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Task>()
               .HasOne(e => e.Column)
-              .WithMany()
+              .WithMany(c => c.Tasks)
               .HasForeignKey(e => e.ColumnRefId)
-              .OnDelete(DeleteBehavior.NoAction);
+              .OnDelete(DeleteBehavior.Restrict);
 
 
             //modelBuilder.Entity<Filters>().OwnsOne(e => e.Board);

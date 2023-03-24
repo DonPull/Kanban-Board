@@ -21,7 +21,7 @@
 }
 
 #create-new-task-enter-type-priority-status-container{
-    width: 99%;
+    width: 100%;
     background-color: var(--theme-color-bg);
     border: 2px solid var(--theme-color-bg-element);
     padding: 0.6rem 2rem;
@@ -56,15 +56,14 @@
     width: 100%;
 }
 #task-description-container textarea{
-    height: 131px;
-    width: 618px;
     max-width: 100%;
     max-height: 10rem;
     min-width: 100%;
     min-height: 10rem;
-    background-color: transparent;
+    resize: none;
+    background-color: var(--theme-color-bg-dropoff-2);
+    border: 2px solid var(--theme-color-bg-element);
     border-radius: 2rem;
-    border: 2px solid var(--theme-color-accent);
     font-family: Montserrat, sans-serif;
     padding: 1rem;
     color: var(--theme-color-accent-1);
@@ -79,11 +78,12 @@
 }
 
 #task-assignees-showcase-container{
-    padding: 1rem;
-    border-radius: 2rem;
-    border: 2px solid var(--theme-color-accent);
     height: 20rem;
     overflow: auto;
+    padding: 1rem;
+    background-color: var(--theme-color-bg-dropoff-2);
+    border: 2px solid var(--theme-color-bg-element);
+    border-radius: 2rem;
 }
 #task-assignees-showcase-container::-webkit-scrollbar{
     width: 0.5rem;

@@ -27,6 +27,11 @@ class JoinProjectModalContent extends Component {
         let { createColumnBoardId, joinProjectBtnRef, codeInputFieldRef } = this.state;
         let [joinProjectBtn, codeInputField] = [joinProjectBtnRef.current, codeInputFieldRef.current];
         joinProjectBtn.onclick = async (event) => {
+
+            if(this.props.onClickCallback){
+                this.props.onClickCallback();
+            }
+
             let cookies = new Cookies();
             let token = cookies.get("jwt_token");
 

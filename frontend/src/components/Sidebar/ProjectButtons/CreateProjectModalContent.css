@@ -107,13 +107,14 @@
     width: -webkit-fill-available;
     width: -moz-available;
     background-color: var(--theme-color-bg);
-    border: 2px solid var(--theme-color-accent);
-    /* border: 2px solid var(--theme-color-bg-element); */
+    /* border: 2px solid var(--theme-color-accent); */
+    border: 2px solid var(--theme-color-bg-element);
     border-radius: 1.4rem;
     padding: 0.5rem 0.7rem;
     margin-bottom: 1rem;
     cursor: pointer;
     user-select: none;
+    transition: 200ms;
 }
 .user-showcase-account-container *{
     cursor: pointer;

@@ -1,6 +1,7 @@
 ﻿using KanbanBoardAPI.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Globalization;
 using Task = KanbanBoardAPI.Models.Task;
 
 namespace KanbanBoardAPI.Controllers
@@ -16,28 +17,30 @@ namespace KanbanBoardAPI.Controllers
             _context = context;
         }
 
-        /*[HttpPost("create")]
-
+        [HttpPost("create")]
         public async Task<ActionResult<Task>> CreateTask(Task request) 
         {
             Task task = new Task();
-            task.ProjectId = request.ProjectId;
-            task.BoardId = request.BoardId;
-            task.ColumnId = request.ColumnId;
+            task.ProjectRefId = request.ProjectRefId;
+            task.BoardRefId = request.BoardRefId;
+            task.ColumnRefId = request.ColumnRefId;
             task.Title = request.Title;
             task.Description = request.Description;
             task.Type = request.Type;
             task.Priority = request.Priority;
             task.Status = request.Status;
-            task.OwnerId = request.OwnerId;
-            task.CreatedDate = request.CreatedDate;
-            task.UpdateTime = request.UpdateTime;
+            task.OwnerRefId = request.OwnerRefId;
             task.Estimate = request.Estimate;
             task.TimeRemainingBeforeDone = request.TimeRemainingBeforeDone;
+
+            var currentDateString = DateTime.Now.ToString("dd/MM/yyyy");
+            DateTime dateTime = DateTime.ParseExact(currentDateString, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            task.CreatedDate = dateTime;
+            task.UpdateTime = dateTime;
 
             _context.Add(task);
             var result = await _context.SaveChangesAsync();
             return Ok(result);
-        }*/
+        }
     }
 }

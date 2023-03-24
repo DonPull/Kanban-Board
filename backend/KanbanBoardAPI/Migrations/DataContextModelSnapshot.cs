@@ -160,55 +160,45 @@ namespace KanbanBoardAPI.Migrations
                     b.Property<int>("BoardRefId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ColumnId")
-                        .HasColumnType("int");
-
                     b.Property<int>("ColumnRefId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CreatedDate")
+                    b.Property<DateTime?>("CreatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("Estimate")
+                    b.Property<DateTime?>("Estimate")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("OwnerRefId")
                         .HasColumnType("int");
 
                     b.Property<string>("Priority")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ProjectRefId")
                         .HasColumnType("int");
 
                     b.Property<string>("Status")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("TimeRemainingBeforeDone")
+                    b.Property<DateTime?>("TimeRemainingBeforeDone")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Title")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Type")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("UpdateTime")
+                    b.Property<DateTime?>("UpdateTime")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
                     b.HasIndex("BoardRefId");
-
-                    b.HasIndex("ColumnId");
 
                     b.HasIndex("ColumnRefId");
 
@@ -401,20 +391,16 @@ namespace KanbanBoardAPI.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("KanbanBoardAPI.Models.Column", null)
-                        .WithMany("Tasks")
-                        .HasForeignKey("ColumnId");
-
                     b.HasOne("KanbanBoardAPI.Models.Column", "Column")
-                        .WithMany()
+                        .WithMany("Tasks")
                         .HasForeignKey("ColumnRefId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("KanbanBoardAPI.Models.User", "Owner")
-                        .WithMany()
+                        .WithMany("OwnedTasks")
                         .HasForeignKey("OwnerRefId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("KanbanBoardAPI.Models.Project", "Project")
                         .WithMany("Tasks")
@@ -487,6 +473,8 @@ namespace KanbanBoardAPI.Migrations
                     b.Navigation("OwnedBoards");
 
                     b.Navigation("OwnedProjects");
+
+                    b.Navigation("OwnedTasks");
 
                     b.Navigation("ProjectParticipants");
 

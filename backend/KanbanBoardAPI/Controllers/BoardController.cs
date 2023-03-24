@@ -64,6 +64,24 @@ namespace KanbanBoardAPI.Controllers
             return Ok(board.Name);
         }
 
+        [HttpGet("get")]
+        public async Task<ActionResult> GetBoardContent(int boardId)
+        {
+            var result = new List<Dictionary<object, object>>();
+
+            var columns = _context.Columns.ToList().FindAll(c => c.BoardId == boardId).ToList();
+
+            foreach(var column in columns)
+            {
+                var columnName = column.Name;
+                var tasks = _context.Tasks.ToList().FindAll(t => t.ColumnRefId == column.Id).ToList();
+
+                result.Add(new Dictionary<object, object>() { { "columnName", columnName }, { "tasks", tasks } } );
+            }
+
+            return Ok(result);
+        }
+
         [HttpGet("getParticipants")]
         public async Task<ActionResult<List<string>>> GetBoardParticipants(int boardId)
         {

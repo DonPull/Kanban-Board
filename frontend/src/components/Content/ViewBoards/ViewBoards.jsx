@@ -31,7 +31,9 @@ function ViewBoards(props) {
     });
 
     useEffect(() => {
-        renderAllBoards();
+        let renderBoardsIntervalId = setInterval(() => {
+            renderAllBoards();
+        }, 1000);
 
         axios.get(apiEndpoint + "/Project/" + projectId).then(response => {
             console.log(response.data);
@@ -42,6 +44,10 @@ function ViewBoards(props) {
             setProjectIsValid(false);
             setProjectIsInvalidSoRedirectTheUser(true);
         });
+
+        return () => {
+            clearInterval(renderBoardsIntervalId);
+        }
     }, []);
 
     useEffect(() => {
@@ -71,7 +77,6 @@ function ViewBoards(props) {
     let renderAllBoards = async () => {
         // get all projects to render them
         await axios.get(apiEndpoint + "/Project/getBoards/" + projectId).then(response => {
-            console.log(response.data);
             setBoardList(response.data);
         }).catch(error => {
             console.log(error);

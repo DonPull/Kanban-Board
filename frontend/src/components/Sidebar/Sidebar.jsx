@@ -9,7 +9,8 @@ import { Link } from 'react-router-dom';
 
 class Sidebar extends Component {
     state = {
-        logoRef: React.createRef()
+        user: this.props.user,
+        logoRef: React.createRef(),
     }
 
     componentDidMount(){
@@ -26,18 +27,20 @@ class Sidebar extends Component {
     }
 
     render() {
+        let { user, logoRef } = this.state;
+        
         return (
             <aside id="sidebar" className='flex column'>
 
                 <Link to={"/"} style={{ all: "unset" }} >
-                    <div ref={this.state.logoRef} id="logo">
+                    <div ref={logoRef} id="logo">
                         <label>FlexBoard</label>
                     </div>
                 </Link>
 
-                <ProjectButtons user={this.props.user} />
+                <ProjectButtons user={user} />
                 {/* <ProjectTree /> */}
-                <SidebarFooter user={this.props.user} />
+                <SidebarFooter user={user} />
 
             </aside>
         );
