@@ -73,10 +73,11 @@ namespace KanbanBoardAPI.Controllers
 
             foreach(var column in columns)
             {
+                var columnId = column.Id;
                 var columnName = column.Name;
                 var tasks = _context.Tasks.ToList().FindAll(t => t.ColumnRefId == column.Id).ToList();
 
-                result.Add(new Dictionary<object, object>() { { "columnName", columnName }, { "tasks", tasks } } );
+                result.Add(new Dictionary<object, object>() { { "columnId", columnId }, { "columnName", columnName }, { "tasks", tasks } } );
             }
 
             return Ok(result);

@@ -90,7 +90,7 @@ export default class App extends Component{
                             <Content renderComp={
                                 <React.Fragment>
                                     <Filters />
-                                    <KanbanBoard />
+                                    <KanbanBoard user={user} />
                                 </React.Fragment>
                             }/>
                         </div>

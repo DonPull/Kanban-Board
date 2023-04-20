@@ -20,13 +20,45 @@ function CreateNewTaskModalContent(props) {
 
     useEffect(() => {
         createTaskBtnRef.current.onclick = () => {
-            let { projectId, boardId } = props;
-            let taskObj = {"ProjectRefId": projectId, "BoardRefId": boardId, "ColumnRefId": ""}; // TODO: DA SE DOVURSHI
+            let { projectId, boardId, tasksInfo, user } = props;
+
+            let taskTitle = document.getElementById(newTaskTitleContainerId).querySelector("input").value;
+            let taskDescription = document.getElementById(taskDescriptionContainerId).querySelector("textarea").value;
+
+            let typePriorityAndStatusInputs = document.getElementById(typePriorityStatusInputsContainerId).querySelectorAll("input");
+            let taskType = typePriorityAndStatusInputs[0].value;
+            let taskPriority = typePriorityAndStatusInputs[1].value;
+            let taskStatus = typePriorityAndStatusInputs[2].value;
+
+            let taskTimeInputs = document.getElementById(taskTimeEstimatesContainerId).querySelectorAll("input");
+            let taskEstimate = taskTimeInputs[0].value;
+            let taskTimeRemaining = taskTimeInputs[1].value;
+
+            let fistColumnId = 0;
+            console.log(tasksInfo);
+            tasksInfo.forEach(e => {
+                console.log("tasksInfo foreach enter.");
+                if(fistColumnId === 0){
+                    fistColumnId = e["columnId"];
+                }else if(e["columnId"] < fistColumnId){
+                    fistColumnId = e["columnId"];
+                }
+            });
+            console.log("fistColumnId: ", fistColumnId);
+
+            let taskObj = {"ProjectRefId": parseInt(projectId), "BoardRefId": parseInt(boardId), "ColumnRefId": fistColumnId, "Title": taskTitle, "Description": taskDescription, "Type": taskType, "Priority": taskPriority, "Status": taskStatus, "OwnerRefId": user["Id"], "Estimate": taskEstimate, "TimeRemainingBeforeDone": taskTimeRemaining};
 
             axios.post(apiEndpoint + "/Task/create", taskObj).then(response => {
-                setBoardParticipantsObj(response.data);
+                let createTaskResult = response.data;
+                setBoardParticipantsObj(createTaskResult);
+
+                axios.post(apiEndpoint + "/Task/addTaskAssignees", { "TaskId": createTaskResult["Id"], "TaskAssigneesIds": taskAssigneesIds }).then(response => {
+                    console.log("added task assignees!");
+                }).catch(error => {
+                    console.log("Could not add task assignees");
+                })
             }).catch(error => {
-                console.log("Failed to get board participants.");
+                console.log("Failed to create task.");
             });
 
             console.log(taskAssigneesIds);

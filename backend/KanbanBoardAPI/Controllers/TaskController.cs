@@ -42,5 +42,24 @@ namespace KanbanBoardAPI.Controllers
             var result = await _context.SaveChangesAsync();
             return Ok(result);
         }
+
+        [HttpPost("addTaskAssignees")]
+        public async Task<ActionResult> AddTaskAssignees(Dictionary<int, List<int>> request)
+        {
+            foreach (KeyValuePair<int, List<int>> entry in request)
+            {
+                foreach (int taskAssigneeId in entry.Value)
+                {
+                    var newTaskAssignee = new TaskAssignees();
+                    newTaskAssignee.TaskId = entry.Key;
+                    newTaskAssignee.UserId = taskAssigneeId;
+
+                    _context.Add(newTaskAssignee);
+                    await _context.SaveChangesAsync();
+                }
+            }
+
+            return Ok();
+        }
     }
 }

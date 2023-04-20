@@ -13,7 +13,7 @@ import axios from 'axios';
 import Toast from './../../Toast';
 import CreateNewTaskModalContent from './CreateNewTaskModalContent';
 
-function KanbanBoard () {
+function KanbanBoard (props) {
     const { projectId, boardId } = useParams();
     const [boardParticipantsObj, setBoardParticipantsObj] = useState([]);
     const [mainActionBtnIsToggled, setMainActionBtnIsToggled] = useState(false);
@@ -28,15 +28,14 @@ function KanbanBoard () {
         duration: 3000,
         type: "error"
     });
-    const [tasksInfo, setTasksInfo] = useState([]);
-        /*
+    const [tasksInfo, setTasksInfo] = useState([
         { columnName: "ToDo", tasks: [
                 {
                     projectOriginOfTask: "Project 1",
                     taskType: "Task",
                     taskPriority: "High",
                     taskStatus: "ToDo",
-                    taskTitle: "Task 1 in ToDo Task 1 in ToDo Task 1 in ToDo Task 1 in ToDo Task 1 in ToDo Task 1 in ToDo Task 1 in ToDo Task 1 in ToDo Task 1 in ToDo Task 1 in ToDo Task 1 in ToDo",
+                    taskTitle: "Update Design",
                     taskDescription: "Sample HTML",
                     taskAttachments: "Sample attachments",
                     taskAssignee: {
@@ -59,7 +58,7 @@ function KanbanBoard () {
                     projectOriginOfTask: "Project 1",
                     taskType: "WorkPack",
                     taskPriority: "Critical",
-                    taskStatus: "Task Is Very Much Done And Complete",
+                    taskStatus: "Finish backend",
                     taskTitle: "Task 2 in ToDo",
                     taskDescription: "Sample HTML",
                     taskAttachments: "Sample attachments",
@@ -87,7 +86,7 @@ function KanbanBoard () {
                     taskType: "Task",
                     taskPriority: "Low",
                     taskStatus: "Currently Doing",
-                    taskTitle: "Task 1 in Doing",
+                    taskTitle: "Update button design",
                     taskDescription: "Sample HTML",
                     taskAttachments: "Sample attachments",
                     taskAssignee: {
@@ -114,7 +113,7 @@ function KanbanBoard () {
                     taskType: "WorkPack",
                     taskPriority: "Medium",
                     taskStatus: "Done",
-                    taskTitle: "Task 1 in Done",
+                    taskTitle: "Fix 'render' bug",
                     taskDescription: "Sample HTML",
                     taskAttachments: "Sample attachments",
                     taskAssignee: {
@@ -137,7 +136,7 @@ function KanbanBoard () {
                     projectOriginOfTask: "Project 1",
                     taskType: "Task",
                     taskPriority: "High",
-                    taskStatus: "Task Is Very Much Done",
+                    taskStatus: "Fix the event listener",
                     taskTitle: "Task 2 in Done",
                     taskDescription: "Sample HTML",
                     taskAttachments: "Sample attachments",
@@ -161,7 +160,7 @@ function KanbanBoard () {
                     projectOriginOfTask: "Project 1",
                     taskType: "Epic",
                     taskPriority: "High",
-                    taskStatus: "Task Is Very Much Done And Complete",
+                    taskStatus: "Render new project view",
                     taskTitle: "Task 3 in Done",
                     taskDescription: "Sample HTML",
                     taskAttachments: "Sample attachments",
@@ -186,7 +185,7 @@ function KanbanBoard () {
                     taskType: "WorkPack",
                     taskPriority: "Medium",
                     taskStatus: "Done",
-                    taskTitle: "Task 1 in Done",
+                    taskTitle: "Change input filed color",
                     taskDescription: "Sample HTML",
                     taskAttachments: "Sample attachments",
                     taskAssignee: {
@@ -307,7 +306,7 @@ function KanbanBoard () {
             ]
         }
     ]);
-    */
+    
 
 
     /*state = {
@@ -363,11 +362,15 @@ function KanbanBoard () {
 
     let rerenderBoardContent = () => {
         axios.get(apiEndpoint + "/Board/get?boardId=" + boardId).then(response => {
-            setTasksInfo(response.data);
+            //setTasksInfo(response.data);
         }).catch(error => {
             console.log("Failed to get board participants.");
         });
     }
+
+    useEffect(() => {
+        console.log("tasks info updated: ", tasksInfo);
+    }, [tasksInfo]);
 
     //componentDidMount(){
     useEffect(() => {
@@ -450,7 +453,7 @@ function KanbanBoard () {
 
                 {toastObj.show && <Toast closeToastCallbackFunction={() => { setToastObj(prevToastObj => { return { ...prevToastObj, show: false } }) }} toastMessage={toastObj.message} notificationDurationInMs={toastObj.duration} notificationType={toastObj.type} />}
                 <Modal modalContent={<JoinProjectModalContent createColumnBoardId={boardId} onClickCallback={onClickCallback} modifyToastObjCallback={modifyToastObjCallback} />} openBtnId={createNewColumnBtnId} />
-                <Modal modalContent={<CreateNewTaskModalContent projectId={projectId} boardId={boardId} boardParticipantsObj={boardParticipantsObj} modifyToastObjCallback={modifyToastObjCallback} />} openBtnId={createNewTaskBtnId} />
+                <Modal modalContent={<CreateNewTaskModalContent tasksInfo={tasksInfo} projectId={projectId} boardId={boardId} user={props.user} boardParticipantsObj={boardParticipantsObj} modifyToastObjCallback={modifyToastObjCallback} />} openBtnId={createNewTaskBtnId} />
             </div>
         );
     //}

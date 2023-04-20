@@ -28,8 +28,8 @@ namespace KanbanBoardAPI.Models
         public virtual ICollection<TaskAssignees>? TaskAssignees { get; set; }
         public DateTime? CreatedDate { get; set; }
         public DateTime? UpdateTime { get; set; }
-        public DateTime? Estimate { get; set; }
-        public DateTime? TimeRemainingBeforeDone { get; set; }
+        public string? Estimate { get; set; }
+        public string? TimeRemainingBeforeDone { get; set; }
 
     }
 }

@@ -15,6 +15,8 @@ class TaskContent extends Component {
     }
 
     componentDidMount(){
+        console.log("received task info in TaskContent modal: ", this.props.taskInfo);
+
         let { taskContentContainerRef, taskContentContainerCloseBtnRef } = this.state;
         this.props.getCloseBtn(taskContentContainerCloseBtnRef.current);
 
@@ -68,7 +70,7 @@ class TaskContent extends Component {
                         <div className='task-description-container'>
                             <label className='task-content-label'>Description</label>
                             <div>
-                                This is a sample description
+                                The description of task "{taskInfo.taskTitle}".
                             </div>
                         </div>
 

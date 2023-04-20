@@ -12,7 +12,7 @@ class KanbanColumn extends Component {
         tasks: this.props.tasksInfo.tasks
     }
 
-    render() { 
+    render() {
         let { columnName, tasks } = this.state;
         return (
             <div className='kanban-column flex column align-center'>
